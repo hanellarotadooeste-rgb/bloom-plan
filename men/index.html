@@ -10,7 +10,7 @@
 <meta name="apple-mobile-web-app-title" content="Plan Men">
 <meta name="theme-color" content="#f3f9fa">
 <link rel="manifest" href="manifest.webmanifest">
-<script>(function(){try{var c=document.createElement('canvas');c.width=c.height=180;var x=c.getContext('2d');var g=x.createLinearGradient(0,0,180,180);g.addColorStop(0,'#3a98a4');g.addColorStop(1,'#1f6f7a');x.fillStyle=g;x.fillRect(0,0,180,180);x.translate(90,90);x.rotate(Math.PI/4);x.fillStyle='#e6f2f4';x.fillRect(-42,-42,84,84);x.fillStyle='#2a7f8b';x.fillRect(-24,-24,48,48);var l=document.createElement('link');l.rel='apple-touch-icon';l.href=c.toDataURL('image/png');document.head.appendChild(l);}catch(e){}})();</script>
+<script>(function(){try{var c=document.createElement('canvas');c.width=c.height=180;var x=c.getContext('2d');var g=x.createLinearGradient(0,0,180,180);g.addColorStop(0,'#1f7a88');g.addColorStop(1,'#15525c');x.fillStyle=g;x.fillRect(0,0,180,180);x.translate(90,90);x.rotate(Math.PI/4);x.fillStyle='#e6f2f4';x.fillRect(-42,-42,84,84);x.fillStyle='#1b6672';x.fillRect(-24,-24,48,48);var l=document.createElement('link');l.rel='apple-touch-icon';l.href=c.toDataURL('image/png');document.head.appendChild(l);}catch(e){}})();</script>
 <link rel="icon" type="image/svg+xml" href="icon.svg">
 <style>body{padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left)}</style>
 <script>if ('serviceWorker' in navigator) window.addEventListener('load', function(){ navigator.serviceWorker.register('sw.js').catch(function(){}); });</script>
@@ -28,7 +28,7 @@ theme: {
 extend: {
 colors: {
 rose: { 50:'#fff1f2',100:'#ffe4e6',200:'#fecdd3',300:'#fda4af',400:'#fb7185',500:'#f43f5e' },
-blush: { 50:'#f6fafb',100:'#f1f8f9',200:'#e6f2f4',300:'#cfe5e8',400:'#8fc3ca',500:'#3a98a4' },
+blush: { 50:'#f6fafb',100:'#f1f8f9',200:'#e6f2f4',300:'#bcd9de',400:'#6aaab4',500:'#1f7a88' },
 champagne: { 100:'#fdfbf7',200:'#f7f2e9',300:'#ece2d0',400:'#dfd0b5',500:'#cbb693' },
 lavender: { 100:'#eff6ff',200:'#dbeafe',300:'#bfdbfe',400:'#93c5fd' }
 },
@@ -45,30 +45,30 @@ handwriting: ['Alex Brush', 'cursive']
 /* Folhas de papel: sempre claras (como papel de verdade), inclusive no modo noturno */
 .paper-lined {
 background-size: 100% 30px;
-background-image: linear-gradient(to bottom, transparent 29px, #cfe5e8 30px);
+background-image: linear-gradient(to bottom, transparent 29px, #bcd9de 30px);
 }
 .paper-grid {
 background-size: 24px 24px;
-background-image: linear-gradient(to right, #cfe5e8 1px, transparent 1px),
-linear-gradient(to bottom, #cfe5e8 1px, transparent 1px);
+background-image: linear-gradient(to right, #bcd9de 1px, transparent 1px),
+linear-gradient(to bottom, #bcd9de 1px, transparent 1px);
 }
 .paper-dotted {
 background-size: 24px 24px;
-background-image: radial-gradient(#8fc3ca 1.5px, transparent 1.5px);
+background-image: radial-gradient(#6aaab4 1.5px, transparent 1.5px);
 }
 .paper-margin {
 background-size: 100% 30px;
-background-image: linear-gradient(to bottom, transparent 29px, #cfe5e8 30px);
+background-image: linear-gradient(to bottom, transparent 29px, #bcd9de 30px);
 }
 .paper-margin::before {
 content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 40px;
-background: #e6f2f4; border-right: 1px solid #cfe5e8; pointer-events: none; z-index: 5;
+background: #e6f2f4; border-right: 1px solid #bcd9de; pointer-events: none; z-index: 5;
 }
 .paper-mindmap {
 background-color: #f7fbfb;
 background-image:
-radial-gradient(circle at center, rgba(58,152,164,0.15) 0%, transparent 60%),
-radial-gradient(circle, #8fc3ca 1.5px, transparent 1.5px);
+radial-gradient(circle at center, rgba(31,122,136,0.18) 0%, transparent 60%),
+radial-gradient(circle, #6aaab4 1.5px, transparent 1.5px);
 background-size: 100% 100%, 28px 28px;
 }
 #notebook-canvas { touch-action: none; }
@@ -81,153 +81,153 @@ input, textarea, select { -webkit-user-select: text; user-select: text; }
 body { -webkit-tap-highlight-color: transparent; -webkit-touch-callout: none; }
 ::-webkit-scrollbar { width: 5px; height: 5px; }
 ::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: #8fc3ca; border-radius: 9999px; }
+::-webkit-scrollbar-thumb { background: #6aaab4; border-radius: 9999px; }
 .dark ::-webkit-scrollbar-thumb { background: #3b6671; }
-.glow-soft { box-shadow: 0 10px 30px -10px rgba(143, 195, 202, 0.45); }
+.glow-soft { box-shadow: 0 10px 30px -10px rgba(106, 170, 180, 0.5); }
 .dark .glow-soft { box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5); }
-input[type=range] { accent-color: #3a98a4; }
+input[type=range] { accent-color: #1f7a88; }
 .toast-in { animation: toastIn .25s ease-out; }
 @keyframes toastIn { from { opacity: 0; transform: translate(-50%, 8px); } to { opacity: 1; transform: translate(-50%, 0); } }
 </style>
 </head>
 <body class="bg-[#f3f9fa] dark:bg-[#112125] text-[#1b3d45] dark:text-[#d5e6e9] h-full overflow-hidden flex font-sans select-none antialiased transition-colors duration-300">
-<aside id="sidebar" class="w-20 md:w-64 bg-white/80 dark:bg-[#17292e]/80 backdrop-blur-xl border-r border-[#cfe5e8] dark:border-[#2a4a53] flex flex-col justify-between transition-all duration-300 z-30 shrink-0 shadow-sm">
+<aside id="sidebar" class="w-20 md:w-64 bg-white/80 dark:bg-[#17292e]/80 backdrop-blur-xl border-r border-[#bcd9de] dark:border-[#2a4a53] flex flex-col justify-between transition-all duration-300 z-30 shrink-0 shadow-sm">
 <div>
 <div class="h-20 flex items-center px-4 md:px-6 border-b border-[#e6f2f4] dark:border-[#234048]">
-<div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-[#3a98a4] via-[#8fc3ca] to-[#cfe5e8] flex items-center justify-center text-white shadow-md shadow-cyan-300/40 shrink-0">
+<div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-[#1f7a88] via-[#6aaab4] to-[#bcd9de] flex items-center justify-center text-white shadow-md shadow-cyan-300/40 shrink-0">
 <i class="fa-solid fa-compass text-lg text-[#1f4f59]"></i>
 </div>
 <div class="hidden md:block ml-3">
-<span class="font-serif font-bold text-2xl tracking-wide text-[#1f4f59] dark:text-[#e6f4f6]">Bloom<span class="text-[#3a98a4] italic font-normal">&amp;Plan</span></span>
-<p class="text-[9px] uppercase tracking-widest text-[#6a979f] font-semibold">Organizador · Men</p>
+<span class="font-serif font-bold text-2xl tracking-wide text-[#1f4f59] dark:text-[#e6f4f6]">Bloom<span class="text-[#1f7a88] italic font-normal">&amp;Plan</span></span>
+<p class="text-[9px] uppercase tracking-widest text-[#4f7f89] font-semibold">Organizador · Men</p>
 </div>
 </div>
 <nav class="p-3 space-y-2">
 <button onclick="switchTab('dashboard')" id="nav-dashboard" class="nav-btn w-full flex items-center gap-3.5 px-4 py-3 rounded-2xl font-medium text-sm text-[#3d6b75] dark:text-[#a9c8ce] hover:bg-[#e6f2f4] dark:hover:bg-[#234048] transition-all duration-200">
-<i class="fa-solid fa-star text-base w-6 text-center text-[#3a98a4]"></i>
+<i class="fa-solid fa-star text-base w-6 text-center text-[#1f7a88]"></i>
 <span class="hidden md:inline font-serif text-base font-semibold">Dashboard</span>
 </button>
 <button onclick="switchTab('notebooks')" id="nav-notebooks" class="nav-btn w-full flex items-center gap-3.5 px-4 py-3 rounded-2xl font-medium text-sm text-[#3d6b75] dark:text-[#a9c8ce] hover:bg-[#e6f2f4] dark:hover:bg-[#234048] transition-all duration-200">
-<i class="fa-solid fa-book-open-reader text-base w-6 text-center text-[#3a98a4]"></i>
+<i class="fa-solid fa-book-open-reader text-base w-6 text-center text-[#1f7a88]"></i>
 <span class="hidden md:inline font-serif text-base font-semibold">Cadernos Digitais</span>
 </button>
 <button onclick="switchTab('studies')" id="nav-studies" class="nav-btn w-full flex items-center gap-3.5 px-4 py-3 rounded-2xl font-medium text-sm text-[#3d6b75] dark:text-[#a9c8ce] hover:bg-[#e6f2f4] dark:hover:bg-[#234048] transition-all duration-200">
-<i class="fa-solid fa-graduation-cap text-base w-6 text-center text-[#3a98a4]"></i>
+<i class="fa-solid fa-graduation-cap text-base w-6 text-center text-[#1f7a88]"></i>
 <span class="hidden md:inline font-serif text-base font-semibold">Estudos &amp; Revisões</span>
 </button>
 <button onclick="switchTab('planning')" id="nav-planning" class="nav-btn w-full flex items-center gap-3.5 px-4 py-3 rounded-2xl font-medium text-sm text-[#3d6b75] dark:text-[#a9c8ce] hover:bg-[#e6f2f4] dark:hover:bg-[#234048] transition-all duration-200">
-<i class="fa-solid fa-calendar-check text-base w-6 text-center text-[#3a98a4]"></i>
+<i class="fa-solid fa-calendar-check text-base w-6 text-center text-[#1f7a88]"></i>
 <span class="hidden md:inline font-serif text-base font-semibold">Tarefas &amp; Hábitos</span>
 </button>
 <button onclick="switchTab('goals')" id="nav-goals" class="nav-btn w-full flex items-center gap-3.5 px-4 py-3 rounded-2xl font-medium text-sm text-[#3d6b75] dark:text-[#a9c8ce] hover:bg-[#e6f2f4] dark:hover:bg-[#234048] transition-all duration-200">
-<i class="fa-solid fa-crown text-base w-6 text-center text-[#3a98a4]"></i>
+<i class="fa-solid fa-crown text-base w-6 text-center text-[#1f7a88]"></i>
 <span class="hidden md:inline font-serif text-base font-semibold">Metas &amp; Sonhos</span>
 </button>
-<button onclick="switchTab('ai-assistant')" id="nav-ai-assistant" class="nav-btn w-full flex items-center gap-3.5 px-4 py-3 rounded-2xl font-medium text-sm text-[#3d6b75] dark:text-[#a9c8ce] hover:bg-[#e6f2f4] dark:hover:bg-[#234048] transition-all duration-200 border border-[#cfe5e8]/60 bg-[#e6f2f4]/30">
-<i class="fa-solid fa-wand-magic-sparkles text-base w-6 text-center text-[#3a98a4]"></i>
+<button onclick="switchTab('ai-assistant')" id="nav-ai-assistant" class="nav-btn w-full flex items-center gap-3.5 px-4 py-3 rounded-2xl font-medium text-sm text-[#3d6b75] dark:text-[#a9c8ce] hover:bg-[#e6f2f4] dark:hover:bg-[#234048] transition-all duration-200 border border-[#bcd9de]/60 bg-[#e6f2f4]/30">
+<i class="fa-solid fa-wand-magic-sparkles text-base w-6 text-center text-[#1f7a88]"></i>
 <span class="hidden md:inline font-serif text-base font-bold text-[#1f4f59] dark:text-[#e6f4f6]">Assistente IA</span>
 </button>
 </nav>
 </div>
 <div class="p-3 border-t border-[#e6f2f4] dark:border-[#234048] space-y-2">
 <div class="flex gap-1">
-<button onclick="exportDataBackup()" class="flex-1 py-1.5 bg-[#e6f2f4] dark:bg-[#234048] text-[10px] font-bold rounded-xl text-[#3d6b75] dark:text-[#a9c8ce] hover:bg-[#cfe5e8] transition flex items-center justify-center gap-1" title="Exportar backup (JSON)">
-<i class="fa-solid fa-download text-[#3a98a4]"></i> <span class="hidden md:inline">Backup</span>
+<button onclick="exportDataBackup()" class="flex-1 py-1.5 bg-[#e6f2f4] dark:bg-[#234048] text-[10px] font-bold rounded-xl text-[#3d6b75] dark:text-[#a9c8ce] hover:bg-[#bcd9de] transition flex items-center justify-center gap-1" title="Exportar backup (JSON)">
+<i class="fa-solid fa-download text-[#1f7a88]"></i> <span class="hidden md:inline">Backup</span>
 </button>
-<button onclick="document.getElementById('import-file-input').click()" class="flex-1 py-1.5 bg-[#e6f2f4] dark:bg-[#234048] text-[10px] font-bold rounded-xl text-[#3d6b75] dark:text-[#a9c8ce] hover:bg-[#cfe5e8] transition flex items-center justify-center gap-1" title="Restaurar dados (JSON)">
-<i class="fa-solid fa-upload text-[#3a98a4]"></i> <span class="hidden md:inline">Restaurar</span>
+<button onclick="document.getElementById('import-file-input').click()" class="flex-1 py-1.5 bg-[#e6f2f4] dark:bg-[#234048] text-[10px] font-bold rounded-xl text-[#3d6b75] dark:text-[#a9c8ce] hover:bg-[#bcd9de] transition flex items-center justify-center gap-1" title="Restaurar dados (JSON)">
+<i class="fa-solid fa-upload text-[#1f7a88]"></i> <span class="hidden md:inline">Restaurar</span>
 </button>
 <input type="file" id="import-file-input" class="hidden" accept=".json,application/json" onchange="importDataBackup(event)">
 </div>
 <button onclick="toggleDarkMode()" class="w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-[#3d6b75] dark:text-[#a9c8ce] hover:bg-[#e6f2f4] dark:hover:bg-[#234048] transition">
-<span class="hidden md:flex items-center gap-2 text-xs font-semibold"><i class="fa-solid fa-moon text-[#3a98a4]"></i> Modo Noturno</span>
+<span class="hidden md:flex items-center gap-2 text-xs font-semibold"><i class="fa-solid fa-moon text-[#1f7a88]"></i> Modo Noturno</span>
 <i class="fa-solid fa-circle-half-stroke text-lg md:hidden mx-auto"></i>
 </button>
-<div class="flex items-center gap-3 p-2 bg-[#e6f2f4]/60 dark:bg-[#1d343a] rounded-xl border border-[#cfe5e8] dark:border-[#2c4f58]">
-<div class="w-8 h-8 rounded-full bg-gradient-to-r from-[#3a98a4] to-[#7cc4cb] text-white font-serif font-bold flex items-center justify-center text-xs shrink-0 shadow">M</div>
+<div class="flex items-center gap-3 p-2 bg-[#e6f2f4]/60 dark:bg-[#1d343a] rounded-xl border border-[#bcd9de] dark:border-[#2c4f58]">
+<div class="w-8 h-8 rounded-full bg-gradient-to-r from-[#1f7a88] to-[#4aa3ad] text-white font-serif font-bold flex items-center justify-center text-xs shrink-0 shadow">M</div>
 <div class="hidden md:block overflow-hidden">
 <p class="text-xs font-bold truncate text-[#1f4f59] dark:text-[#dff0f2]">Men Pro</p>
-<p class="text-[9px] text-[#6a979f] truncate">iPad Pro Edition</p>
+<p class="text-[9px] text-[#4f7f89] truncate">iPad Pro Edition</p>
 </div>
 </div>
 </div>
 </aside>
 <main class="flex-1 min-w-0 flex flex-col h-full overflow-hidden relative">
-<header class="h-20 bg-white/70 dark:bg-[#17292e]/70 backdrop-blur-md border-b border-[#cfe5e8] dark:border-[#2a4a53] flex items-center justify-between px-6 z-20 shrink-0">
+<header class="h-20 bg-white/70 dark:bg-[#17292e]/70 backdrop-blur-md border-b border-[#bcd9de] dark:border-[#2a4a53] flex items-center justify-between px-6 z-20 shrink-0">
 <h1 id="page-title" class="text-2xl font-serif font-bold tracking-wide text-[#1f4f59] dark:text-[#e6f4f6]">Meu Painel</h1>
 <div class="flex items-center gap-4">
 <div class="hidden lg:flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#e6f2f4] dark:bg-[#234048] text-xs font-serif italic text-[#3d6b75] dark:text-[#b4d0d5]">
-<i class="fa-solid fa-quote-left text-[#3a98a4] text-[10px]"></i>
+<i class="fa-solid fa-quote-left text-[#1f7a88] text-[10px]"></i>
 <span>"Você é capaz de grandes conquistas hoje."</span>
 </div>
-<div class="px-3.5 py-1.5 bg-[#e6f2f4] dark:bg-[#234048] text-[#1f4f59] dark:text-[#dff0f2] rounded-full text-xs font-semibold flex items-center gap-2 border border-[#cfe5e8] dark:border-[#335a64]">
-<i class="fa-regular fa-clock text-[#3a98a4]"></i>
+<div class="px-3.5 py-1.5 bg-[#e6f2f4] dark:bg-[#234048] text-[#1f4f59] dark:text-[#dff0f2] rounded-full text-xs font-semibold flex items-center gap-2 border border-[#bcd9de] dark:border-[#335a64]">
+<i class="fa-regular fa-clock text-[#1f7a88]"></i>
 <span id="header-clock">00:00</span>
 </div>
 </div>
 </header>
 <div id="content-container" class="flex-1 min-h-0 overflow-y-auto p-4 md:p-6 lg:p-8">
 <section id="tab-dashboard" class="tab-content space-y-6 max-w-7xl mx-auto">
-<div class="relative bg-gradient-to-r from-[#e6f2f4] via-[#cfe5e8] to-[#bfe0e5] dark:from-[#234048] dark:via-[#2c505a] dark:to-[#2a4a50] rounded-3xl p-6 md:p-8 text-[#1f4f59] dark:text-[#e6f4f6] shadow-sm border border-[#cfe5e8] dark:border-[#335a64] overflow-hidden">
+<div class="relative bg-gradient-to-r from-[#e6f2f4] via-[#bcd9de] to-[#a9d0d7] dark:from-[#234048] dark:via-[#2c505a] dark:to-[#2a4a50] rounded-3xl p-6 md:p-8 text-[#1f4f59] dark:text-[#e6f4f6] shadow-sm border border-[#bcd9de] dark:border-[#335a64] overflow-hidden">
 <div class="absolute -right-10 -bottom-10 opacity-10 text-[180px] pointer-events-none font-serif italic">Bloom</div>
 <div class="relative z-10 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
 <div>
-<span class="text-[#6a979f] dark:text-[#9ebfc5] text-xs font-semibold uppercase tracking-widest" id="dash-date"></span>
+<span class="text-[#4f7f89] dark:text-[#9ebfc5] text-xs font-semibold uppercase tracking-widest" id="dash-date"></span>
 <h2 class="text-3xl md:text-4xl font-serif font-bold mt-1 tracking-wide" id="dash-greeting">Seja bem-vindo 🔹</h2>
 <p class="text-[#3d6b75] dark:text-[#bcd6da] text-sm mt-1 font-serif italic">Que seu dia seja produtivo e repleto de conquistas incríveis.</p>
 </div>
-<button onclick="switchTab('notebooks')" class="px-5 py-3 bg-white dark:bg-[#17292e] text-[#1f4f59] dark:text-[#dff0f2] rounded-2xl font-serif font-bold text-sm shadow-md hover:bg-[#e6f2f4] dark:hover:bg-[#234048] transition flex items-center gap-2 border border-[#cfe5e8] dark:border-[#2a4a53]">
-<i class="fa-solid fa-plus text-[#3a98a4]"></i> Abrir Cadernos
+<button onclick="switchTab('notebooks')" class="px-5 py-3 bg-white dark:bg-[#17292e] text-[#1f4f59] dark:text-[#dff0f2] rounded-2xl font-serif font-bold text-sm shadow-md hover:bg-[#e6f2f4] dark:hover:bg-[#234048] transition flex items-center gap-2 border border-[#bcd9de] dark:border-[#2a4a53]">
+<i class="fa-solid fa-plus text-[#1f7a88]"></i> Abrir Cadernos
 </button>
 </div>
 </div>
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-<div class="bg-white dark:bg-[#17292e] p-6 rounded-3xl border border-[#cfe5e8] dark:border-[#2a4a53] shadow-sm flex flex-col justify-between glow-soft">
+<div class="bg-white dark:bg-[#17292e] p-6 rounded-3xl border border-[#bcd9de] dark:border-[#2a4a53] shadow-sm flex flex-col justify-between glow-soft">
 <div>
 <div class="flex justify-between items-center mb-4">
-<h3 class="font-serif font-bold text-lg text-[#1f4f59] dark:text-[#dff0f2] flex items-center gap-2"><i class="fa-solid fa-heart text-[#3a98a4]"></i> Prioridades de Hoje</h3>
-<span class="text-xs bg-[#e6f2f4] dark:bg-[#234048] text-[#3a98a4] font-bold px-3 py-1 rounded-full" id="dash-tasks-count">0/0</span>
+<h3 class="font-serif font-bold text-lg text-[#1f4f59] dark:text-[#dff0f2] flex items-center gap-2"><i class="fa-solid fa-heart text-[#1f7a88]"></i> Prioridades de Hoje</h3>
+<span class="text-xs bg-[#e6f2f4] dark:bg-[#234048] text-[#1f7a88] font-bold px-3 py-1 rounded-full" id="dash-tasks-count">0/0</span>
 </div>
 <div class="mb-4">
-<div class="flex justify-between text-xs text-[#6a979f] mb-1 font-medium"><span>Progresso das Tarefas</span><span id="dash-progress-percent">0%</span></div>
+<div class="flex justify-between text-xs text-[#4f7f89] mb-1 font-medium"><span>Progresso das Tarefas</span><span id="dash-progress-percent">0%</span></div>
 <div class="w-full h-2 bg-[#e6f2f4] dark:bg-[#234048] rounded-full overflow-hidden">
-<div id="dash-progress-bar" class="h-full bg-gradient-to-r from-[#3a98a4] to-[#7cc4cb] transition-all duration-300 w-0"></div>
+<div id="dash-progress-bar" class="h-full bg-gradient-to-r from-[#1f7a88] to-[#4aa3ad] transition-all duration-300 w-0"></div>
 </div>
 </div>
 <div id="dash-tasks-list" class="space-y-2.5 max-h-48 overflow-y-auto pr-1"></div>
 </div>
 </div>
-<div class="bg-white dark:bg-[#17292e] p-6 rounded-3xl border border-[#cfe5e8] dark:border-[#2a4a53] shadow-sm glow-soft">
+<div class="bg-white dark:bg-[#17292e] p-6 rounded-3xl border border-[#bcd9de] dark:border-[#2a4a53] shadow-sm glow-soft">
 <div class="flex justify-between items-center mb-4">
-<h3 class="font-serif font-bold text-lg text-[#1f4f59] dark:text-[#dff0f2] flex items-center gap-2"><i class="fa-solid fa-calendar-days text-[#3a98a4]"></i> Calendário</h3>
+<h3 class="font-serif font-bold text-lg text-[#1f4f59] dark:text-[#dff0f2] flex items-center gap-2"><i class="fa-solid fa-calendar-days text-[#1f7a88]"></i> Calendário</h3>
 <div class="flex items-center gap-1">
-<button onclick="shiftCalendar(-1)" class="w-7 h-7 rounded-lg text-[#6a979f] hover:bg-[#e6f2f4] dark:hover:bg-[#234048]" aria-label="Mês anterior"><i class="fa-solid fa-chevron-left text-[10px]"></i></button>
-<span id="calendar-month-year" class="text-xs font-serif italic text-[#6a979f] min-w-[96px] text-center whitespace-nowrap"></span>
-<button onclick="shiftCalendar(1)" class="w-7 h-7 rounded-lg text-[#6a979f] hover:bg-[#e6f2f4] dark:hover:bg-[#234048]" aria-label="Próximo mês"><i class="fa-solid fa-chevron-right text-[10px]"></i></button>
+<button onclick="shiftCalendar(-1)" class="w-7 h-7 rounded-lg text-[#4f7f89] hover:bg-[#e6f2f4] dark:hover:bg-[#234048]" aria-label="Mês anterior"><i class="fa-solid fa-chevron-left text-[10px]"></i></button>
+<span id="calendar-month-year" class="text-xs font-serif italic text-[#4f7f89] min-w-[96px] text-center whitespace-nowrap"></span>
+<button onclick="shiftCalendar(1)" class="w-7 h-7 rounded-lg text-[#4f7f89] hover:bg-[#e6f2f4] dark:hover:bg-[#234048]" aria-label="Próximo mês"><i class="fa-solid fa-chevron-right text-[10px]"></i></button>
 </div>
 </div>
-<div class="grid grid-cols-7 gap-1 text-center text-[11px] font-bold text-[#6a979f] mb-2 font-serif">
+<div class="grid grid-cols-7 gap-1 text-center text-[11px] font-bold text-[#4f7f89] mb-2 font-serif">
 <div>Dom</div><div>Seg</div><div>Ter</div><div>Qua</div><div>Qui</div><div>Sex</div><div>Sáb</div>
 </div>
 <div id="calendar-days-grid" class="grid grid-cols-7 gap-1 text-center text-xs"></div>
-<p class="text-[10px] text-[#6a979f] mt-3 flex items-center gap-1.5"><span class="inline-block w-1.5 h-1.5 rounded-full bg-[#3a98a4]"></span> dia com tarefa pendente</p>
+<p class="text-[10px] text-[#4f7f89] mt-3 flex items-center gap-1.5"><span class="inline-block w-1.5 h-1.5 rounded-full bg-[#1f7a88]"></span> dia com tarefa pendente</p>
 </div>
-<div class="bg-white dark:bg-[#17292e] p-6 rounded-3xl border border-[#cfe5e8] dark:border-[#2a4a53] shadow-sm flex flex-col justify-between glow-soft">
+<div class="bg-white dark:bg-[#17292e] p-6 rounded-3xl border border-[#bcd9de] dark:border-[#2a4a53] shadow-sm flex flex-col justify-between glow-soft">
 <div>
-<h3 class="font-serif font-bold text-lg text-[#1f4f59] dark:text-[#dff0f2] flex items-center gap-2 mb-4"><i class="fa-solid fa-book-bookmark text-[#3a98a4]"></i> Cadernos Recentes</h3>
+<h3 class="font-serif font-bold text-lg text-[#1f4f59] dark:text-[#dff0f2] flex items-center gap-2 mb-4"><i class="fa-solid fa-book-bookmark text-[#1f7a88]"></i> Cadernos Recentes</h3>
 <div id="dash-recent-notebooks" class="space-y-3"></div>
 </div>
 <div class="mt-4 pt-4 border-t border-[#e6f2f4] dark:border-[#234048] flex gap-2">
-<button onclick="switchTab('studies')" class="flex-1 py-2.5 bg-[#e6f2f4] dark:bg-[#234048] text-xs font-semibold rounded-xl text-[#1f4f59] dark:text-[#dff0f2] hover:bg-[#cfe5e8] transition flex items-center justify-center gap-1.5"><i class="fa-solid fa-graduation-cap text-[#3a98a4]"></i> Estudos</button>
-<button onclick="switchTab('planning')" class="flex-1 py-2.5 bg-[#e6f2f4] dark:bg-[#234048] text-xs font-semibold rounded-xl text-[#1f4f59] dark:text-[#dff0f2] hover:bg-[#cfe5e8] transition flex items-center justify-center gap-1.5"><i class="fa-solid fa-check text-[#3a98a4]"></i> Hábitos</button>
+<button onclick="switchTab('studies')" class="flex-1 py-2.5 bg-[#e6f2f4] dark:bg-[#234048] text-xs font-semibold rounded-xl text-[#1f4f59] dark:text-[#dff0f2] hover:bg-[#bcd9de] transition flex items-center justify-center gap-1.5"><i class="fa-solid fa-graduation-cap text-[#1f7a88]"></i> Estudos</button>
+<button onclick="switchTab('planning')" class="flex-1 py-2.5 bg-[#e6f2f4] dark:bg-[#234048] text-xs font-semibold rounded-xl text-[#1f4f59] dark:text-[#dff0f2] hover:bg-[#bcd9de] transition flex items-center justify-center gap-1.5"><i class="fa-solid fa-check text-[#1f7a88]"></i> Hábitos</button>
 </div>
 </div>
-<div class="bg-white dark:bg-[#17292e] p-6 rounded-3xl border border-[#cfe5e8] dark:border-[#2a4a53] shadow-sm md:col-span-2 glow-soft">
-<h3 class="font-serif font-bold text-lg text-[#1f4f59] dark:text-[#dff0f2] flex items-center gap-2 mb-4"><i class="fa-solid fa-wand-magic-sparkles text-[#3a98a4]"></i> Hábitos de Autocuidado &amp; Rotina</h3>
+<div class="bg-white dark:bg-[#17292e] p-6 rounded-3xl border border-[#bcd9de] dark:border-[#2a4a53] shadow-sm md:col-span-2 glow-soft">
+<h3 class="font-serif font-bold text-lg text-[#1f4f59] dark:text-[#dff0f2] flex items-center gap-2 mb-4"><i class="fa-solid fa-wand-magic-sparkles text-[#1f7a88]"></i> Hábitos de Autocuidado &amp; Rotina</h3>
 <div id="dash-habits-container" class="grid grid-cols-1 sm:grid-cols-2 gap-3"></div>
 </div>
-<div class="bg-white dark:bg-[#17292e] p-6 rounded-3xl border border-[#cfe5e8] dark:border-[#2a4a53] shadow-sm glow-soft">
-<h3 class="font-serif font-bold text-lg text-[#1f4f59] dark:text-[#dff0f2] flex items-center gap-2 mb-4"><i class="fa-solid fa-crown text-[#3a98a4]"></i> Metas Principais</h3>
+<div class="bg-white dark:bg-[#17292e] p-6 rounded-3xl border border-[#bcd9de] dark:border-[#2a4a53] shadow-sm glow-soft">
+<h3 class="font-serif font-bold text-lg text-[#1f4f59] dark:text-[#dff0f2] flex items-center gap-2 mb-4"><i class="fa-solid fa-crown text-[#1f7a88]"></i> Metas Principais</h3>
 <div id="dash-goals-summary" class="space-y-4"></div>
 </div>
 </div>
@@ -237,22 +237,22 @@ input[type=range] { accent-color: #3a98a4; }
 <div class="flex justify-between items-center">
 <div>
 <h2 class="text-3xl font-serif font-bold text-[#1f4f59] dark:text-[#dff0f2]">Meus Cadernos Digitais</h2>
-<p class="text-xs text-[#6a979f]">Escreva, desenhe e crie resumos com suporte a toque e Apple Pencil.</p>
+<p class="text-xs text-[#4f7f89]">Escreva, desenhe e crie resumos com suporte a toque e Apple Pencil.</p>
 </div>
-<button onclick="openNewNotebookModal()" class="px-5 py-2.5 bg-gradient-to-r from-[#3a98a4] to-[#7cc4cb] text-white rounded-2xl text-sm font-serif font-bold shadow-md hover:opacity-90 transition flex items-center gap-2"><i class="fa-solid fa-plus"></i> Novo Caderno</button>
+<button onclick="openNewNotebookModal()" class="px-5 py-2.5 bg-gradient-to-r from-[#1f7a88] to-[#4aa3ad] text-white rounded-2xl text-sm font-serif font-bold shadow-md hover:opacity-90 transition flex items-center gap-2"><i class="fa-solid fa-plus"></i> Novo Caderno</button>
 </div>
 <div id="notebooks-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6"></div>
 </div>
 <div id="notebook-editor" class="hidden flex-1 min-h-0 flex flex-col h-full -m-4 md:-m-6 lg:-m-8">
-<div class="bg-white/90 dark:bg-[#17292e]/90 backdrop-blur-md border-b border-[#cfe5e8] dark:border-[#2a4a53] p-3 flex flex-wrap items-center justify-between gap-3 shadow-sm z-10">
+<div class="bg-white/90 dark:bg-[#17292e]/90 backdrop-blur-md border-b border-[#bcd9de] dark:border-[#2a4a53] p-3 flex flex-wrap items-center justify-between gap-3 shadow-sm z-10">
 <div class="flex items-center gap-3">
-<button onclick="closeNotebook()" class="p-2 hover:bg-[#e6f2f4] dark:hover:bg-[#234048] rounded-xl text-[#6a979f] transition" title="Voltar aos cadernos"><i class="fa-solid fa-arrow-left"></i></button>
+<button onclick="closeNotebook()" class="p-2 hover:bg-[#e6f2f4] dark:hover:bg-[#234048] rounded-xl text-[#4f7f89] transition" title="Voltar aos cadernos"><i class="fa-solid fa-arrow-left"></i></button>
 <div>
 <h3 id="current-notebook-title" class="font-serif font-bold text-base text-[#1f4f59] dark:text-[#dff0f2]">Título do Caderno</h3>
-<span id="current-page-indicator" class="text-[10px] text-[#6a979f]">Página 1 de 1</span>
+<span id="current-page-indicator" class="text-[10px] text-[#4f7f89]">Página 1 de 1</span>
 </div>
 </div>
-<div class="flex items-center gap-1.5 bg-[#e6f2f4] dark:bg-[#1d343a] p-1.5 rounded-2xl border border-[#cfe5e8] dark:border-[#2a4a53]">
+<div class="flex items-center gap-1.5 bg-[#e6f2f4] dark:bg-[#1d343a] p-1.5 rounded-2xl border border-[#bcd9de] dark:border-[#2a4a53]">
 <button onclick="setTool('pen')" id="tool-pen" class="tool-btn px-3 py-1.5 rounded-xl text-xs font-semibold flex items-center gap-1.5 text-[#3d6b75] dark:text-[#a9c8ce]"><i class="fa-solid fa-pen-nib"></i> Caneta</button>
 <button onclick="setTool('highlighter')" id="tool-highlighter" class="tool-btn px-3 py-1.5 rounded-xl text-xs font-semibold flex items-center gap-1.5 text-[#3d6b75] dark:text-[#a9c8ce]"><i class="fa-solid fa-highlighter"></i> Marca-Texto</button>
 <button onclick="setTool('text')" id="tool-text" class="tool-btn px-3 py-1.5 rounded-xl text-xs font-semibold flex items-center gap-1.5 text-[#3d6b75] dark:text-[#a9c8ce]"><i class="fa-solid fa-font"></i> Texto</button>
@@ -262,12 +262,12 @@ input[type=range] { accent-color: #3a98a4; }
 <div class="flex items-center gap-3 flex-wrap">
 <div class="flex items-center gap-1.5" id="pen-colors">
 <button data-color="#1f4f59" onclick="setPenColor('#1f4f59')" class="pen-swatch w-6 h-6 rounded-full bg-[#1f4f59] border-2 border-white shadow-sm" aria-label="Grafite"></button>
-<button data-color="#3a98a4" onclick="setPenColor('#3a98a4')" class="pen-swatch w-6 h-6 rounded-full bg-[#3a98a4] border-2 border-white shadow-sm" aria-label="Petróleo"></button>
+<button data-color="#1f7a88" onclick="setPenColor('#1f7a88')" class="pen-swatch w-6 h-6 rounded-full bg-[#1f7a88] border-2 border-white shadow-sm" aria-label="Petróleo"></button>
 <button data-color="#93c5fd" onclick="setPenColor('#93c5fd')" class="pen-swatch w-6 h-6 rounded-full bg-[#93c5fd] border-2 border-white shadow-sm" aria-label="Azul"></button>
 <button data-color="#dfd0b5" onclick="setPenColor('#dfd0b5')" class="pen-swatch w-6 h-6 rounded-full bg-[#dfd0b5] border-2 border-white shadow-sm" aria-label="Areia"></button>
 <button data-color="#86efac" onclick="setPenColor('#86efac')" class="pen-swatch w-6 h-6 rounded-full bg-[#86efac] border-2 border-white shadow-sm" aria-label="Verde"></button>
 </div>
-<select onchange="changePagePaper(this.value)" id="paper-type-select" class="bg-[#e6f2f4] dark:bg-[#1d343a] text-xs font-semibold rounded-xl px-3 py-1.5 border border-[#cfe5e8] dark:border-[#2a4a53] text-[#1f4f59] dark:text-[#dff0f2] focus:outline-none">
+<select onchange="changePagePaper(this.value)" id="paper-type-select" class="bg-[#e6f2f4] dark:bg-[#1d343a] text-xs font-semibold rounded-xl px-3 py-1.5 border border-[#bcd9de] dark:border-[#2a4a53] text-[#1f4f59] dark:text-[#dff0f2] focus:outline-none">
 <option value="lined">Pautada Pastel</option>
 <option value="margin">Margem Rosa</option>
 <option value="grid">Quadriculada</option>
@@ -276,19 +276,19 @@ input[type=range] { accent-color: #3a98a4; }
 <option value="blank">Branca</option>
 </select>
 <div class="flex items-center gap-1">
-<button onclick="prevPage()" class="p-2 hover:bg-[#e6f2f4] dark:hover:bg-[#234048] rounded-xl text-xs text-[#6a979f]" aria-label="Página anterior"><i class="fa-solid fa-chevron-left"></i></button>
-<button onclick="nextPage()" class="p-2 hover:bg-[#e6f2f4] dark:hover:bg-[#234048] rounded-xl text-xs text-[#6a979f]" aria-label="Próxima página"><i class="fa-solid fa-chevron-right"></i></button>
-<button onclick="addNewPage()" class="p-2 hover:bg-[#e6f2f4] dark:hover:bg-[#234048] rounded-xl text-xs text-[#3a98a4] font-bold" title="Nova página"><i class="fa-solid fa-plus"></i></button>
-<button onclick="deleteCurrentPage()" class="p-2 hover:bg-[#e6f2f4] dark:hover:bg-[#234048] rounded-xl text-xs text-[#6a979f]" title="Excluir página"><i class="fa-regular fa-trash-can"></i></button>
-<button onclick="exportNotebookPDF()" class="px-3 py-1.5 bg-[#e6f2f4] dark:bg-[#1d343a] hover:bg-[#cfe5e8] text-xs rounded-xl font-semibold text-[#1f4f59] dark:text-[#dff0f2] transition border border-[#cfe5e8] dark:border-[#2a4a53]" title="Exportar caderno em PDF">
+<button onclick="prevPage()" class="p-2 hover:bg-[#e6f2f4] dark:hover:bg-[#234048] rounded-xl text-xs text-[#4f7f89]" aria-label="Página anterior"><i class="fa-solid fa-chevron-left"></i></button>
+<button onclick="nextPage()" class="p-2 hover:bg-[#e6f2f4] dark:hover:bg-[#234048] rounded-xl text-xs text-[#4f7f89]" aria-label="Próxima página"><i class="fa-solid fa-chevron-right"></i></button>
+<button onclick="addNewPage()" class="p-2 hover:bg-[#e6f2f4] dark:hover:bg-[#234048] rounded-xl text-xs text-[#1f7a88] font-bold" title="Nova página"><i class="fa-solid fa-plus"></i></button>
+<button onclick="deleteCurrentPage()" class="p-2 hover:bg-[#e6f2f4] dark:hover:bg-[#234048] rounded-xl text-xs text-[#4f7f89]" title="Excluir página"><i class="fa-regular fa-trash-can"></i></button>
+<button onclick="exportNotebookPDF()" class="px-3 py-1.5 bg-[#e6f2f4] dark:bg-[#1d343a] hover:bg-[#bcd9de] text-xs rounded-xl font-semibold text-[#1f4f59] dark:text-[#dff0f2] transition border border-[#bcd9de] dark:border-[#2a4a53]" title="Exportar caderno em PDF">
 <i class="fa-solid fa-file-pdf text-rose-400"></i> PDF
 </button>
 </div>
 </div>
 </div>
-<div id="paper-area" class="flex-1 min-h-0 bg-[#cfe5e8]/40 dark:bg-[#0e1a1d] p-4 overflow-auto flex justify-center items-start">
+<div id="paper-area" class="flex-1 min-h-0 bg-[#bcd9de]/40 dark:bg-[#0e1a1d] p-4 overflow-auto flex justify-center items-start">
 <div id="paper-wrap" class="shrink-0" style="width:800px;height:1100px">
-<div id="paper-container" class="relative bg-white shadow-2xl rounded-lg overflow-hidden ring-1 ring-[#cfe5e8] paper-lined" style="width:800px;height:1100px;transform-origin:0 0">
+<div id="paper-container" class="relative bg-white shadow-2xl rounded-lg overflow-hidden ring-1 ring-[#bcd9de] paper-lined" style="width:800px;height:1100px;transform-origin:0 0">
 <canvas id="notebook-canvas" class="absolute inset-0 z-10" style="width:100%;height:100%"></canvas>
 <div id="text-overlay-layer" class="absolute inset-0 z-20 pointer-events-none"></div>
 </div>
@@ -300,16 +300,16 @@ input[type=range] { accent-color: #3a98a4; }
 <div class="flex justify-between items-center">
 <div>
 <h2 class="text-3xl font-serif font-bold text-[#1f4f59] dark:text-[#dff0f2]">Estudos &amp; Revisões</h2>
-<p class="text-xs text-[#6a979f]">Organize suas disciplinas, progresso de cursos e matérias acumuladas.</p>
+<p class="text-xs text-[#4f7f89]">Organize suas disciplinas, progresso de cursos e matérias acumuladas.</p>
 </div>
-<button onclick="openSubjectModal()" class="px-5 py-2.5 bg-gradient-to-r from-[#3a98a4] to-[#7cc4cb] text-white rounded-2xl text-sm font-serif font-bold shadow-md hover:opacity-90 transition flex items-center gap-2"><i class="fa-solid fa-plus"></i> Nova Disciplina</button>
+<button onclick="openSubjectModal()" class="px-5 py-2.5 bg-gradient-to-r from-[#1f7a88] to-[#4aa3ad] text-white rounded-2xl text-sm font-serif font-bold shadow-md hover:opacity-90 transition flex items-center gap-2"><i class="fa-solid fa-plus"></i> Nova Disciplina</button>
 </div>
 <div id="subjects-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
-<div class="bg-white dark:bg-[#17292e] p-6 rounded-3xl border border-[#cfe5e8] dark:border-[#2a4a53] shadow-sm glow-soft">
-<h3 class="text-xl font-serif font-bold mb-4 text-[#1f4f59] dark:text-[#dff0f2] flex items-center gap-2"><i class="fa-solid fa-lightbulb text-[#3a98a4]"></i> Dúvidas &amp; Tópicos para Revisão Espaçada</h3>
+<div class="bg-white dark:bg-[#17292e] p-6 rounded-3xl border border-[#bcd9de] dark:border-[#2a4a53] shadow-sm glow-soft">
+<h3 class="text-xl font-serif font-bold mb-4 text-[#1f4f59] dark:text-[#dff0f2] flex items-center gap-2"><i class="fa-solid fa-lightbulb text-[#1f7a88]"></i> Dúvidas &amp; Tópicos para Revisão Espaçada</h3>
 <div class="flex gap-2 mb-4">
-<input type="text" id="doubt-input" autocomplete="off" onkeydown="if(event.key==='Enter')addDoubt()" placeholder="Digite uma dúvida ou conteúdo para revisar..." class="flex-1 bg-[#e6f2f4] dark:bg-[#1d343a] px-4 py-3 rounded-2xl text-xs border border-[#cfe5e8] dark:border-[#2a4a53] focus:outline-none focus:ring-2 focus:ring-[#3a98a4] text-[#1f4f59] dark:text-[#dff0f2]">
-<button onclick="addDoubt()" class="px-5 py-3 bg-[#3a98a4] hover:bg-[#2f8490] text-white rounded-2xl font-serif font-bold text-xs transition">Adicionar</button>
+<input type="text" id="doubt-input" autocomplete="off" onkeydown="if(event.key==='Enter')addDoubt()" placeholder="Digite uma dúvida ou conteúdo para revisar..." class="flex-1 bg-[#e6f2f4] dark:bg-[#1d343a] px-4 py-3 rounded-2xl text-xs border border-[#bcd9de] dark:border-[#2a4a53] focus:outline-none focus:ring-2 focus:ring-[#1f7a88] text-[#1f4f59] dark:text-[#dff0f2]">
+<button onclick="addDoubt()" class="px-5 py-3 bg-[#1f7a88] hover:bg-[#176975] text-white rounded-2xl font-serif font-bold text-xs transition">Adicionar</button>
 </div>
 <div id="doubts-list" class="space-y-2.5"></div>
 </div>
@@ -318,18 +318,18 @@ input[type=range] { accent-color: #3a98a4; }
 <div class="flex justify-between items-center">
 <div>
 <h2 class="text-3xl font-serif font-bold text-[#1f4f59] dark:text-[#dff0f2]">Tarefas &amp; Hábitos</h2>
-<p class="text-xs text-[#6a979f]">Mantenha sua rotina organizada com leveza e equilíbrio.</p>
+<p class="text-xs text-[#4f7f89]">Mantenha sua rotina organizada com leveza e equilíbrio.</p>
 </div>
-<button onclick="openTaskModal()" class="px-5 py-2.5 bg-gradient-to-r from-[#3a98a4] to-[#7cc4cb] text-white rounded-2xl text-sm font-serif font-bold shadow-md hover:opacity-90 transition flex items-center gap-2"><i class="fa-solid fa-plus"></i> Nova Tarefa</button>
+<button onclick="openTaskModal()" class="px-5 py-2.5 bg-gradient-to-r from-[#1f7a88] to-[#4aa3ad] text-white rounded-2xl text-sm font-serif font-bold shadow-md hover:opacity-90 transition flex items-center gap-2"><i class="fa-solid fa-plus"></i> Nova Tarefa</button>
 </div>
 <div id="tasks-list-full" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
-<div class="bg-white dark:bg-[#17292e] p-6 rounded-3xl border border-[#cfe5e8] dark:border-[#2a4a53] shadow-sm mt-8 glow-soft">
+<div class="bg-white dark:bg-[#17292e] p-6 rounded-3xl border border-[#bcd9de] dark:border-[#2a4a53] shadow-sm mt-8 glow-soft">
 <div class="flex justify-between items-center mb-6">
 <div>
-<h3 class="text-xl font-serif font-bold text-[#1f4f59] dark:text-[#dff0f2] flex items-center gap-2"><i class="fa-solid fa-seedling text-[#3a98a4]"></i> Monitor de Hábitos Diários</h3>
-<p class="text-xs text-[#6a979f]">Cultive hábitos saudáveis todos os dias.</p>
+<h3 class="text-xl font-serif font-bold text-[#1f4f59] dark:text-[#dff0f2] flex items-center gap-2"><i class="fa-solid fa-seedling text-[#1f7a88]"></i> Monitor de Hábitos Diários</h3>
+<p class="text-xs text-[#4f7f89]">Cultive hábitos saudáveis todos os dias.</p>
 </div>
-<button onclick="openHabitModal()" class="px-4 py-2 bg-[#e6f2f4] dark:bg-[#234048] text-[#1f4f59] dark:text-[#dff0f2] rounded-xl text-xs font-serif font-bold hover:bg-[#cfe5e8] transition flex items-center gap-2"><i class="fa-solid fa-plus text-[#3a98a4]"></i> Novo Hábito</button>
+<button onclick="openHabitModal()" class="px-4 py-2 bg-[#e6f2f4] dark:bg-[#234048] text-[#1f4f59] dark:text-[#dff0f2] rounded-xl text-xs font-serif font-bold hover:bg-[#bcd9de] transition flex items-center gap-2"><i class="fa-solid fa-plus text-[#1f7a88]"></i> Novo Hábito</button>
 </div>
 <div id="habits-list-full" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
 </div>
@@ -338,57 +338,57 @@ input[type=range] { accent-color: #3a98a4; }
 <div class="flex justify-between items-center">
 <div>
 <h2 class="text-3xl font-serif font-bold text-[#1f4f59] dark:text-[#dff0f2]">Metas &amp; Visão de Futuro</h2>
-<p class="text-xs text-[#6a979f]">Seus objetivos acadêmicos, pessoais e profissionais.</p>
+<p class="text-xs text-[#4f7f89]">Seus objetivos acadêmicos, pessoais e profissionais.</p>
 </div>
-<button onclick="openGoalModal()" class="px-5 py-2.5 bg-gradient-to-r from-[#3a98a4] to-[#7cc4cb] text-white rounded-2xl text-sm font-serif font-bold shadow-md hover:opacity-90 transition flex items-center gap-2"><i class="fa-solid fa-plus"></i> Nova Meta</button>
+<button onclick="openGoalModal()" class="px-5 py-2.5 bg-gradient-to-r from-[#1f7a88] to-[#4aa3ad] text-white rounded-2xl text-sm font-serif font-bold shadow-md hover:opacity-90 transition flex items-center gap-2"><i class="fa-solid fa-plus"></i> Nova Meta</button>
 </div>
 <div id="goals-container" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div>
 </section>
 <section id="tab-ai-assistant" class="tab-content hidden h-full flex flex-col max-w-5xl mx-auto">
-<div class="bg-white dark:bg-[#17292e] rounded-3xl p-6 border border-[#cfe5e8] dark:border-[#2a4a53] shadow-sm flex flex-col h-full min-h-0 glow-soft">
+<div class="bg-white dark:bg-[#17292e] rounded-3xl p-6 border border-[#bcd9de] dark:border-[#2a4a53] shadow-sm flex flex-col h-full min-h-0 glow-soft">
 <div class="flex items-center justify-between border-b border-[#e6f2f4] dark:border-[#234048] pb-4 mb-4">
 <div class="flex items-center gap-3">
-<div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-[#3a98a4] to-[#7cc4cb] text-white flex items-center justify-center text-xl shadow-md"><i class="fa-solid fa-robot"></i></div>
+<div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-[#1f7a88] to-[#4aa3ad] text-white flex items-center justify-center text-xl shadow-md"><i class="fa-solid fa-robot"></i></div>
 <div>
 <h3 class="font-serif font-bold text-xl text-[#1f4f59] dark:text-[#dff0f2]">Atlas — Seu Assistente IA</h3>
-<p class="text-xs text-[#6a979f]">Tire dúvidas, peça resumos e crie cronogramas.</p>
+<p class="text-xs text-[#4f7f89]">Tire dúvidas, peça resumos e crie cronogramas.</p>
 </div>
 </div>
-<span class="px-3 py-1 bg-[#e6f2f4] dark:bg-[#234048] text-[#3a98a4] text-xs font-bold rounded-full border border-[#cfe5e8] dark:border-[#2a4a53]">Online ✨</span>
+<span class="px-3 py-1 bg-[#e6f2f4] dark:bg-[#234048] text-[#1f7a88] text-xs font-bold rounded-full border border-[#bcd9de] dark:border-[#2a4a53]">Online ✨</span>
 </div>
 <div id="ai-messages-container" class="flex-1 min-h-0 overflow-y-auto space-y-4 pr-2 mb-4">
 <div class="flex gap-3 items-start">
-<div class="w-8 h-8 rounded-full bg-[#e6f2f4] dark:bg-[#234048] text-[#3a98a4] flex items-center justify-center text-xs shrink-0 mt-1"><i class="fa-solid fa-star"></i></div>
-<div class="bg-[#e6f2f4]/60 dark:bg-[#1d343a] p-4 rounded-2xl max-w-lg text-xs leading-relaxed text-[#1f4f59] dark:text-[#dff0f2] border border-[#cfe5e8] dark:border-[#2a4a53]">
+<div class="w-8 h-8 rounded-full bg-[#e6f2f4] dark:bg-[#234048] text-[#1f7a88] flex items-center justify-center text-xs shrink-0 mt-1"><i class="fa-solid fa-star"></i></div>
+<div class="bg-[#e6f2f4]/60 dark:bg-[#1d343a] p-4 rounded-2xl max-w-lg text-xs leading-relaxed text-[#1f4f59] dark:text-[#dff0f2] border border-[#bcd9de] dark:border-[#2a4a53]">
 E aí! Sou o <b>Atlas</b>, seu assistente pessoal de IA. Como posso te ajudar hoje na sua rotina de organização ou estudos?
 <div class="mt-3 flex flex-wrap gap-2">
-<button onclick="sendQuickAiPrompt('Como posso estruturar minha rotina de estudos de hoje?')" class="px-3 py-1 bg-white dark:bg-[#2c505a] rounded-xl text-[11px] text-[#3a98a4] font-medium border border-[#cfe5e8] dark:border-[#2a4a53] hover:bg-[#e6f2f4]">📅 Organizar dia de estudos</button>
-<button onclick="sendQuickAiPrompt('Me dê dicas para melhorar meu foco no iPad.')" class="px-3 py-1 bg-white dark:bg-[#2c505a] rounded-xl text-[11px] text-[#3a98a4] font-medium border border-[#cfe5e8] dark:border-[#2a4a53] hover:bg-[#e6f2f4]">🧠 Dicas de foco</button>
-<button onclick="sendQuickAiPrompt('Como exporto meus cadernos em PDF?')" class="px-3 py-1 bg-white dark:bg-[#2c505a] rounded-xl text-[11px] text-[#3a98a4] font-medium border border-[#cfe5e8] dark:border-[#2a4a53] hover:bg-[#e6f2f4]">📄 Como exportar PDF</button>
+<button onclick="sendQuickAiPrompt('Como posso estruturar minha rotina de estudos de hoje?')" class="px-3 py-1 bg-white dark:bg-[#2c505a] rounded-xl text-[11px] text-[#1f7a88] font-medium border border-[#bcd9de] dark:border-[#2a4a53] hover:bg-[#e6f2f4]">📅 Organizar dia de estudos</button>
+<button onclick="sendQuickAiPrompt('Me dê dicas para melhorar meu foco no iPad.')" class="px-3 py-1 bg-white dark:bg-[#2c505a] rounded-xl text-[11px] text-[#1f7a88] font-medium border border-[#bcd9de] dark:border-[#2a4a53] hover:bg-[#e6f2f4]">🧠 Dicas de foco</button>
+<button onclick="sendQuickAiPrompt('Como exporto meus cadernos em PDF?')" class="px-3 py-1 bg-white dark:bg-[#2c505a] rounded-xl text-[11px] text-[#1f7a88] font-medium border border-[#bcd9de] dark:border-[#2a4a53] hover:bg-[#e6f2f4]">📄 Como exportar PDF</button>
 </div>
 </div>
 </div>
 </div>
-<div class="flex gap-2 bg-[#e6f2f4] dark:bg-[#1d343a] p-2 rounded-2xl border border-[#cfe5e8] dark:border-[#2a4a53]">
+<div class="flex gap-2 bg-[#e6f2f4] dark:bg-[#1d343a] p-2 rounded-2xl border border-[#bcd9de] dark:border-[#2a4a53]">
 <input type="text" id="ai-input" autocomplete="off" placeholder="Faça uma pergunta ou solicite ajuda para a IA..." onkeydown="if(event.key==='Enter')sendAiMessage()" class="flex-1 bg-transparent px-4 py-2 text-xs outline-none text-[#1f4f59] dark:text-[#dff0f2]">
-<button id="ai-send-btn" onclick="sendAiMessage()" class="px-5 py-2.5 bg-[#3a98a4] hover:bg-[#2f8490] text-white rounded-xl text-xs font-serif font-bold shadow transition flex items-center gap-2"><i class="fa-solid fa-paper-plane"></i> Enviar</button>
+<button id="ai-send-btn" onclick="sendAiMessage()" class="px-5 py-2.5 bg-[#1f7a88] hover:bg-[#176975] text-white rounded-xl text-xs font-serif font-bold shadow transition flex items-center gap-2"><i class="fa-solid fa-paper-plane"></i> Enviar</button>
 </div>
 </div>
 </section>
 </div>
 </main>
 <div id="modal-notebook" class="fixed inset-0 bg-[#2a4a53]/40 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
-<div class="bg-white dark:bg-[#17292e] w-full max-w-md p-6 rounded-3xl shadow-2xl border border-[#cfe5e8] dark:border-[#2a4a53]">
+<div class="bg-white dark:bg-[#17292e] w-full max-w-md p-6 rounded-3xl shadow-2xl border border-[#bcd9de] dark:border-[#2a4a53]">
 <h3 class="text-xl font-serif font-bold mb-4 text-[#1f4f59] dark:text-[#dff0f2]">Novo Caderno</h3>
 <div class="space-y-4">
 <div>
-<label class="text-xs font-semibold text-[#6a979f]">Nome do Caderno</label>
-<input type="text" id="nb-title-input" autocomplete="off" placeholder="Ex: Diário de Estudos, Resumos..." class="w-full mt-1 bg-[#e6f2f4] dark:bg-[#1d343a] px-4 py-3 rounded-2xl text-xs border border-[#cfe5e8] dark:border-[#2a4a53] text-[#1f4f59] dark:text-[#dff0f2] focus:outline-none">
+<label class="text-xs font-semibold text-[#4f7f89]">Nome do Caderno</label>
+<input type="text" id="nb-title-input" autocomplete="off" placeholder="Ex: Diário de Estudos, Resumos..." class="w-full mt-1 bg-[#e6f2f4] dark:bg-[#1d343a] px-4 py-3 rounded-2xl text-xs border border-[#bcd9de] dark:border-[#2a4a53] text-[#1f4f59] dark:text-[#dff0f2] focus:outline-none">
 </div>
 <div>
-<label class="text-xs font-semibold text-[#6a979f]">Cor da Capa Pastel</label>
+<label class="text-xs font-semibold text-[#4f7f89]">Cor da Capa Pastel</label>
 <div class="flex gap-3 mt-2" id="cover-options">
-<button onclick="selectCoverColor(this)" data-cover="bg-gradient-to-br from-[#cfe5e8] to-[#8fc3ca]" class="w-9 h-9 rounded-xl bg-gradient-to-br from-[#cfe5e8] to-[#8fc3ca] ring-2 ring-offset-2 ring-[#3a98a4] color-opt" aria-label="Petróleo"></button>
+<button onclick="selectCoverColor(this)" data-cover="bg-gradient-to-br from-[#bcd9de] to-[#6aaab4]" class="w-9 h-9 rounded-xl bg-gradient-to-br from-[#bcd9de] to-[#6aaab4] ring-2 ring-offset-2 ring-[#1f7a88] color-opt" aria-label="Petróleo"></button>
 <button onclick="selectCoverColor(this)" data-cover="bg-gradient-to-br from-[#dbeafe] to-[#93c5fd]" class="w-9 h-9 rounded-xl bg-gradient-to-br from-[#dbeafe] to-[#93c5fd] color-opt" aria-label="Azul"></button>
 <button onclick="selectCoverColor(this)" data-cover="bg-gradient-to-br from-[#f7f2e9] to-[#dfd0b5]" class="w-9 h-9 rounded-xl bg-gradient-to-br from-[#f7f2e9] to-[#dfd0b5] color-opt" aria-label="Areia"></button>
 <button onclick="selectCoverColor(this)" data-cover="bg-gradient-to-br from-[#dcfce7] to-[#86efac]" class="w-9 h-9 rounded-xl bg-gradient-to-br from-[#dcfce7] to-[#86efac] color-opt" aria-label="Verde"></button>
@@ -396,55 +396,55 @@ E aí! Sou o <b>Atlas</b>, seu assistente pessoal de IA. Como posso te ajudar ho
 </div>
 </div>
 <div class="flex justify-end gap-2 mt-6">
-<button onclick="closeModal('modal-notebook')" class="px-4 py-2 text-xs font-semibold text-[#6a979f] hover:bg-[#e6f2f4] rounded-xl">Cancelar</button>
-<button onclick="createNotebook()" class="px-5 py-2.5 bg-[#3a98a4] text-white rounded-xl text-xs font-serif font-bold shadow hover:bg-[#2f8490]">Criar Caderno</button>
+<button onclick="closeModal('modal-notebook')" class="px-4 py-2 text-xs font-semibold text-[#4f7f89] hover:bg-[#e6f2f4] rounded-xl">Cancelar</button>
+<button onclick="createNotebook()" class="px-5 py-2.5 bg-[#1f7a88] text-white rounded-xl text-xs font-serif font-bold shadow hover:bg-[#176975]">Criar Caderno</button>
 </div>
 </div>
 </div>
 <div id="modal-task" class="fixed inset-0 bg-[#2a4a53]/40 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
-<div class="bg-white dark:bg-[#17292e] w-full max-w-md p-6 rounded-3xl shadow-2xl border border-[#cfe5e8] dark:border-[#2a4a53]">
+<div class="bg-white dark:bg-[#17292e] w-full max-w-md p-6 rounded-3xl shadow-2xl border border-[#bcd9de] dark:border-[#2a4a53]">
 <h3 class="text-xl font-serif font-bold mb-4 text-[#1f4f59] dark:text-[#dff0f2]">Nova Tarefa</h3>
 <div class="space-y-4">
 <div>
-<label class="text-xs font-semibold text-[#6a979f]">Título</label>
-<input type="text" id="task-title-input" autocomplete="off" placeholder="Ex: Organizar resumo de Biologia" class="w-full mt-1 bg-[#e6f2f4] dark:bg-[#1d343a] px-4 py-3 rounded-2xl text-xs border border-[#cfe5e8] dark:border-[#2a4a53] text-[#1f4f59] dark:text-[#dff0f2] focus:outline-none">
+<label class="text-xs font-semibold text-[#4f7f89]">Título</label>
+<input type="text" id="task-title-input" autocomplete="off" placeholder="Ex: Organizar resumo de Biologia" class="w-full mt-1 bg-[#e6f2f4] dark:bg-[#1d343a] px-4 py-3 rounded-2xl text-xs border border-[#bcd9de] dark:border-[#2a4a53] text-[#1f4f59] dark:text-[#dff0f2] focus:outline-none">
 </div>
 <div class="grid grid-cols-2 gap-3">
 <div>
-<label class="text-xs font-semibold text-[#6a979f]">Prioridade</label>
-<select id="task-priority-input" class="w-full mt-1 bg-[#e6f2f4] dark:bg-[#1d343a] px-3 py-3 rounded-2xl text-xs border border-[#cfe5e8] dark:border-[#2a4a53] text-[#1f4f59] dark:text-[#dff0f2]">
+<label class="text-xs font-semibold text-[#4f7f89]">Prioridade</label>
+<select id="task-priority-input" class="w-full mt-1 bg-[#e6f2f4] dark:bg-[#1d343a] px-3 py-3 rounded-2xl text-xs border border-[#bcd9de] dark:border-[#2a4a53] text-[#1f4f59] dark:text-[#dff0f2]">
 <option value="Alta">Alta 🔥</option>
 <option value="Média" selected>Média ⚡</option>
 <option value="Baixa">Baixa 🌿</option>
 </select>
 </div>
 <div>
-<label class="text-xs font-semibold text-[#6a979f]">Data Limite</label>
-<input type="date" id="task-date-input" class="w-full mt-1 bg-[#e6f2f4] dark:bg-[#1d343a] px-3 py-3 rounded-2xl text-xs border border-[#cfe5e8] dark:border-[#2a4a53] text-[#1f4f59] dark:text-[#dff0f2]">
+<label class="text-xs font-semibold text-[#4f7f89]">Data Limite</label>
+<input type="date" id="task-date-input" class="w-full mt-1 bg-[#e6f2f4] dark:bg-[#1d343a] px-3 py-3 rounded-2xl text-xs border border-[#bcd9de] dark:border-[#2a4a53] text-[#1f4f59] dark:text-[#dff0f2]">
 </div>
 </div>
 </div>
 <div class="flex justify-end gap-2 mt-6">
-<button onclick="closeModal('modal-task')" class="px-4 py-2 text-xs font-semibold text-[#6a979f] hover:bg-[#e6f2f4] rounded-xl">Cancelar</button>
-<button onclick="createTask()" class="px-5 py-2.5 bg-[#3a98a4] text-white rounded-xl text-xs font-serif font-bold shadow hover:bg-[#2f8490]">Salvar Tarefa</button>
+<button onclick="closeModal('modal-task')" class="px-4 py-2 text-xs font-semibold text-[#4f7f89] hover:bg-[#e6f2f4] rounded-xl">Cancelar</button>
+<button onclick="createTask()" class="px-5 py-2.5 bg-[#1f7a88] text-white rounded-xl text-xs font-serif font-bold shadow hover:bg-[#176975]">Salvar Tarefa</button>
 </div>
 </div>
 </div>
 <div id="modal-subject" class="fixed inset-0 bg-[#2a4a53]/40 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
-<div class="bg-white dark:bg-[#17292e] w-full max-w-md p-6 rounded-3xl shadow-2xl border border-[#cfe5e8] dark:border-[#2a4a53]">
+<div class="bg-white dark:bg-[#17292e] w-full max-w-md p-6 rounded-3xl shadow-2xl border border-[#bcd9de] dark:border-[#2a4a53]">
 <h3 class="text-xl font-serif font-bold mb-4 text-[#1f4f59] dark:text-[#dff0f2]">Nova Disciplina</h3>
 <div class="space-y-4">
 <div>
-<label class="text-xs font-semibold text-[#6a979f]">Nome</label>
-<input type="text" id="subject-name-input" autocomplete="off" placeholder="Ex: Anatomia Humana" class="w-full mt-1 bg-[#e6f2f4] dark:bg-[#1d343a] px-4 py-3 rounded-2xl text-xs border border-[#cfe5e8] dark:border-[#2a4a53] text-[#1f4f59] dark:text-[#dff0f2] focus:outline-none">
+<label class="text-xs font-semibold text-[#4f7f89]">Nome</label>
+<input type="text" id="subject-name-input" autocomplete="off" placeholder="Ex: Anatomia Humana" class="w-full mt-1 bg-[#e6f2f4] dark:bg-[#1d343a] px-4 py-3 rounded-2xl text-xs border border-[#bcd9de] dark:border-[#2a4a53] text-[#1f4f59] dark:text-[#dff0f2] focus:outline-none">
 </div>
 <div>
-<label class="text-xs font-semibold text-[#6a979f]">Tópicos (separe por vírgula)</label>
-<input type="text" id="subject-topics-input" autocomplete="off" placeholder="Ex: Sistema nervoso, Ossos, Músculos" class="w-full mt-1 bg-[#e6f2f4] dark:bg-[#1d343a] px-4 py-3 rounded-2xl text-xs border border-[#cfe5e8] dark:border-[#2a4a53] text-[#1f4f59] dark:text-[#dff0f2] focus:outline-none">
+<label class="text-xs font-semibold text-[#4f7f89]">Tópicos (separe por vírgula)</label>
+<input type="text" id="subject-topics-input" autocomplete="off" placeholder="Ex: Sistema nervoso, Ossos, Músculos" class="w-full mt-1 bg-[#e6f2f4] dark:bg-[#1d343a] px-4 py-3 rounded-2xl text-xs border border-[#bcd9de] dark:border-[#2a4a53] text-[#1f4f59] dark:text-[#dff0f2] focus:outline-none">
 </div>
 <div>
-<label class="text-xs font-semibold text-[#6a979f]">Cor</label>
-<select id="subject-color-input" class="w-full mt-1 bg-[#e6f2f4] dark:bg-[#1d343a] px-3 py-3 rounded-2xl text-xs border border-[#cfe5e8] dark:border-[#2a4a53] text-[#1f4f59] dark:text-[#dff0f2]">
+<label class="text-xs font-semibold text-[#4f7f89]">Cor</label>
+<select id="subject-color-input" class="w-full mt-1 bg-[#e6f2f4] dark:bg-[#1d343a] px-3 py-3 rounded-2xl text-xs border border-[#bcd9de] dark:border-[#2a4a53] text-[#1f4f59] dark:text-[#dff0f2]">
 <option value="border-teal-400">Petróleo</option>
 <option value="border-sky-400">Azul</option>
 <option value="border-amber-300">Areia</option>
@@ -453,49 +453,49 @@ E aí! Sou o <b>Atlas</b>, seu assistente pessoal de IA. Como posso te ajudar ho
 </div>
 </div>
 <div class="flex justify-end gap-2 mt-6">
-<button onclick="closeModal('modal-subject')" class="px-4 py-2 text-xs font-semibold text-[#6a979f] hover:bg-[#e6f2f4] rounded-xl">Cancelar</button>
-<button onclick="createSubject()" class="px-5 py-2.5 bg-[#3a98a4] text-white rounded-xl text-xs font-serif font-bold shadow hover:bg-[#2f8490]">Salvar</button>
+<button onclick="closeModal('modal-subject')" class="px-4 py-2 text-xs font-semibold text-[#4f7f89] hover:bg-[#e6f2f4] rounded-xl">Cancelar</button>
+<button onclick="createSubject()" class="px-5 py-2.5 bg-[#1f7a88] text-white rounded-xl text-xs font-serif font-bold shadow hover:bg-[#176975]">Salvar</button>
 </div>
 </div>
 </div>
 <div id="modal-goal" class="fixed inset-0 bg-[#2a4a53]/40 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
-<div class="bg-white dark:bg-[#17292e] w-full max-w-md p-6 rounded-3xl shadow-2xl border border-[#cfe5e8] dark:border-[#2a4a53]">
+<div class="bg-white dark:bg-[#17292e] w-full max-w-md p-6 rounded-3xl shadow-2xl border border-[#bcd9de] dark:border-[#2a4a53]">
 <h3 class="text-xl font-serif font-bold mb-4 text-[#1f4f59] dark:text-[#dff0f2]">Nova Meta</h3>
 <div class="space-y-4">
 <div>
-<label class="text-xs font-semibold text-[#6a979f]">Título</label>
-<input type="text" id="goal-title-input" autocomplete="off" placeholder="Ex: Viajar para a Europa" class="w-full mt-1 bg-[#e6f2f4] dark:bg-[#1d343a] px-4 py-3 rounded-2xl text-xs border border-[#cfe5e8] dark:border-[#2a4a53] text-[#1f4f59] dark:text-[#dff0f2] focus:outline-none">
+<label class="text-xs font-semibold text-[#4f7f89]">Título</label>
+<input type="text" id="goal-title-input" autocomplete="off" placeholder="Ex: Viajar para a Europa" class="w-full mt-1 bg-[#e6f2f4] dark:bg-[#1d343a] px-4 py-3 rounded-2xl text-xs border border-[#bcd9de] dark:border-[#2a4a53] text-[#1f4f59] dark:text-[#dff0f2] focus:outline-none">
 </div>
 <div class="grid grid-cols-2 gap-3">
 <div>
-<label class="text-xs font-semibold text-[#6a979f]">Categoria</label>
-<select id="goal-category-input" class="w-full mt-1 bg-[#e6f2f4] dark:bg-[#1d343a] px-3 py-3 rounded-2xl text-xs border border-[#cfe5e8] dark:border-[#2a4a53] text-[#1f4f59] dark:text-[#dff0f2]">
+<label class="text-xs font-semibold text-[#4f7f89]">Categoria</label>
+<select id="goal-category-input" class="w-full mt-1 bg-[#e6f2f4] dark:bg-[#1d343a] px-3 py-3 rounded-2xl text-xs border border-[#bcd9de] dark:border-[#2a4a53] text-[#1f4f59] dark:text-[#dff0f2]">
 <option>Acadêmico</option><option>Pessoal</option><option>Profissional</option><option>Financeiro</option><option>Saúde</option>
 </select>
 </div>
 <div>
-<label class="text-xs font-semibold text-[#6a979f]">Objetivo final</label>
-<input type="text" id="goal-date-input" autocomplete="off" placeholder="Ex: Junho 2027" class="w-full mt-1 bg-[#e6f2f4] dark:bg-[#1d343a] px-3 py-3 rounded-2xl text-xs border border-[#cfe5e8] dark:border-[#2a4a53] text-[#1f4f59] dark:text-[#dff0f2] focus:outline-none">
+<label class="text-xs font-semibold text-[#4f7f89]">Objetivo final</label>
+<input type="text" id="goal-date-input" autocomplete="off" placeholder="Ex: Junho 2027" class="w-full mt-1 bg-[#e6f2f4] dark:bg-[#1d343a] px-3 py-3 rounded-2xl text-xs border border-[#bcd9de] dark:border-[#2a4a53] text-[#1f4f59] dark:text-[#dff0f2] focus:outline-none">
 </div>
 </div>
 </div>
 <div class="flex justify-end gap-2 mt-6">
-<button onclick="closeModal('modal-goal')" class="px-4 py-2 text-xs font-semibold text-[#6a979f] hover:bg-[#e6f2f4] rounded-xl">Cancelar</button>
-<button onclick="createGoal()" class="px-5 py-2.5 bg-[#3a98a4] text-white rounded-xl text-xs font-serif font-bold shadow hover:bg-[#2f8490]">Salvar Meta</button>
+<button onclick="closeModal('modal-goal')" class="px-4 py-2 text-xs font-semibold text-[#4f7f89] hover:bg-[#e6f2f4] rounded-xl">Cancelar</button>
+<button onclick="createGoal()" class="px-5 py-2.5 bg-[#1f7a88] text-white rounded-xl text-xs font-serif font-bold shadow hover:bg-[#176975]">Salvar Meta</button>
 </div>
 </div>
 </div>
 <div id="modal-habit" class="fixed inset-0 bg-[#2a4a53]/40 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
-<div class="bg-white dark:bg-[#17292e] w-full max-w-md p-6 rounded-3xl shadow-2xl border border-[#cfe5e8] dark:border-[#2a4a53]">
+<div class="bg-white dark:bg-[#17292e] w-full max-w-md p-6 rounded-3xl shadow-2xl border border-[#bcd9de] dark:border-[#2a4a53]">
 <h3 class="text-xl font-serif font-bold mb-4 text-[#1f4f59] dark:text-[#dff0f2]">Novo Hábito</h3>
 <div class="space-y-4">
 <div>
-<label class="text-xs font-semibold text-[#6a979f]">Nome do hábito</label>
-<input type="text" id="habit-title-input" autocomplete="off" placeholder="Ex: Caminhada de 30 min" class="w-full mt-1 bg-[#e6f2f4] dark:bg-[#1d343a] px-4 py-3 rounded-2xl text-xs border border-[#cfe5e8] dark:border-[#2a4a53] text-[#1f4f59] dark:text-[#dff0f2] focus:outline-none">
+<label class="text-xs font-semibold text-[#4f7f89]">Nome do hábito</label>
+<input type="text" id="habit-title-input" autocomplete="off" placeholder="Ex: Caminhada de 30 min" class="w-full mt-1 bg-[#e6f2f4] dark:bg-[#1d343a] px-4 py-3 rounded-2xl text-xs border border-[#bcd9de] dark:border-[#2a4a53] text-[#1f4f59] dark:text-[#dff0f2] focus:outline-none">
 </div>
 <div>
-<label class="text-xs font-semibold text-[#6a979f]">Ícone</label>
-<select id="habit-icon-input" class="w-full mt-1 bg-[#e6f2f4] dark:bg-[#1d343a] px-3 py-3 rounded-2xl text-xs border border-[#cfe5e8] dark:border-[#2a4a53] text-[#1f4f59] dark:text-[#dff0f2]">
+<label class="text-xs font-semibold text-[#4f7f89]">Ícone</label>
+<select id="habit-icon-input" class="w-full mt-1 bg-[#e6f2f4] dark:bg-[#1d343a] px-3 py-3 rounded-2xl text-xs border border-[#bcd9de] dark:border-[#2a4a53] text-[#1f4f59] dark:text-[#dff0f2]">
 <option value="fa-star">✨ Brilho</option>
 <option value="fa-bottle-water">💧 Água</option>
 <option value="fa-book-open">📖 Leitura</option>
@@ -508,17 +508,17 @@ E aí! Sou o <b>Atlas</b>, seu assistente pessoal de IA. Como posso te ajudar ho
 </div>
 </div>
 <div class="flex justify-end gap-2 mt-6">
-<button onclick="closeModal('modal-habit')" class="px-4 py-2 text-xs font-semibold text-[#6a979f] hover:bg-[#e6f2f4] rounded-xl">Cancelar</button>
-<button onclick="createHabit()" class="px-5 py-2.5 bg-[#3a98a4] text-white rounded-xl text-xs font-serif font-bold shadow hover:bg-[#2f8490]">Salvar Hábito</button>
+<button onclick="closeModal('modal-habit')" class="px-4 py-2 text-xs font-semibold text-[#4f7f89] hover:bg-[#e6f2f4] rounded-xl">Cancelar</button>
+<button onclick="createHabit()" class="px-5 py-2.5 bg-[#1f7a88] text-white rounded-xl text-xs font-serif font-bold shadow hover:bg-[#176975]">Salvar Hábito</button>
 </div>
 </div>
 </div>
 <div id="modal-confirm" class="fixed inset-0 bg-[#2a4a53]/40 backdrop-blur-sm z-[55] flex items-center justify-center p-4 hidden">
-<div class="bg-white dark:bg-[#17292e] w-full max-w-sm p-6 rounded-3xl shadow-2xl border border-[#cfe5e8] dark:border-[#2a4a53]">
+<div class="bg-white dark:bg-[#17292e] w-full max-w-sm p-6 rounded-3xl shadow-2xl border border-[#bcd9de] dark:border-[#2a4a53]">
 <p id="confirm-message" class="text-sm text-[#1f4f59] dark:text-[#dff0f2] font-medium"></p>
 <div class="flex justify-end gap-2 mt-6">
-<button id="confirm-no" class="px-4 py-2 text-xs font-semibold text-[#6a979f] hover:bg-[#e6f2f4] rounded-xl">Cancelar</button>
-<button id="confirm-yes" class="px-5 py-2.5 bg-[#3a98a4] text-white rounded-xl text-xs font-serif font-bold shadow hover:bg-[#2f8490]">Confirmar</button>
+<button id="confirm-no" class="px-4 py-2 text-xs font-semibold text-[#4f7f89] hover:bg-[#e6f2f4] rounded-xl">Cancelar</button>
+<button id="confirm-yes" class="px-5 py-2.5 bg-[#1f7a88] text-white rounded-xl text-xs font-serif font-bold shadow hover:bg-[#176975]">Confirmar</button>
 </div>
 </div>
 </div>
@@ -595,13 +595,13 @@ setTimeout(() => URL.revokeObjectURL(url), 5000);
 }
 /* ================= ESTADO ================= */
 const PAPER_W = 800, PAPER_H = 1100;
-const DEFAULT_COVER = 'bg-gradient-to-br from-[#cfe5e8] to-[#8fc3ca]';
+const DEFAULT_COVER = 'bg-gradient-to-br from-[#bcd9de] to-[#6aaab4]';
 function seedState() {
 return {
 selectedCoverColor: DEFAULT_COVER, activeTool: 'pen', penColor: '#1f4f59',
 currentNotebookId: null, currentPageIndex: 0,
 notebooks: [
-{ id: '1', title: 'Resumos & Estudos', color: 'bg-gradient-to-br from-[#cfe5e8] to-[#8fc3ca]', pages: [{ paper: 'lined', drawingData: null, texts: [] }] },
+{ id: '1', title: 'Resumos & Estudos', color: 'bg-gradient-to-br from-[#bcd9de] to-[#6aaab4]', pages: [{ paper: 'lined', drawingData: null, texts: [] }] },
 { id: '2', title: 'Planner Financeiro & Metas', color: 'bg-gradient-to-br from-[#f7f2e9] to-[#dfd0b5]', pages: [{ paper: 'grid', drawingData: null, texts: [] }] },
 { id: '3', title: 'Mapas Mentais & Diagramas 🧠', color: 'bg-gradient-to-br from-[#dcfce7] to-[#86efac]', pages: [{ paper: 'mindmap', drawingData: null, texts: [] }] },
 { id: '4', title: 'Diário & Reflexões', color: 'bg-gradient-to-br from-[#dbeafe] to-[#93c5fd]', pages: [{ paper: 'dotted', drawingData: null, texts: [] }] }
@@ -755,15 +755,15 @@ const row = document.createElement('div');
 if (id) row.id = id;
 if (who === 'user') {
 row.className = 'flex gap-3 items-start justify-end';
-row.innerHTML = `<div class="bg-[#3a98a4] text-white p-4 rounded-2xl max-w-lg text-xs leading-relaxed shadow-sm font-medium">${html}</div>`;
+row.innerHTML = `<div class="bg-[#1f7a88] text-white p-4 rounded-2xl max-w-lg text-xs leading-relaxed shadow-sm font-medium">${html}</div>`;
 } else if (who === 'error') {
 row.className = 'flex gap-3 items-start';
 row.innerHTML = `<div class="w-8 h-8 rounded-full bg-rose-100 text-rose-500 flex items-center justify-center text-xs shrink-0 mt-1"><i class="fa-solid fa-triangle-exclamation"></i></div>
 <div class="bg-rose-50 dark:bg-rose-950/40 p-4 rounded-2xl max-w-lg text-xs leading-relaxed text-rose-600 dark:text-rose-200">${html}</div>`;
 } else {
 row.className = 'flex gap-3 items-start';
-row.innerHTML = `<div class="w-8 h-8 rounded-full bg-[#e6f2f4] dark:bg-[#234048] text-[#3a98a4] flex items-center justify-center text-xs shrink-0 mt-1"><i class="fa-solid fa-star"></i></div>
-<div class="bg-[#e6f2f4]/60 dark:bg-[#1d343a] p-4 rounded-2xl max-w-lg text-xs leading-relaxed text-[#1f4f59] dark:text-[#dff0f2] border border-[#cfe5e8] dark:border-[#2a4a53] ${id === 'ai-loading' ? 'italic' : ''}">${html}</div>`;
+row.innerHTML = `<div class="w-8 h-8 rounded-full bg-[#e6f2f4] dark:bg-[#234048] text-[#1f7a88] flex items-center justify-center text-xs shrink-0 mt-1"><i class="fa-solid fa-star"></i></div>
+<div class="bg-[#e6f2f4]/60 dark:bg-[#1d343a] p-4 rounded-2xl max-w-lg text-xs leading-relaxed text-[#1f4f59] dark:text-[#dff0f2] border border-[#bcd9de] dark:border-[#2a4a53] ${id === 'ai-loading' ? 'italic' : ''}">${html}</div>`;
 }
 container.appendChild(row);
 container.scrollTop = container.scrollHeight;
@@ -791,7 +791,7 @@ aiHistory.pop();
 if (err && err.code === 'no_key') {
 const row = aiBubble(`Para conversar comigo fora do Claude, cole aqui sua chave da API do Gemini (ela fica salva só neste aparelho):
 <div class="mt-3 flex gap-2"><input type="password" autocomplete="off" placeholder="Chave da API" class="key-input flex-1 bg-white px-3 py-2 rounded-xl border border-rose-200 text-[#1f4f59] focus:outline-none">
-<button class="key-save px-3 py-2 bg-[#3a98a4] text-white rounded-xl font-bold">Salvar</button></div>`, 'error');
+<button class="key-save px-3 py-2 bg-[#1f7a88] text-white rounded-xl font-bold">Salvar</button></div>`, 'error');
 row.querySelector('.key-save').onclick = () => {
 const v = row.querySelector('.key-input').value.trim();
 if (v) { store.set('bloom_gemini_key', v); row.remove(); toast('Chave salva. Envie sua mensagem de novo 🔹'); }
@@ -815,9 +815,9 @@ planning: 'Tarefas & Hábitos', goals: 'Metas & Sonhos', 'ai-assistant': 'Assist
 function switchTab(tabId) {
 if (appState.currentNotebookId && tabId !== 'notebooks') saveCurrentCanvas();
 document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
-document.querySelectorAll('.nav-btn').forEach(el => el.classList.remove('bg-[#e6f2f4]', 'dark:bg-[#234048]', 'text-[#3a98a4]'));
+document.querySelectorAll('.nav-btn').forEach(el => el.classList.remove('bg-[#e6f2f4]', 'dark:bg-[#234048]', 'text-[#1f7a88]'));
 $(`tab-${tabId}`)?.classList.remove('hidden');
-$(`nav-${tabId}`)?.classList.add('bg-[#e6f2f4]', 'dark:bg-[#234048]', 'text-[#3a98a4]');
+$(`nav-${tabId}`)?.classList.add('bg-[#e6f2f4]', 'dark:bg-[#234048]', 'text-[#1f7a88]');
 $('page-title').innerText = TITLES[tabId] || 'Meu Painel';
 if (tabId === 'dashboard') renderDashboard();
 if (tabId === 'notebooks') renderNotebookGallery();
@@ -857,30 +857,30 @@ $('dash-progress-bar').style.width = `${percent}%`;
 $('dash-tasks-count').innerText = `${completed}/${total}`;
 const tasksList = $('dash-tasks-list');
 tasksList.innerHTML = '';
-if (!total) tasksList.innerHTML = '<p class="text-xs text-[#6a979f] italic font-serif">Nenhuma tarefa ainda. Que tal criar a primeira? 🔹</p>';
+if (!total) tasksList.innerHTML = '<p class="text-xs text-[#4f7f89] italic font-serif">Nenhuma tarefa ainda. Que tal criar a primeira? 🔹</p>';
 sortedTasks().slice(0, 5).forEach(task => {
 const item = document.createElement('div');
-item.className = 'flex items-center justify-between p-2.5 rounded-2xl bg-[#e6f2f4]/50 dark:bg-[#1d343a] text-xs border border-[#cfe5e8] dark:border-[#2a4a53]';
+item.className = 'flex items-center justify-between p-2.5 rounded-2xl bg-[#e6f2f4]/50 dark:bg-[#1d343a] text-xs border border-[#bcd9de] dark:border-[#2a4a53]';
 item.innerHTML = `
 <div class="flex items-center gap-2.5 min-w-0">
-<input type="checkbox" ${task.completed ? 'checked' : ''} onchange="toggleTask('${task.id}')" class="rounded-full text-[#3a98a4] focus:ring-[#3a98a4] w-4 h-4 shrink-0">
-<span class="truncate ${task.completed ? 'line-through text-[#6a979f]' : 'font-medium'}">${esc(task.title)}</span>
+<input type="checkbox" ${task.completed ? 'checked' : ''} onchange="toggleTask('${task.id}')" class="rounded-full text-[#1f7a88] focus:ring-[#1f7a88] w-4 h-4 shrink-0">
+<span class="truncate ${task.completed ? 'line-through text-[#4f7f89]' : 'font-medium'}">${esc(task.title)}</span>
 </div>
-<span class="text-[9px] font-bold px-2 py-0.5 rounded-full bg-white dark:bg-[#2c505a] text-[#3a98a4] shadow-sm shrink-0 ml-2">${PRIORITY_LABEL[task.priority]}</span>`;
+<span class="text-[9px] font-bold px-2 py-0.5 rounded-full bg-white dark:bg-[#2c505a] text-[#1f7a88] shadow-sm shrink-0 ml-2">${PRIORITY_LABEL[task.priority]}</span>`;
 tasksList.appendChild(item);
 });
 const recentNb = $('dash-recent-notebooks');
 recentNb.innerHTML = '';
 appState.notebooks.slice(0, 3).forEach(nb => {
 const item = document.createElement('div');
-item.className = 'flex items-center justify-between p-2.5 bg-[#e6f2f4]/40 dark:bg-[#1d343a] rounded-2xl cursor-pointer hover:bg-[#e6f2f4] transition border border-[#cfe5e8] dark:border-[#2a4a53]';
+item.className = 'flex items-center justify-between p-2.5 bg-[#e6f2f4]/40 dark:bg-[#1d343a] rounded-2xl cursor-pointer hover:bg-[#e6f2f4] transition border border-[#bcd9de] dark:border-[#2a4a53]';
 item.onclick = () => { switchTab('notebooks'); openNotebook(nb.id); };
 item.innerHTML = `
 <div class="flex items-center gap-3 min-w-0">
 <div class="w-3.5 h-8 ${esc(nb.color)} rounded-md shadow-sm shrink-0"></div>
 <span class="text-xs font-serif font-bold text-[#1f4f59] dark:text-[#dff0f2] truncate">${esc(nb.title)}</span>
 </div>
-<i class="fa-solid fa-chevron-right text-[#6a979f] text-xs"></i>`;
+<i class="fa-solid fa-chevron-right text-[#4f7f89] text-xs"></i>`;
 recentNb.appendChild(item);
 });
 const habitsDash = $('dash-habits-container');
@@ -888,16 +888,16 @@ habitsDash.innerHTML = '';
 appState.habits.forEach(h => {
 const done = habitDone(h);
 const card = document.createElement('div');
-card.className = `p-3 rounded-2xl border flex items-center justify-between ${done ? 'bg-[#e6f2f4] border-[#8fc3ca] dark:bg-[#2a4a53] dark:border-[#3b6671]' : 'bg-white border-[#cfe5e8] dark:bg-[#17292e] dark:border-[#234048]'}`;
+card.className = `p-3 rounded-2xl border flex items-center justify-between ${done ? 'bg-[#e6f2f4] border-[#6aaab4] dark:bg-[#2a4a53] dark:border-[#3b6671]' : 'bg-white border-[#bcd9de] dark:bg-[#17292e] dark:border-[#234048]'}`;
 card.innerHTML = `
 <div class="flex items-center gap-3">
-<div class="w-8 h-8 rounded-xl ${done ? 'bg-[#3a98a4] text-white' : 'bg-[#e6f2f4] dark:bg-[#234048] text-[#6a979f]'} flex items-center justify-center text-xs shadow-sm"><i class="fa-solid ${esc(h.icon)}"></i></div>
+<div class="w-8 h-8 rounded-xl ${done ? 'bg-[#1f7a88] text-white' : 'bg-[#e6f2f4] dark:bg-[#234048] text-[#4f7f89]'} flex items-center justify-center text-xs shadow-sm"><i class="fa-solid ${esc(h.icon)}"></i></div>
 <div>
 <p class="text-xs font-bold text-[#1f4f59] dark:text-[#dff0f2]">${esc(h.title)}</p>
-<p class="text-[10px] text-[#6a979f]"><i class="fa-solid fa-star text-[#3a98a4]"></i> ${h.streak} dias seguidos</p>
+<p class="text-[10px] text-[#4f7f89]"><i class="fa-solid fa-star text-[#1f7a88]"></i> ${h.streak} dias seguidos</p>
 </div>
 </div>
-<button onclick="toggleHabit('${h.id}')" class="p-2 text-[#3a98a4]" aria-label="Marcar hábito"><i class="${done ? 'fa-solid fa-circle-check' : 'fa-regular fa-circle'} text-base"></i></button>`;
+<button onclick="toggleHabit('${h.id}')" class="p-2 text-[#1f7a88]" aria-label="Marcar hábito"><i class="${done ? 'fa-solid fa-circle-check' : 'fa-regular fa-circle'} text-base"></i></button>`;
 habitsDash.appendChild(card);
 });
 const goalsDash = $('dash-goals-summary');
@@ -906,8 +906,8 @@ appState.goals.forEach(g => {
 const div = document.createElement('div');
 div.className = 'space-y-1.5';
 div.innerHTML = `
-<div class="flex justify-between text-xs font-serif font-bold"><span>${esc(g.title)}</span><span class="text-[#3a98a4]">${g.progress}%</span></div>
-<div class="w-full h-2 bg-[#e6f2f4] dark:bg-[#234048] rounded-full overflow-hidden"><div class="h-full bg-gradient-to-r from-[#3a98a4] to-[#7cc4cb] rounded-full" style="width:${g.progress}%"></div></div>`;
+<div class="flex justify-between text-xs font-serif font-bold"><span>${esc(g.title)}</span><span class="text-[#1f7a88]">${g.progress}%</span></div>
+<div class="w-full h-2 bg-[#e6f2f4] dark:bg-[#234048] rounded-full overflow-hidden"><div class="h-full bg-gradient-to-r from-[#1f7a88] to-[#4aa3ad] rounded-full" style="width:${g.progress}%"></div></div>`;
 goalsDash.appendChild(div);
 });
 renderCalendar();
@@ -933,8 +933,8 @@ for (let d = 1; d <= daysInMonth; d++) {
 const iso = `${y}-${pad(m + 1)}-${pad(d)}`;
 const isToday = iso === today;
 const cell = document.createElement('div');
-cell.className = `relative py-1.5 rounded-xl text-xs font-medium ${isToday ? 'bg-[#3a98a4] text-white font-bold shadow-md shadow-cyan-300' : 'text-[#1f4f59] dark:text-[#dff0f2]'}`;
-cell.innerHTML = `${d}${pending.has(iso) ? `<span class="absolute left-1/2 -translate-x-1/2 bottom-0.5 w-1 h-1 rounded-full ${isToday ? 'bg-white' : 'bg-[#3a98a4]'}"></span>` : ''}`;
+cell.className = `relative py-1.5 rounded-xl text-xs font-medium ${isToday ? 'bg-[#1f7a88] text-white font-bold shadow-md shadow-cyan-300' : 'text-[#1f4f59] dark:text-[#dff0f2]'}`;
+cell.innerHTML = `${d}${pending.has(iso) ? `<span class="absolute left-1/2 -translate-x-1/2 bottom-0.5 w-1 h-1 rounded-full ${isToday ? 'bg-white' : 'bg-[#1f7a88]'}"></span>` : ''}`;
 grid.appendChild(cell);
 }
 }
@@ -962,11 +962,11 @@ card.innerHTML = `
 </div>
 <div class="flex justify-between items-center text-xs font-serif italic text-[#3d6b75]">
 <span>${nb.pages.length} ${nb.pages.length === 1 ? 'pág' : 'págs'}</span>
-<i class="fa-solid fa-pen-nib text-[#3a98a4]"></i>
+<i class="fa-solid fa-pen-nib text-[#1f7a88]"></i>
 </div>
 </div>
 </div>
-<button class="absolute top-2 right-2 w-8 h-8 rounded-full bg-white/80 text-[#6a979f] hover:text-rose-500 shadow flex items-center justify-center" aria-label="Excluir caderno"><i class="fa-regular fa-trash-can text-xs"></i></button>`;
+<button class="absolute top-2 right-2 w-8 h-8 rounded-full bg-white/80 text-[#4f7f89] hover:text-rose-500 shadow flex items-center justify-center" aria-label="Excluir caderno"><i class="fa-regular fa-trash-can text-xs"></i></button>`;
 card.querySelector('button').onclick = async ev => {
 ev.stopPropagation();
 if (await askConfirm(`Excluir o caderno "${nb.title}" e todas as suas páginas?`, 'Excluir')) {
@@ -1091,13 +1091,13 @@ saveCurrentCanvas();
 function setTool(tool) {
 appState.activeTool = tool;
 document.querySelectorAll('.tool-btn').forEach(b => {
-b.classList.remove('bg-white', 'dark:bg-[#2c505a]', 'shadow-sm', 'text-[#3a98a4]');
+b.classList.remove('bg-white', 'dark:bg-[#2c505a]', 'shadow-sm', 'text-[#1f7a88]');
 b.classList.add('text-[#3d6b75]', 'dark:text-[#a9c8ce]');
 });
 const active = $(`tool-${tool}`);
 if (active) {
 active.classList.remove('text-[#3d6b75]', 'dark:text-[#a9c8ce]');
-active.classList.add('bg-white', 'dark:bg-[#2c505a]', 'shadow-sm', 'text-[#3a98a4]');
+active.classList.add('bg-white', 'dark:bg-[#2c505a]', 'shadow-sm', 'text-[#1f7a88]');
 }
 if (canvas) {
 canvas.style.touchAction = tool === 'hand' ? 'auto' : 'none';
@@ -1109,11 +1109,11 @@ appState.penColor = color;
 if (appState.activeTool === 'eraser' || appState.activeTool === 'text' || appState.activeTool === 'hand') setTool('pen');
 document.querySelectorAll('.pen-swatch').forEach(b => {
 const on = b.dataset.color === color;
-b.classList.toggle('ring-2', on); b.classList.toggle('ring-offset-1', on); b.classList.toggle('ring-[#3a98a4]', on);
+b.classList.toggle('ring-2', on); b.classList.toggle('ring-offset-1', on); b.classList.toggle('ring-[#1f7a88]', on);
 });
 }
 function applyPaper(paperType) {
-$('paper-container').className = `relative bg-white shadow-2xl rounded-lg overflow-hidden ring-1 ring-[#cfe5e8] paper-${paperType}`;
+$('paper-container').className = `relative bg-white shadow-2xl rounded-lg overflow-hidden ring-1 ring-[#bcd9de] paper-${paperType}`;
 }
 function changePagePaper(paperType) {
 const page = currentPage();
@@ -1142,22 +1142,22 @@ const nodes = [
 { x: cx - 240, y: cy + 170, title: 'Tópico 3 🌿', text: 'Insira suas ideias ou conceitos...' },
 { x: cx + 240, y: cy + 170, title: 'Tópico 4 💡', text: 'Insira suas ideias ou conceitos...' }
 ];
-ctx.lineWidth = 3; ctx.strokeStyle = '#3a98a4'; ctx.globalAlpha = 0.7;
+ctx.lineWidth = 3; ctx.strokeStyle = '#1f7a88'; ctx.globalAlpha = 0.7;
 nodes.forEach(n => { ctx.beginPath(); ctx.moveTo(cx, cy); ctx.quadraticCurveTo((cx + n.x) / 2, cy, n.x, n.y); ctx.stroke(); });
 ctx.globalAlpha = 1;
-ctx.fillStyle = '#e6f2f4'; ctx.strokeStyle = '#3a98a4'; ctx.lineWidth = 4;
+ctx.fillStyle = '#e6f2f4'; ctx.strokeStyle = '#1f7a88'; ctx.lineWidth = 4;
 rr(cx - 130, cy - 45, 260, 90, 24); ctx.fill(); ctx.stroke();
 ctx.textAlign = 'center';
 ctx.fillStyle = '#1f4f59'; ctx.font = 'bold 20px "Cormorant Garamond", serif';
 ctx.fillText('Tema Central 🔹', cx, cy - 5);
-ctx.font = '12px "Plus Jakarta Sans", sans-serif'; ctx.fillStyle = '#6a979f';
+ctx.font = '12px "Plus Jakarta Sans", sans-serif'; ctx.fillStyle = '#4f7f89';
 ctx.fillText('(Toque para escrever / desenhar)', cx, cy + 20);
 nodes.forEach(n => {
-ctx.fillStyle = '#ffffff'; ctx.strokeStyle = '#cfe5e8'; ctx.lineWidth = 2.5;
+ctx.fillStyle = '#ffffff'; ctx.strokeStyle = '#bcd9de'; ctx.lineWidth = 2.5;
 rr(n.x - 100, n.y - 40, 200, 80, 18); ctx.fill(); ctx.stroke();
 ctx.fillStyle = '#1f4f59'; ctx.font = 'bold 15px "Plus Jakarta Sans", sans-serif';
 ctx.fillText(n.title, n.x, n.y - 12);
-ctx.fillStyle = '#6a979f'; ctx.font = '11px "Plus Jakarta Sans", sans-serif';
+ctx.fillStyle = '#4f7f89'; ctx.font = '11px "Plus Jakarta Sans", sans-serif';
 ctx.fillText(n.text, n.x, n.y + 12);
 });
 saveCurrentCanvas();
@@ -1175,10 +1175,10 @@ setTimeout(() => box.querySelector('textarea').focus(), 50);
 }
 function buildTextBox(t, page) {
 const box = document.createElement('div');
-box.className = 'absolute p-2.5 border border-dashed border-[#3a98a4] bg-white/90 rounded-2xl pointer-events-auto shadow-md';
+box.className = 'absolute p-2.5 border border-dashed border-[#1f7a88] bg-white/90 rounded-2xl pointer-events-auto shadow-md';
 box.style.left = t.x + 'px'; box.style.top = t.y + 'px';
 box.innerHTML = `
-<div class="tb-handle flex justify-between items-center text-[10px] text-[#6a979f] mb-1 cursor-move font-serif italic" style="touch-action:none">
+<div class="tb-handle flex justify-between items-center text-[10px] text-[#4f7f89] mb-1 cursor-move font-serif italic" style="touch-action:none">
 <span>Anotação</span>
 <button class="tb-del text-rose-400 hover:text-rose-600 px-1" aria-label="Remover anotação"><i class="fa-solid fa-xmark"></i></button>
 </div>
@@ -1309,24 +1309,24 @@ fitPaper();
 function renderStudies() {
 const container = $('subjects-container');
 container.innerHTML = '';
-if (!appState.subjects.length) container.innerHTML = '<p class="text-sm text-[#6a979f] italic font-serif col-span-full">Nenhuma disciplina ainda. Toque em "Nova Disciplina" 🔹</p>';
+if (!appState.subjects.length) container.innerHTML = '<p class="text-sm text-[#4f7f89] italic font-serif col-span-full">Nenhuma disciplina ainda. Toque em "Nova Disciplina" 🔹</p>';
 appState.subjects.forEach((sub, i) => {
 const card = document.createElement('div');
 card.dataset.card = '1';
-card.className = `bg-white dark:bg-[#17292e] p-6 rounded-3xl border-l-4 ${esc(sub.color)} border-y border-r border-[#cfe5e8] dark:border-[#2a4a53] shadow-sm space-y-4 glow-soft`;
+card.className = `bg-white dark:bg-[#17292e] p-6 rounded-3xl border-l-4 ${esc(sub.color)} border-y border-r border-[#bcd9de] dark:border-[#2a4a53] shadow-sm space-y-4 glow-soft`;
 card.innerHTML = `
 <div class="flex justify-between items-center gap-2">
 <h3 class="font-serif font-bold text-xl text-[#1f4f59] dark:text-[#dff0f2]">${esc(sub.name)}</h3>
 <div class="flex items-center gap-2 shrink-0">
-<span data-badge class="text-xs font-bold px-3 py-1 rounded-full bg-[#e6f2f4] dark:bg-[#234048] text-[#3a98a4]">${sub.progress}%</span>
-<button onclick="removeItem('subjects',${i})" class="text-[#6a979f] hover:text-rose-500" aria-label="Excluir disciplina"><i class="fa-regular fa-trash-can text-xs"></i></button>
+<span data-badge class="text-xs font-bold px-3 py-1 rounded-full bg-[#e6f2f4] dark:bg-[#234048] text-[#1f7a88]">${sub.progress}%</span>
+<button onclick="removeItem('subjects',${i})" class="text-[#4f7f89] hover:text-rose-500" aria-label="Excluir disciplina"><i class="fa-regular fa-trash-can text-xs"></i></button>
 </div>
 </div>
 <input type="range" min="0" max="100" value="${sub.progress}" class="w-full" oninput="setProgress('subjects',${i},this.value,this)" aria-label="Progresso">
 <div>
-<p class="text-xs font-semibold text-[#6a979f] mb-2 font-serif italic">Tópicos Principais:</p>
+<p class="text-xs font-semibold text-[#4f7f89] mb-2 font-serif italic">Tópicos Principais:</p>
 <ul class="space-y-1.5 text-xs">
-${sub.topics.map(t => `<li class="flex items-center gap-2 text-[#1f4f59] dark:text-[#dff0f2]"><i class="fa-solid fa-star text-[#3a98a4] text-[10px]"></i> ${esc(t)}</li>`).join('')}
+${sub.topics.map(t => `<li class="flex items-center gap-2 text-[#1f4f59] dark:text-[#dff0f2]"><i class="fa-solid fa-star text-[#1f7a88] text-[10px]"></i> ${esc(t)}</li>`).join('')}
 </ul>
 </div>`;
 container.appendChild(card);
@@ -1338,10 +1338,10 @@ const list = $('doubts-list');
 list.innerHTML = '';
 appState.doubts.forEach((d, index) => {
 const div = document.createElement('div');
-div.className = 'flex justify-between items-center gap-3 p-3.5 bg-[#e6f2f4]/60 dark:bg-[#1d343a] rounded-2xl border border-[#cfe5e8] dark:border-[#2a4a53] text-xs';
+div.className = 'flex justify-between items-center gap-3 p-3.5 bg-[#e6f2f4]/60 dark:bg-[#1d343a] rounded-2xl border border-[#bcd9de] dark:border-[#2a4a53] text-xs';
 div.innerHTML = `
 <span class="font-medium text-[#1f4f59] dark:text-[#dff0f2]">${esc(d.text)}</span>
-<button onclick="removeDoubt(${index})" class="text-[#3a98a4] hover:text-rose-500 font-serif font-bold text-xs shrink-0"><i class="fa-solid fa-check"></i> Revisado</button>`;
+<button onclick="removeDoubt(${index})" class="text-[#1f7a88] hover:text-rose-500 font-serif font-bold text-xs shrink-0"><i class="fa-solid fa-check"></i> Revisado</button>`;
 list.appendChild(div);
 });
 }
@@ -1375,23 +1375,23 @@ if (kind === 'goals') renderGoals();
 function renderPlanning() {
 const list = $('tasks-list-full');
 list.innerHTML = '';
-if (!appState.tasks.length) list.innerHTML = '<p class="text-sm text-[#6a979f] italic font-serif col-span-full">Nenhuma tarefa ainda. Toque em "Nova Tarefa" 🔹</p>';
+if (!appState.tasks.length) list.innerHTML = '<p class="text-sm text-[#4f7f89] italic font-serif col-span-full">Nenhuma tarefa ainda. Toque em "Nova Tarefa" 🔹</p>';
 const today = todayISO();
 sortedTasks().forEach(t => {
 const late = !t.completed && t.date && t.date < today;
 const card = document.createElement('div');
-card.className = 'bg-white dark:bg-[#17292e] p-4 rounded-3xl border border-[#cfe5e8] dark:border-[#2a4a53] shadow-sm flex items-center justify-between gap-2 glow-soft';
+card.className = 'bg-white dark:bg-[#17292e] p-4 rounded-3xl border border-[#bcd9de] dark:border-[#2a4a53] shadow-sm flex items-center justify-between gap-2 glow-soft';
 card.innerHTML = `
 <div class="flex items-center gap-3.5 min-w-0">
-<input type="checkbox" ${t.completed ? 'checked' : ''} onchange="toggleTask('${t.id}')" class="rounded-full text-[#3a98a4] focus:ring-[#3a98a4] w-5 h-5 shrink-0">
+<input type="checkbox" ${t.completed ? 'checked' : ''} onchange="toggleTask('${t.id}')" class="rounded-full text-[#1f7a88] focus:ring-[#1f7a88] w-5 h-5 shrink-0">
 <div class="min-w-0">
-<p class="text-sm font-semibold ${t.completed ? 'line-through text-[#6a979f]' : 'text-[#1f4f59] dark:text-[#dff0f2]'}">${esc(t.title)}</p>
-<span class="text-[10px] ${late ? 'text-rose-500 font-bold' : 'text-[#6a979f]'}">${late ? 'Atrasada · ' : ''}${dateLabel(t.date)}</span>
+<p class="text-sm font-semibold ${t.completed ? 'line-through text-[#4f7f89]' : 'text-[#1f4f59] dark:text-[#dff0f2]'}">${esc(t.title)}</p>
+<span class="text-[10px] ${late ? 'text-rose-500 font-bold' : 'text-[#4f7f89]'}">${late ? 'Atrasada · ' : ''}${dateLabel(t.date)}</span>
 </div>
 </div>
 <div class="flex items-center gap-2 shrink-0">
-<span class="text-xs px-2.5 py-1 rounded-full bg-[#e6f2f4] dark:bg-[#234048] text-[#3a98a4] font-bold">${PRIORITY_LABEL[t.priority]}</span>
-<button onclick="deleteTask('${t.id}')" class="text-[#6a979f] hover:text-rose-500 p-1" aria-label="Excluir tarefa"><i class="fa-regular fa-trash-can text-xs"></i></button>
+<span class="text-xs px-2.5 py-1 rounded-full bg-[#e6f2f4] dark:bg-[#234048] text-[#1f7a88] font-bold">${PRIORITY_LABEL[t.priority]}</span>
+<button onclick="deleteTask('${t.id}')" class="text-[#4f7f89] hover:text-rose-500 p-1" aria-label="Excluir tarefa"><i class="fa-regular fa-trash-can text-xs"></i></button>
 </div>`;
 list.appendChild(card);
 });
@@ -1400,22 +1400,22 @@ renderHabitsFull();
 function renderHabitsFull() {
 const container = $('habits-list-full');
 container.innerHTML = '';
-if (!appState.habits.length) container.innerHTML = '<p class="text-sm text-[#6a979f] italic font-serif col-span-full">Nenhum hábito ainda. Toque em "Novo Hábito" 🌱</p>';
+if (!appState.habits.length) container.innerHTML = '<p class="text-sm text-[#4f7f89] italic font-serif col-span-full">Nenhum hábito ainda. Toque em "Novo Hábito" 🌱</p>';
 appState.habits.forEach(h => {
 const done = habitDone(h);
 const card = document.createElement('div');
-card.className = 'bg-white dark:bg-[#17292e] p-4 rounded-3xl border border-[#cfe5e8] dark:border-[#2a4a53] shadow-sm flex items-center justify-between gap-2 glow-soft';
+card.className = 'bg-white dark:bg-[#17292e] p-4 rounded-3xl border border-[#bcd9de] dark:border-[#2a4a53] shadow-sm flex items-center justify-between gap-2 glow-soft';
 card.innerHTML = `
 <div class="flex items-center gap-3.5 min-w-0">
-<div class="w-10 h-10 rounded-2xl bg-[#e6f2f4] dark:bg-[#1d343a] text-[#3a98a4] flex items-center justify-center text-base shrink-0"><i class="fa-solid ${esc(h.icon)}"></i></div>
+<div class="w-10 h-10 rounded-2xl bg-[#e6f2f4] dark:bg-[#1d343a] text-[#1f7a88] flex items-center justify-center text-base shrink-0"><i class="fa-solid ${esc(h.icon)}"></i></div>
 <div class="min-w-0">
 <p class="text-sm font-bold text-[#1f4f59] dark:text-[#dff0f2]">${esc(h.title)}</p>
-<p class="text-xs text-[#6a979f]"><i class="fa-solid fa-star text-[#3a98a4]"></i> ${h.streak} dias seguidos</p>
+<p class="text-xs text-[#4f7f89]"><i class="fa-solid fa-star text-[#1f7a88]"></i> ${h.streak} dias seguidos</p>
 </div>
 </div>
 <div class="flex items-center gap-1 shrink-0">
-<button onclick="toggleHabit('${h.id}')" class="px-4 py-2 rounded-xl text-xs font-serif font-bold ${done ? 'bg-[#e6f2f4] text-[#3a98a4]' : 'bg-[#e6f2f4]/40 text-[#6a979f]'}">${done ? 'Concluído ✨' : 'Marcar 🔹'}</button>
-<button onclick="deleteHabit('${h.id}')" class="text-[#6a979f] hover:text-rose-500 p-1" aria-label="Excluir hábito"><i class="fa-regular fa-trash-can text-xs"></i></button>
+<button onclick="toggleHabit('${h.id}')" class="px-4 py-2 rounded-xl text-xs font-serif font-bold ${done ? 'bg-[#e6f2f4] text-[#1f7a88]' : 'bg-[#e6f2f4]/40 text-[#4f7f89]'}">${done ? 'Concluído ✨' : 'Marcar 🔹'}</button>
+<button onclick="deleteHabit('${h.id}')" class="text-[#4f7f89] hover:text-rose-500 p-1" aria-label="Excluir hábito"><i class="fa-regular fa-trash-can text-xs"></i></button>
 </div>`;
 container.appendChild(card);
 });
@@ -1454,24 +1454,24 @@ saveState(); renderDashboard(); renderPlanning();
 function renderGoals() {
 const container = $('goals-container');
 container.innerHTML = '';
-if (!appState.goals.length) container.innerHTML = '<p class="text-sm text-[#6a979f] italic font-serif col-span-full">Nenhuma meta ainda. Toque em "Nova Meta" 👑</p>';
+if (!appState.goals.length) container.innerHTML = '<p class="text-sm text-[#4f7f89] italic font-serif col-span-full">Nenhuma meta ainda. Toque em "Nova Meta" 👑</p>';
 appState.goals.forEach((g, i) => {
 const card = document.createElement('div');
 card.dataset.card = '1';
-card.className = 'bg-white dark:bg-[#17292e] p-6 rounded-3xl border border-[#cfe5e8] dark:border-[#2a4a53] shadow-sm space-y-4 glow-soft';
+card.className = 'bg-white dark:bg-[#17292e] p-6 rounded-3xl border border-[#bcd9de] dark:border-[#2a4a53] shadow-sm space-y-4 glow-soft';
 card.innerHTML = `
 <div class="flex justify-between items-center gap-2">
 <h3 class="font-serif font-bold text-lg text-[#1f4f59] dark:text-[#dff0f2]">${esc(g.title)}</h3>
 <div class="flex items-center gap-2 shrink-0">
-<span class="text-xs font-bold text-[#3a98a4] bg-[#e6f2f4] dark:bg-[#234048] px-3 py-1 rounded-full">${esc(g.category)}</span>
-<button onclick="removeItem('goals',${i})" class="text-[#6a979f] hover:text-rose-500" aria-label="Excluir meta"><i class="fa-regular fa-trash-can text-xs"></i></button>
+<span class="text-xs font-bold text-[#1f7a88] bg-[#e6f2f4] dark:bg-[#234048] px-3 py-1 rounded-full">${esc(g.category)}</span>
+<button onclick="removeItem('goals',${i})" class="text-[#4f7f89] hover:text-rose-500" aria-label="Excluir meta"><i class="fa-regular fa-trash-can text-xs"></i></button>
 </div>
 </div>
 <div class="space-y-1.5">
-<div class="flex justify-between text-xs text-[#6a979f]"><span>Progresso Alcançado</span><span data-badge class="font-bold text-[#3a98a4]">${g.progress}%</span></div>
+<div class="flex justify-between text-xs text-[#4f7f89]"><span>Progresso Alcançado</span><span data-badge class="font-bold text-[#1f7a88]">${g.progress}%</span></div>
 <input type="range" min="0" max="100" value="${g.progress}" class="w-full" oninput="setProgress('goals',${i},this.value,this)" aria-label="Progresso">
 </div>
-<div class="text-[10px] text-[#6a979f] flex justify-between font-serif italic"><span>Objetivo final: ${esc(g.targetDate)}</span></div>`;
+<div class="text-[10px] text-[#4f7f89] flex justify-between font-serif italic"><span>Objetivo final: ${esc(g.targetDate)}</span></div>`;
 container.appendChild(card);
 });
 }
@@ -1485,8 +1485,8 @@ function openGoalModal() { openModal('modal-goal'); setTimeout(() => $('goal-tit
 function openHabitModal() { openModal('modal-habit'); setTimeout(() => $('habit-title-input').focus(), 50); }
 function selectCoverColor(btn) {
 appState.selectedCoverColor = btn.dataset.cover;
-document.querySelectorAll('.color-opt').forEach(b => b.classList.remove('ring-2', 'ring-offset-2', 'ring-[#3a98a4]'));
-btn.classList.add('ring-2', 'ring-offset-2', 'ring-[#3a98a4]');
+document.querySelectorAll('.color-opt').forEach(b => b.classList.remove('ring-2', 'ring-offset-2', 'ring-[#1f7a88]'));
+btn.classList.add('ring-2', 'ring-offset-2', 'ring-[#1f7a88]');
 }
 function createNotebook() {
 const title = $('nb-title-input').value.trim();
