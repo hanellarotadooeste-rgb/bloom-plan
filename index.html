@@ -1,0 +1,1550 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="h-full">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<title>Bloom &amp; Plan</title>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Bloom &amp; Plan">
+<meta name="theme-color" content="#fcf9f9">
+<link rel="manifest" href="manifest.webmanifest">
+<script>(function(){try{var c=document.createElement('canvas');c.width=c.height=180;var x=c.getContext('2d');var g=x.createLinearGradient(0,0,180,180);g.addColorStop(0,'#e19da9');g.addColorStop(1,'#dfd0b5');x.fillStyle=g;x.fillRect(0,0,180,180);x.fillStyle='#fff5f7';for(var k=0;k<6;k++){var a=k*Math.PI/3;x.beginPath();x.arc(90+34*Math.cos(a),90+34*Math.sin(a),31,0,7);x.fill();}x.fillStyle='#5a424c';x.beginPath();x.arc(90,90,20,0,7);x.fill();var l=document.createElement('link');l.rel='apple-touch-icon';l.href=c.toDataURL('image/png');document.head.appendChild(l);}catch(e){}})();</script>
+<link rel="icon" type="image/svg+xml" href="icon.svg">
+<style>body{padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left)}</style>
+<script>if ('serviceWorker' in navigator) window.addEventListener('load', function(){ navigator.serviceWorker.register('sw.js').catch(function(){}); });</script>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Alex+Brush&display=swap" rel="stylesheet">
+<script>
+tailwind.config = {
+darkMode: 'class',
+theme: {
+extend: {
+colors: {
+rose: { 50:'#fff1f2',100:'#ffe4e6',200:'#fecdd3',300:'#fda4af',400:'#fb7185',500:'#f43f5e' },
+blush: { 50:'#fdfbfb',100:'#fcf8f8',200:'#f8ecee',300:'#f4dde1',400:'#ebbdc5',500:'#e19da9' },
+champagne: { 100:'#fdfbf7',200:'#f7f2e9',300:'#ece2d0',400:'#dfd0b5',500:'#cbb693' },
+lavender: { 100:'#f5f3ff',200:'#ede9fe',300:'#ddd6fe',400:'#c4b5fd' }
+},
+fontFamily: {
+sans: ['Plus Jakarta Sans', 'sans-serif'],
+serif: ['Cormorant Garamond', 'serif'],
+handwriting: ['Alex Brush', 'cursive']
+}
+}
+}
+}
+</script>
+<style>
+/* Folhas de papel: sempre claras (como papel de verdade), inclusive no modo noturno */
+.paper-lined {
+background-size: 100% 30px;
+background-image: linear-gradient(to bottom, transparent 29px, #f4dde1 30px);
+}
+.paper-grid {
+background-size: 24px 24px;
+background-image: linear-gradient(to right, #f4dde1 1px, transparent 1px),
+linear-gradient(to bottom, #f4dde1 1px, transparent 1px);
+}
+.paper-dotted {
+background-size: 24px 24px;
+background-image: radial-gradient(#ebbdc5 1.5px, transparent 1.5px);
+}
+.paper-margin {
+background-size: 100% 30px;
+background-image: linear-gradient(to bottom, transparent 29px, #f4dde1 30px);
+}
+.paper-margin::before {
+content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 40px;
+background: #f8ecee; border-right: 1px solid #f4dde1; pointer-events: none; z-index: 5;
+}
+.paper-mindmap {
+background-color: #fcfbf9;
+background-image:
+radial-gradient(circle at center, rgba(225,157,169,0.15) 0%, transparent 60%),
+radial-gradient(circle, #ebbdc5 1.5px, transparent 1.5px);
+background-size: 100% 100%, 28px 28px;
+}
+#notebook-canvas { touch-action: none; }
+/* Durante a exportação em PDF esconde as bordas das anotações */
+.exporting .tb-handle { display: none !important; }
+.exporting > div { border-color: transparent !important; background: transparent !important; box-shadow: none !important; }
+.exporting textarea { resize: none !important; }
+/* iOS bloqueia digitação em campos com user-select: none */
+input, textarea, select { -webkit-user-select: text; user-select: text; }
+body { -webkit-tap-highlight-color: transparent; -webkit-touch-callout: none; }
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #ebbdc5; border-radius: 9999px; }
+.dark ::-webkit-scrollbar-thumb { background: #4a3b43; }
+.glow-soft { box-shadow: 0 10px 30px -10px rgba(244, 221, 225, 0.7); }
+.dark .glow-soft { box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5); }
+input[type=range] { accent-color: #e19da9; }
+.toast-in { animation: toastIn .25s ease-out; }
+@keyframes toastIn { from { opacity: 0; transform: translate(-50%, 8px); } to { opacity: 1; transform: translate(-50%, 0); } }
+</style>
+</head>
+<body class="bg-[#fcf9f9] dark:bg-[#1a1518] text-[#4a3b43] dark:text-[#ebdce3] h-full overflow-hidden flex font-sans select-none antialiased transition-colors duration-300">
+<aside id="sidebar" class="w-20 md:w-64 bg-white/80 dark:bg-[#231c20]/80 backdrop-blur-xl border-r border-[#f4dde1] dark:border-[#382b32] flex flex-col justify-between transition-all duration-300 z-30 shrink-0 shadow-sm">
+<div>
+<div class="h-20 flex items-center px-4 md:px-6 border-b border-[#f8ecee] dark:border-[#33272e]">
+<div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-[#e19da9] via-[#f4dde1] to-[#dfd0b5] flex items-center justify-center text-white shadow-md shadow-rose-200/50 shrink-0">
+<i class="fa-solid fa-feather-pointed text-lg text-[#5a424c]"></i>
+</div>
+<div class="hidden md:block ml-3">
+<span class="font-serif font-bold text-2xl tracking-wide text-[#5a424c] dark:text-[#f3e3e9]">Bloom<span class="text-[#e19da9] italic font-normal">&amp;Plan</span></span>
+<p class="text-[9px] uppercase tracking-widest text-[#a88995] font-semibold">Organizador iPad</p>
+</div>
+</div>
+<nav class="p-3 space-y-2">
+<button onclick="switchTab('dashboard')" id="nav-dashboard" class="nav-btn w-full flex items-center gap-3.5 px-4 py-3 rounded-2xl font-medium text-sm text-[#705863] dark:text-[#cbb6c0] hover:bg-[#f8ecee] dark:hover:bg-[#33272e] transition-all duration-200">
+<i class="fa-solid fa-star text-base w-6 text-center text-[#e19da9]"></i>
+<span class="hidden md:inline font-serif text-base font-semibold">Dashboard</span>
+</button>
+<button onclick="switchTab('notebooks')" id="nav-notebooks" class="nav-btn w-full flex items-center gap-3.5 px-4 py-3 rounded-2xl font-medium text-sm text-[#705863] dark:text-[#cbb6c0] hover:bg-[#f8ecee] dark:hover:bg-[#33272e] transition-all duration-200">
+<i class="fa-solid fa-book-open-reader text-base w-6 text-center text-[#e19da9]"></i>
+<span class="hidden md:inline font-serif text-base font-semibold">Cadernos Digitais</span>
+</button>
+<button onclick="switchTab('studies')" id="nav-studies" class="nav-btn w-full flex items-center gap-3.5 px-4 py-3 rounded-2xl font-medium text-sm text-[#705863] dark:text-[#cbb6c0] hover:bg-[#f8ecee] dark:hover:bg-[#33272e] transition-all duration-200">
+<i class="fa-solid fa-graduation-cap text-base w-6 text-center text-[#e19da9]"></i>
+<span class="hidden md:inline font-serif text-base font-semibold">Estudos &amp; Revisões</span>
+</button>
+<button onclick="switchTab('planning')" id="nav-planning" class="nav-btn w-full flex items-center gap-3.5 px-4 py-3 rounded-2xl font-medium text-sm text-[#705863] dark:text-[#cbb6c0] hover:bg-[#f8ecee] dark:hover:bg-[#33272e] transition-all duration-200">
+<i class="fa-solid fa-calendar-check text-base w-6 text-center text-[#e19da9]"></i>
+<span class="hidden md:inline font-serif text-base font-semibold">Tarefas &amp; Hábitos</span>
+</button>
+<button onclick="switchTab('goals')" id="nav-goals" class="nav-btn w-full flex items-center gap-3.5 px-4 py-3 rounded-2xl font-medium text-sm text-[#705863] dark:text-[#cbb6c0] hover:bg-[#f8ecee] dark:hover:bg-[#33272e] transition-all duration-200">
+<i class="fa-solid fa-crown text-base w-6 text-center text-[#e19da9]"></i>
+<span class="hidden md:inline font-serif text-base font-semibold">Metas &amp; Sonhos</span>
+</button>
+<button onclick="switchTab('ai-assistant')" id="nav-ai-assistant" class="nav-btn w-full flex items-center gap-3.5 px-4 py-3 rounded-2xl font-medium text-sm text-[#705863] dark:text-[#cbb6c0] hover:bg-[#f8ecee] dark:hover:bg-[#33272e] transition-all duration-200 border border-[#f4dde1]/60 bg-[#f8ecee]/30">
+<i class="fa-solid fa-wand-magic-sparkles text-base w-6 text-center text-[#e19da9]"></i>
+<span class="hidden md:inline font-serif text-base font-bold text-[#5a424c] dark:text-[#f3e3e9]">Assistente IA</span>
+</button>
+</nav>
+</div>
+<div class="p-3 border-t border-[#f8ecee] dark:border-[#33272e] space-y-2">
+<div class="flex gap-1">
+<button onclick="exportDataBackup()" class="flex-1 py-1.5 bg-[#f8ecee] dark:bg-[#33272e] text-[10px] font-bold rounded-xl text-[#705863] dark:text-[#cbb6c0] hover:bg-[#f4dde1] transition flex items-center justify-center gap-1" title="Exportar backup (JSON)">
+<i class="fa-solid fa-download text-[#e19da9]"></i> <span class="hidden md:inline">Backup</span>
+</button>
+<button onclick="document.getElementById('import-file-input').click()" class="flex-1 py-1.5 bg-[#f8ecee] dark:bg-[#33272e] text-[10px] font-bold rounded-xl text-[#705863] dark:text-[#cbb6c0] hover:bg-[#f4dde1] transition flex items-center justify-center gap-1" title="Restaurar dados (JSON)">
+<i class="fa-solid fa-upload text-[#e19da9]"></i> <span class="hidden md:inline">Restaurar</span>
+</button>
+<input type="file" id="import-file-input" class="hidden" accept=".json,application/json" onchange="importDataBackup(event)">
+</div>
+<button onclick="toggleDarkMode()" class="w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-[#705863] dark:text-[#cbb6c0] hover:bg-[#f8ecee] dark:hover:bg-[#33272e] transition">
+<span class="hidden md:flex items-center gap-2 text-xs font-semibold"><i class="fa-solid fa-moon text-[#e19da9]"></i> Modo Noturno</span>
+<i class="fa-solid fa-circle-half-stroke text-lg md:hidden mx-auto"></i>
+</button>
+<div class="flex items-center gap-3 p-2 bg-[#f8ecee]/60 dark:bg-[#2d2328] rounded-xl border border-[#f4dde1] dark:border-[#3d2f36]">
+<div class="w-8 h-8 rounded-full bg-gradient-to-r from-[#e19da9] to-[#dfd0b5] text-white font-serif font-bold flex items-center justify-center text-xs shrink-0 shadow">G</div>
+<div class="hidden md:block overflow-hidden">
+<p class="text-xs font-bold truncate text-[#5a424c] dark:text-[#f0dce3]">Girlboss Pro</p>
+<p class="text-[9px] text-[#a88995] truncate">iPad Pro Edition</p>
+</div>
+</div>
+</div>
+</aside>
+<main class="flex-1 min-w-0 flex flex-col h-full overflow-hidden relative">
+<header class="h-20 bg-white/70 dark:bg-[#231c20]/70 backdrop-blur-md border-b border-[#f4dde1] dark:border-[#382b32] flex items-center justify-between px-6 z-20 shrink-0">
+<h1 id="page-title" class="text-2xl font-serif font-bold tracking-wide text-[#5a424c] dark:text-[#f3e3e9]">Meu Painel</h1>
+<div class="flex items-center gap-4">
+<div class="hidden lg:flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#f8ecee] dark:bg-[#33272e] text-xs font-serif italic text-[#705863] dark:text-[#d3bec7]">
+<i class="fa-solid fa-quote-left text-[#e19da9] text-[10px]"></i>
+<span>"Você é capaz de grandes conquistas hoje."</span>
+</div>
+<div class="px-3.5 py-1.5 bg-[#f8ecee] dark:bg-[#33272e] text-[#5a424c] dark:text-[#f0dce3] rounded-full text-xs font-semibold flex items-center gap-2 border border-[#f4dde1] dark:border-[#42333b]">
+<i class="fa-regular fa-clock text-[#e19da9]"></i>
+<span id="header-clock">00:00</span>
+</div>
+</div>
+</header>
+<div id="content-container" class="flex-1 min-h-0 overflow-y-auto p-4 md:p-6 lg:p-8">
+<section id="tab-dashboard" class="tab-content space-y-6 max-w-7xl mx-auto">
+<div class="relative bg-gradient-to-r from-[#f8ecee] via-[#f4dde1] to-[#ece2d0] dark:from-[#33272e] dark:via-[#3d2c34] dark:to-[#382e30] rounded-3xl p-6 md:p-8 text-[#5a424c] dark:text-[#f5e6ec] shadow-sm border border-[#f4dde1] dark:border-[#42333b] overflow-hidden">
+<div class="absolute -right-10 -bottom-10 opacity-10 text-[180px] pointer-events-none font-serif italic">Bloom</div>
+<div class="relative z-10 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+<div>
+<span class="text-[#a88995] dark:text-[#c4aab4] text-xs font-semibold uppercase tracking-widest" id="dash-date"></span>
+<h2 class="text-3xl md:text-4xl font-serif font-bold mt-1 tracking-wide" id="dash-greeting">Seja bem-vinda 🌸</h2>
+<p class="text-[#705863] dark:text-[#d8c5ce] text-sm mt-1 font-serif italic">Que seu dia seja produtivo e repleto de conquistas incríveis.</p>
+</div>
+<button onclick="switchTab('notebooks')" class="px-5 py-3 bg-white dark:bg-[#231c20] text-[#5a424c] dark:text-[#f0dce3] rounded-2xl font-serif font-bold text-sm shadow-md hover:bg-[#f8ecee] dark:hover:bg-[#33272e] transition flex items-center gap-2 border border-[#f4dde1] dark:border-[#382b32]">
+<i class="fa-solid fa-plus text-[#e19da9]"></i> Abrir Cadernos
+</button>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+<div class="bg-white dark:bg-[#231c20] p-6 rounded-3xl border border-[#f4dde1] dark:border-[#382b32] shadow-sm flex flex-col justify-between glow-soft">
+<div>
+<div class="flex justify-between items-center mb-4">
+<h3 class="font-serif font-bold text-lg text-[#5a424c] dark:text-[#f0dce3] flex items-center gap-2"><i class="fa-solid fa-heart text-[#e19da9]"></i> Prioridades de Hoje</h3>
+<span class="text-xs bg-[#f8ecee] dark:bg-[#33272e] text-[#e19da9] font-bold px-3 py-1 rounded-full" id="dash-tasks-count">0/0</span>
+</div>
+<div class="mb-4">
+<div class="flex justify-between text-xs text-[#a88995] mb-1 font-medium"><span>Progresso das Tarefas</span><span id="dash-progress-percent">0%</span></div>
+<div class="w-full h-2 bg-[#f8ecee] dark:bg-[#33272e] rounded-full overflow-hidden">
+<div id="dash-progress-bar" class="h-full bg-gradient-to-r from-[#e19da9] to-[#dfd0b5] transition-all duration-300 w-0"></div>
+</div>
+</div>
+<div id="dash-tasks-list" class="space-y-2.5 max-h-48 overflow-y-auto pr-1"></div>
+</div>
+</div>
+<div class="bg-white dark:bg-[#231c20] p-6 rounded-3xl border border-[#f4dde1] dark:border-[#382b32] shadow-sm glow-soft">
+<div class="flex justify-between items-center mb-4">
+<h3 class="font-serif font-bold text-lg text-[#5a424c] dark:text-[#f0dce3] flex items-center gap-2"><i class="fa-solid fa-calendar-days text-[#e19da9]"></i> Calendário</h3>
+<div class="flex items-center gap-1">
+<button onclick="shiftCalendar(-1)" class="w-7 h-7 rounded-lg text-[#a88995] hover:bg-[#f8ecee] dark:hover:bg-[#33272e]" aria-label="Mês anterior"><i class="fa-solid fa-chevron-left text-[10px]"></i></button>
+<span id="calendar-month-year" class="text-xs font-serif italic text-[#a88995] min-w-[96px] text-center whitespace-nowrap"></span>
+<button onclick="shiftCalendar(1)" class="w-7 h-7 rounded-lg text-[#a88995] hover:bg-[#f8ecee] dark:hover:bg-[#33272e]" aria-label="Próximo mês"><i class="fa-solid fa-chevron-right text-[10px]"></i></button>
+</div>
+</div>
+<div class="grid grid-cols-7 gap-1 text-center text-[11px] font-bold text-[#a88995] mb-2 font-serif">
+<div>Dom</div><div>Seg</div><div>Ter</div><div>Qua</div><div>Qui</div><div>Sex</div><div>Sáb</div>
+</div>
+<div id="calendar-days-grid" class="grid grid-cols-7 gap-1 text-center text-xs"></div>
+<p class="text-[10px] text-[#a88995] mt-3 flex items-center gap-1.5"><span class="inline-block w-1.5 h-1.5 rounded-full bg-[#e19da9]"></span> dia com tarefa pendente</p>
+</div>
+<div class="bg-white dark:bg-[#231c20] p-6 rounded-3xl border border-[#f4dde1] dark:border-[#382b32] shadow-sm flex flex-col justify-between glow-soft">
+<div>
+<h3 class="font-serif font-bold text-lg text-[#5a424c] dark:text-[#f0dce3] flex items-center gap-2 mb-4"><i class="fa-solid fa-book-bookmark text-[#e19da9]"></i> Cadernos Recentes</h3>
+<div id="dash-recent-notebooks" class="space-y-3"></div>
+</div>
+<div class="mt-4 pt-4 border-t border-[#f8ecee] dark:border-[#33272e] flex gap-2">
+<button onclick="switchTab('studies')" class="flex-1 py-2.5 bg-[#f8ecee] dark:bg-[#33272e] text-xs font-semibold rounded-xl text-[#5a424c] dark:text-[#f0dce3] hover:bg-[#f4dde1] transition flex items-center justify-center gap-1.5"><i class="fa-solid fa-graduation-cap text-[#e19da9]"></i> Estudos</button>
+<button onclick="switchTab('planning')" class="flex-1 py-2.5 bg-[#f8ecee] dark:bg-[#33272e] text-xs font-semibold rounded-xl text-[#5a424c] dark:text-[#f0dce3] hover:bg-[#f4dde1] transition flex items-center justify-center gap-1.5"><i class="fa-solid fa-check text-[#e19da9]"></i> Hábitos</button>
+</div>
+</div>
+<div class="bg-white dark:bg-[#231c20] p-6 rounded-3xl border border-[#f4dde1] dark:border-[#382b32] shadow-sm md:col-span-2 glow-soft">
+<h3 class="font-serif font-bold text-lg text-[#5a424c] dark:text-[#f0dce3] flex items-center gap-2 mb-4"><i class="fa-solid fa-wand-magic-sparkles text-[#e19da9]"></i> Hábitos de Autocuidado &amp; Rotina</h3>
+<div id="dash-habits-container" class="grid grid-cols-1 sm:grid-cols-2 gap-3"></div>
+</div>
+<div class="bg-white dark:bg-[#231c20] p-6 rounded-3xl border border-[#f4dde1] dark:border-[#382b32] shadow-sm glow-soft">
+<h3 class="font-serif font-bold text-lg text-[#5a424c] dark:text-[#f0dce3] flex items-center gap-2 mb-4"><i class="fa-solid fa-crown text-[#e19da9]"></i> Metas Principais</h3>
+<div id="dash-goals-summary" class="space-y-4"></div>
+</div>
+</div>
+</section>
+<section id="tab-notebooks" class="tab-content hidden h-full flex flex-col">
+<div id="notebook-gallery" class="space-y-6 max-w-7xl mx-auto w-full">
+<div class="flex justify-between items-center">
+<div>
+<h2 class="text-3xl font-serif font-bold text-[#5a424c] dark:text-[#f0dce3]">Meus Cadernos Digitais</h2>
+<p class="text-xs text-[#a88995]">Escreva, desenhe e crie resumos com suporte a toque e Apple Pencil.</p>
+</div>
+<button onclick="openNewNotebookModal()" class="px-5 py-2.5 bg-gradient-to-r from-[#e19da9] to-[#dfd0b5] text-white rounded-2xl text-sm font-serif font-bold shadow-md hover:opacity-90 transition flex items-center gap-2"><i class="fa-solid fa-plus"></i> Novo Caderno</button>
+</div>
+<div id="notebooks-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6"></div>
+</div>
+<div id="notebook-editor" class="hidden flex-1 min-h-0 flex flex-col h-full -m-4 md:-m-6 lg:-m-8">
+<div class="bg-white/90 dark:bg-[#231c20]/90 backdrop-blur-md border-b border-[#f4dde1] dark:border-[#382b32] p-3 flex flex-wrap items-center justify-between gap-3 shadow-sm z-10">
+<div class="flex items-center gap-3">
+<button onclick="closeNotebook()" class="p-2 hover:bg-[#f8ecee] dark:hover:bg-[#33272e] rounded-xl text-[#a88995] transition" title="Voltar aos cadernos"><i class="fa-solid fa-arrow-left"></i></button>
+<div>
+<h3 id="current-notebook-title" class="font-serif font-bold text-base text-[#5a424c] dark:text-[#f0dce3]">Título do Caderno</h3>
+<span id="current-page-indicator" class="text-[10px] text-[#a88995]">Página 1 de 1</span>
+</div>
+</div>
+<div class="flex items-center gap-1.5 bg-[#f8ecee] dark:bg-[#2d2328] p-1.5 rounded-2xl border border-[#f4dde1] dark:border-[#382b32]">
+<button onclick="setTool('pen')" id="tool-pen" class="tool-btn px-3 py-1.5 rounded-xl text-xs font-semibold flex items-center gap-1.5 text-[#705863] dark:text-[#cbb6c0]"><i class="fa-solid fa-pen-nib"></i> Caneta</button>
+<button onclick="setTool('highlighter')" id="tool-highlighter" class="tool-btn px-3 py-1.5 rounded-xl text-xs font-semibold flex items-center gap-1.5 text-[#705863] dark:text-[#cbb6c0]"><i class="fa-solid fa-highlighter"></i> Marca-Texto</button>
+<button onclick="setTool('text')" id="tool-text" class="tool-btn px-3 py-1.5 rounded-xl text-xs font-semibold flex items-center gap-1.5 text-[#705863] dark:text-[#cbb6c0]"><i class="fa-solid fa-font"></i> Texto</button>
+<button onclick="setTool('eraser')" id="tool-eraser" class="tool-btn px-3 py-1.5 rounded-xl text-xs font-semibold flex items-center gap-1.5 text-[#705863] dark:text-[#cbb6c0]"><i class="fa-solid fa-eraser"></i> Borracha</button>
+<button onclick="setTool('hand')" id="tool-hand" class="tool-btn px-3 py-1.5 rounded-xl text-xs font-semibold flex items-center gap-1.5 text-[#705863] dark:text-[#cbb6c0]" title="Mover a folha com o dedo"><i class="fa-solid fa-hand"></i> Mover</button>
+</div>
+<div class="flex items-center gap-3 flex-wrap">
+<div class="flex items-center gap-1.5" id="pen-colors">
+<button data-color="#5a424c" onclick="setPenColor('#5a424c')" class="pen-swatch w-6 h-6 rounded-full bg-[#5a424c] border-2 border-white shadow-sm" aria-label="Marrom"></button>
+<button data-color="#e19da9" onclick="setPenColor('#e19da9')" class="pen-swatch w-6 h-6 rounded-full bg-[#e19da9] border-2 border-white shadow-sm" aria-label="Rosa"></button>
+<button data-color="#c4b5fd" onclick="setPenColor('#c4b5fd')" class="pen-swatch w-6 h-6 rounded-full bg-[#c4b5fd] border-2 border-white shadow-sm" aria-label="Lavanda"></button>
+<button data-color="#dfd0b5" onclick="setPenColor('#dfd0b5')" class="pen-swatch w-6 h-6 rounded-full bg-[#dfd0b5] border-2 border-white shadow-sm" aria-label="Champagne"></button>
+<button data-color="#86efac" onclick="setPenColor('#86efac')" class="pen-swatch w-6 h-6 rounded-full bg-[#86efac] border-2 border-white shadow-sm" aria-label="Verde"></button>
+</div>
+<select onchange="changePagePaper(this.value)" id="paper-type-select" class="bg-[#f8ecee] dark:bg-[#2d2328] text-xs font-semibold rounded-xl px-3 py-1.5 border border-[#f4dde1] dark:border-[#382b32] text-[#5a424c] dark:text-[#f0dce3] focus:outline-none">
+<option value="lined">Pautada Pastel</option>
+<option value="margin">Margem Rosa</option>
+<option value="grid">Quadriculada</option>
+<option value="dotted">Pontilhada</option>
+<option value="mindmap">🌸 Mapa Mental</option>
+<option value="blank">Branca</option>
+</select>
+<div class="flex items-center gap-1">
+<button onclick="prevPage()" class="p-2 hover:bg-[#f8ecee] dark:hover:bg-[#33272e] rounded-xl text-xs text-[#a88995]" aria-label="Página anterior"><i class="fa-solid fa-chevron-left"></i></button>
+<button onclick="nextPage()" class="p-2 hover:bg-[#f8ecee] dark:hover:bg-[#33272e] rounded-xl text-xs text-[#a88995]" aria-label="Próxima página"><i class="fa-solid fa-chevron-right"></i></button>
+<button onclick="addNewPage()" class="p-2 hover:bg-[#f8ecee] dark:hover:bg-[#33272e] rounded-xl text-xs text-[#e19da9] font-bold" title="Nova página"><i class="fa-solid fa-plus"></i></button>
+<button onclick="deleteCurrentPage()" class="p-2 hover:bg-[#f8ecee] dark:hover:bg-[#33272e] rounded-xl text-xs text-[#a88995]" title="Excluir página"><i class="fa-regular fa-trash-can"></i></button>
+<button onclick="exportNotebookPDF()" class="px-3 py-1.5 bg-[#f8ecee] dark:bg-[#2d2328] hover:bg-[#f4dde1] text-xs rounded-xl font-semibold text-[#5a424c] dark:text-[#f0dce3] transition border border-[#f4dde1] dark:border-[#382b32]" title="Exportar caderno em PDF">
+<i class="fa-solid fa-file-pdf text-rose-400"></i> PDF
+</button>
+</div>
+</div>
+</div>
+<div id="paper-area" class="flex-1 min-h-0 bg-[#f4dde1]/40 dark:bg-[#151113] p-4 overflow-auto flex justify-center items-start">
+<div id="paper-wrap" class="shrink-0" style="width:800px;height:1100px">
+<div id="paper-container" class="relative bg-white shadow-2xl rounded-lg overflow-hidden ring-1 ring-[#f4dde1] paper-lined" style="width:800px;height:1100px;transform-origin:0 0">
+<canvas id="notebook-canvas" class="absolute inset-0 z-10" style="width:100%;height:100%"></canvas>
+<div id="text-overlay-layer" class="absolute inset-0 z-20 pointer-events-none"></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="tab-studies" class="tab-content hidden space-y-6 max-w-7xl mx-auto">
+<div class="flex justify-between items-center">
+<div>
+<h2 class="text-3xl font-serif font-bold text-[#5a424c] dark:text-[#f0dce3]">Estudos &amp; Revisões</h2>
+<p class="text-xs text-[#a88995]">Organize suas disciplinas, progresso de cursos e matérias acumuladas.</p>
+</div>
+<button onclick="openSubjectModal()" class="px-5 py-2.5 bg-gradient-to-r from-[#e19da9] to-[#dfd0b5] text-white rounded-2xl text-sm font-serif font-bold shadow-md hover:opacity-90 transition flex items-center gap-2"><i class="fa-solid fa-plus"></i> Nova Disciplina</button>
+</div>
+<div id="subjects-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+<div class="bg-white dark:bg-[#231c20] p-6 rounded-3xl border border-[#f4dde1] dark:border-[#382b32] shadow-sm glow-soft">
+<h3 class="text-xl font-serif font-bold mb-4 text-[#5a424c] dark:text-[#f0dce3] flex items-center gap-2"><i class="fa-solid fa-lightbulb text-[#e19da9]"></i> Dúvidas &amp; Tópicos para Revisão Espaçada</h3>
+<div class="flex gap-2 mb-4">
+<input type="text" id="doubt-input" autocomplete="off" onkeydown="if(event.key==='Enter')addDoubt()" placeholder="Digite uma dúvida ou conteúdo para revisar..." class="flex-1 bg-[#f8ecee] dark:bg-[#2d2328] px-4 py-3 rounded-2xl text-xs border border-[#f4dde1] dark:border-[#382b32] focus:outline-none focus:ring-2 focus:ring-[#e19da9] text-[#5a424c] dark:text-[#f0dce3]">
+<button onclick="addDoubt()" class="px-5 py-3 bg-[#e19da9] hover:bg-[#d88d9a] text-white rounded-2xl font-serif font-bold text-xs transition">Adicionar</button>
+</div>
+<div id="doubts-list" class="space-y-2.5"></div>
+</div>
+</section>
+<section id="tab-planning" class="tab-content hidden space-y-6 max-w-7xl mx-auto">
+<div class="flex justify-between items-center">
+<div>
+<h2 class="text-3xl font-serif font-bold text-[#5a424c] dark:text-[#f0dce3]">Tarefas &amp; Hábitos</h2>
+<p class="text-xs text-[#a88995]">Mantenha sua rotina organizada com leveza e equilíbrio.</p>
+</div>
+<button onclick="openTaskModal()" class="px-5 py-2.5 bg-gradient-to-r from-[#e19da9] to-[#dfd0b5] text-white rounded-2xl text-sm font-serif font-bold shadow-md hover:opacity-90 transition flex items-center gap-2"><i class="fa-solid fa-plus"></i> Nova Tarefa</button>
+</div>
+<div id="tasks-list-full" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+<div class="bg-white dark:bg-[#231c20] p-6 rounded-3xl border border-[#f4dde1] dark:border-[#382b32] shadow-sm mt-8 glow-soft">
+<div class="flex justify-between items-center mb-6">
+<div>
+<h3 class="text-xl font-serif font-bold text-[#5a424c] dark:text-[#f0dce3] flex items-center gap-2"><i class="fa-solid fa-seedling text-[#e19da9]"></i> Monitor de Hábitos Diários</h3>
+<p class="text-xs text-[#a88995]">Cultive hábitos saudáveis todos os dias.</p>
+</div>
+<button onclick="openHabitModal()" class="px-4 py-2 bg-[#f8ecee] dark:bg-[#33272e] text-[#5a424c] dark:text-[#f0dce3] rounded-xl text-xs font-serif font-bold hover:bg-[#f4dde1] transition flex items-center gap-2"><i class="fa-solid fa-plus text-[#e19da9]"></i> Novo Hábito</button>
+</div>
+<div id="habits-list-full" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+</div>
+</section>
+<section id="tab-goals" class="tab-content hidden space-y-6 max-w-7xl mx-auto">
+<div class="flex justify-between items-center">
+<div>
+<h2 class="text-3xl font-serif font-bold text-[#5a424c] dark:text-[#f0dce3]">Metas &amp; Visão de Futuro</h2>
+<p class="text-xs text-[#a88995]">Seus objetivos acadêmicos, pessoais e profissionais.</p>
+</div>
+<button onclick="openGoalModal()" class="px-5 py-2.5 bg-gradient-to-r from-[#e19da9] to-[#dfd0b5] text-white rounded-2xl text-sm font-serif font-bold shadow-md hover:opacity-90 transition flex items-center gap-2"><i class="fa-solid fa-plus"></i> Nova Meta</button>
+</div>
+<div id="goals-container" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div>
+</section>
+<section id="tab-ai-assistant" class="tab-content hidden h-full flex flex-col max-w-5xl mx-auto">
+<div class="bg-white dark:bg-[#231c20] rounded-3xl p-6 border border-[#f4dde1] dark:border-[#382b32] shadow-sm flex flex-col h-full min-h-0 glow-soft">
+<div class="flex items-center justify-between border-b border-[#f8ecee] dark:border-[#33272e] pb-4 mb-4">
+<div class="flex items-center gap-3">
+<div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-[#e19da9] to-[#dfd0b5] text-white flex items-center justify-center text-xl shadow-md"><i class="fa-solid fa-robot"></i></div>
+<div>
+<h3 class="font-serif font-bold text-xl text-[#5a424c] dark:text-[#f0dce3]">Aura — Sua Assistente Girlboss IA</h3>
+<p class="text-xs text-[#a88995]">Tire dúvidas, peça resumos e crie cronogramas.</p>
+</div>
+</div>
+<span class="px-3 py-1 bg-[#f8ecee] dark:bg-[#33272e] text-[#e19da9] text-xs font-bold rounded-full border border-[#f4dde1] dark:border-[#382b32]">Online ✨</span>
+</div>
+<div id="ai-messages-container" class="flex-1 min-h-0 overflow-y-auto space-y-4 pr-2 mb-4">
+<div class="flex gap-3 items-start">
+<div class="w-8 h-8 rounded-full bg-[#f8ecee] dark:bg-[#33272e] text-[#e19da9] flex items-center justify-center text-xs shrink-0 mt-1"><i class="fa-solid fa-star"></i></div>
+<div class="bg-[#f8ecee]/60 dark:bg-[#2d2328] p-4 rounded-2xl max-w-lg text-xs leading-relaxed text-[#5a424c] dark:text-[#f0dce3] border border-[#f4dde1] dark:border-[#382b32]">
+Olá, maravilhosa! Sou a <b>Aura</b>, sua assistente pessoal de IA. Como posso te ajudar hoje na sua rotina de organização ou estudos?
+<div class="mt-3 flex flex-wrap gap-2">
+<button onclick="sendQuickAiPrompt('Como posso estruturar minha rotina de estudos de hoje?')" class="px-3 py-1 bg-white dark:bg-[#3d2c34] rounded-xl text-[11px] text-[#e19da9] font-medium border border-[#f4dde1] dark:border-[#382b32] hover:bg-[#f8ecee]">📅 Organizar dia de estudos</button>
+<button onclick="sendQuickAiPrompt('Me dê dicas para melhorar meu foco no iPad.')" class="px-3 py-1 bg-white dark:bg-[#3d2c34] rounded-xl text-[11px] text-[#e19da9] font-medium border border-[#f4dde1] dark:border-[#382b32] hover:bg-[#f8ecee]">🧠 Dicas de foco</button>
+<button onclick="sendQuickAiPrompt('Como exporto meus cadernos em PDF?')" class="px-3 py-1 bg-white dark:bg-[#3d2c34] rounded-xl text-[11px] text-[#e19da9] font-medium border border-[#f4dde1] dark:border-[#382b32] hover:bg-[#f8ecee]">📄 Como exportar PDF</button>
+</div>
+</div>
+</div>
+</div>
+<div class="flex gap-2 bg-[#f8ecee] dark:bg-[#2d2328] p-2 rounded-2xl border border-[#f4dde1] dark:border-[#382b32]">
+<input type="text" id="ai-input" autocomplete="off" placeholder="Faça uma pergunta ou solicite ajuda para a IA..." onkeydown="if(event.key==='Enter')sendAiMessage()" class="flex-1 bg-transparent px-4 py-2 text-xs outline-none text-[#5a424c] dark:text-[#f0dce3]">
+<button id="ai-send-btn" onclick="sendAiMessage()" class="px-5 py-2.5 bg-[#e19da9] hover:bg-[#d88d9a] text-white rounded-xl text-xs font-serif font-bold shadow transition flex items-center gap-2"><i class="fa-solid fa-paper-plane"></i> Enviar</button>
+</div>
+</div>
+</section>
+</div>
+</main>
+<div id="modal-notebook" class="fixed inset-0 bg-[#382b32]/40 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+<div class="bg-white dark:bg-[#231c20] w-full max-w-md p-6 rounded-3xl shadow-2xl border border-[#f4dde1] dark:border-[#382b32]">
+<h3 class="text-xl font-serif font-bold mb-4 text-[#5a424c] dark:text-[#f0dce3]">Novo Caderno</h3>
+<div class="space-y-4">
+<div>
+<label class="text-xs font-semibold text-[#a88995]">Nome do Caderno</label>
+<input type="text" id="nb-title-input" autocomplete="off" placeholder="Ex: Diário de Estudos, Resumos..." class="w-full mt-1 bg-[#f8ecee] dark:bg-[#2d2328] px-4 py-3 rounded-2xl text-xs border border-[#f4dde1] dark:border-[#382b32] text-[#5a424c] dark:text-[#f0dce3] focus:outline-none">
+</div>
+<div>
+<label class="text-xs font-semibold text-[#a88995]">Cor da Capa Pastel</label>
+<div class="flex gap-3 mt-2" id="cover-options">
+<button onclick="selectCoverColor(this)" data-cover="bg-gradient-to-br from-[#f4dde1] to-[#ebbdc5]" class="w-9 h-9 rounded-xl bg-gradient-to-br from-[#f4dde1] to-[#ebbdc5] ring-2 ring-offset-2 ring-[#e19da9] color-opt" aria-label="Rosa"></button>
+<button onclick="selectCoverColor(this)" data-cover="bg-gradient-to-br from-[#ede9fe] to-[#c4b5fd]" class="w-9 h-9 rounded-xl bg-gradient-to-br from-[#ede9fe] to-[#c4b5fd] color-opt" aria-label="Lavanda"></button>
+<button onclick="selectCoverColor(this)" data-cover="bg-gradient-to-br from-[#f7f2e9] to-[#dfd0b5]" class="w-9 h-9 rounded-xl bg-gradient-to-br from-[#f7f2e9] to-[#dfd0b5] color-opt" aria-label="Champagne"></button>
+<button onclick="selectCoverColor(this)" data-cover="bg-gradient-to-br from-[#dcfce7] to-[#86efac]" class="w-9 h-9 rounded-xl bg-gradient-to-br from-[#dcfce7] to-[#86efac] color-opt" aria-label="Verde"></button>
+</div>
+</div>
+</div>
+<div class="flex justify-end gap-2 mt-6">
+<button onclick="closeModal('modal-notebook')" class="px-4 py-2 text-xs font-semibold text-[#a88995] hover:bg-[#f8ecee] rounded-xl">Cancelar</button>
+<button onclick="createNotebook()" class="px-5 py-2.5 bg-[#e19da9] text-white rounded-xl text-xs font-serif font-bold shadow hover:bg-[#d88d9a]">Criar Caderno</button>
+</div>
+</div>
+</div>
+<div id="modal-task" class="fixed inset-0 bg-[#382b32]/40 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+<div class="bg-white dark:bg-[#231c20] w-full max-w-md p-6 rounded-3xl shadow-2xl border border-[#f4dde1] dark:border-[#382b32]">
+<h3 class="text-xl font-serif font-bold mb-4 text-[#5a424c] dark:text-[#f0dce3]">Nova Tarefa</h3>
+<div class="space-y-4">
+<div>
+<label class="text-xs font-semibold text-[#a88995]">Título</label>
+<input type="text" id="task-title-input" autocomplete="off" placeholder="Ex: Organizar resumo de Biologia" class="w-full mt-1 bg-[#f8ecee] dark:bg-[#2d2328] px-4 py-3 rounded-2xl text-xs border border-[#f4dde1] dark:border-[#382b32] text-[#5a424c] dark:text-[#f0dce3] focus:outline-none">
+</div>
+<div class="grid grid-cols-2 gap-3">
+<div>
+<label class="text-xs font-semibold text-[#a88995]">Prioridade</label>
+<select id="task-priority-input" class="w-full mt-1 bg-[#f8ecee] dark:bg-[#2d2328] px-3 py-3 rounded-2xl text-xs border border-[#f4dde1] dark:border-[#382b32] text-[#5a424c] dark:text-[#f0dce3]">
+<option value="Alta">Alta 🌸</option>
+<option value="Média" selected>Média ✨</option>
+<option value="Baixa">Baixa 🌿</option>
+</select>
+</div>
+<div>
+<label class="text-xs font-semibold text-[#a88995]">Data Limite</label>
+<input type="date" id="task-date-input" class="w-full mt-1 bg-[#f8ecee] dark:bg-[#2d2328] px-3 py-3 rounded-2xl text-xs border border-[#f4dde1] dark:border-[#382b32] text-[#5a424c] dark:text-[#f0dce3]">
+</div>
+</div>
+</div>
+<div class="flex justify-end gap-2 mt-6">
+<button onclick="closeModal('modal-task')" class="px-4 py-2 text-xs font-semibold text-[#a88995] hover:bg-[#f8ecee] rounded-xl">Cancelar</button>
+<button onclick="createTask()" class="px-5 py-2.5 bg-[#e19da9] text-white rounded-xl text-xs font-serif font-bold shadow hover:bg-[#d88d9a]">Salvar Tarefa</button>
+</div>
+</div>
+</div>
+<div id="modal-subject" class="fixed inset-0 bg-[#382b32]/40 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+<div class="bg-white dark:bg-[#231c20] w-full max-w-md p-6 rounded-3xl shadow-2xl border border-[#f4dde1] dark:border-[#382b32]">
+<h3 class="text-xl font-serif font-bold mb-4 text-[#5a424c] dark:text-[#f0dce3]">Nova Disciplina</h3>
+<div class="space-y-4">
+<div>
+<label class="text-xs font-semibold text-[#a88995]">Nome</label>
+<input type="text" id="subject-name-input" autocomplete="off" placeholder="Ex: Anatomia Humana" class="w-full mt-1 bg-[#f8ecee] dark:bg-[#2d2328] px-4 py-3 rounded-2xl text-xs border border-[#f4dde1] dark:border-[#382b32] text-[#5a424c] dark:text-[#f0dce3] focus:outline-none">
+</div>
+<div>
+<label class="text-xs font-semibold text-[#a88995]">Tópicos (separe por vírgula)</label>
+<input type="text" id="subject-topics-input" autocomplete="off" placeholder="Ex: Sistema nervoso, Ossos, Músculos" class="w-full mt-1 bg-[#f8ecee] dark:bg-[#2d2328] px-4 py-3 rounded-2xl text-xs border border-[#f4dde1] dark:border-[#382b32] text-[#5a424c] dark:text-[#f0dce3] focus:outline-none">
+</div>
+<div>
+<label class="text-xs font-semibold text-[#a88995]">Cor</label>
+<select id="subject-color-input" class="w-full mt-1 bg-[#f8ecee] dark:bg-[#2d2328] px-3 py-3 rounded-2xl text-xs border border-[#f4dde1] dark:border-[#382b32] text-[#5a424c] dark:text-[#f0dce3]">
+<option value="border-rose-300">Rosa</option>
+<option value="border-purple-300">Lavanda</option>
+<option value="border-amber-300">Champagne</option>
+<option value="border-emerald-300">Verde</option>
+</select>
+</div>
+</div>
+<div class="flex justify-end gap-2 mt-6">
+<button onclick="closeModal('modal-subject')" class="px-4 py-2 text-xs font-semibold text-[#a88995] hover:bg-[#f8ecee] rounded-xl">Cancelar</button>
+<button onclick="createSubject()" class="px-5 py-2.5 bg-[#e19da9] text-white rounded-xl text-xs font-serif font-bold shadow hover:bg-[#d88d9a]">Salvar</button>
+</div>
+</div>
+</div>
+<div id="modal-goal" class="fixed inset-0 bg-[#382b32]/40 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+<div class="bg-white dark:bg-[#231c20] w-full max-w-md p-6 rounded-3xl shadow-2xl border border-[#f4dde1] dark:border-[#382b32]">
+<h3 class="text-xl font-serif font-bold mb-4 text-[#5a424c] dark:text-[#f0dce3]">Nova Meta</h3>
+<div class="space-y-4">
+<div>
+<label class="text-xs font-semibold text-[#a88995]">Título</label>
+<input type="text" id="goal-title-input" autocomplete="off" placeholder="Ex: Viajar para a Europa" class="w-full mt-1 bg-[#f8ecee] dark:bg-[#2d2328] px-4 py-3 rounded-2xl text-xs border border-[#f4dde1] dark:border-[#382b32] text-[#5a424c] dark:text-[#f0dce3] focus:outline-none">
+</div>
+<div class="grid grid-cols-2 gap-3">
+<div>
+<label class="text-xs font-semibold text-[#a88995]">Categoria</label>
+<select id="goal-category-input" class="w-full mt-1 bg-[#f8ecee] dark:bg-[#2d2328] px-3 py-3 rounded-2xl text-xs border border-[#f4dde1] dark:border-[#382b32] text-[#5a424c] dark:text-[#f0dce3]">
+<option>Acadêmico</option><option>Pessoal</option><option>Profissional</option><option>Financeiro</option><option>Saúde</option>
+</select>
+</div>
+<div>
+<label class="text-xs font-semibold text-[#a88995]">Objetivo final</label>
+<input type="text" id="goal-date-input" autocomplete="off" placeholder="Ex: Junho 2027" class="w-full mt-1 bg-[#f8ecee] dark:bg-[#2d2328] px-3 py-3 rounded-2xl text-xs border border-[#f4dde1] dark:border-[#382b32] text-[#5a424c] dark:text-[#f0dce3] focus:outline-none">
+</div>
+</div>
+</div>
+<div class="flex justify-end gap-2 mt-6">
+<button onclick="closeModal('modal-goal')" class="px-4 py-2 text-xs font-semibold text-[#a88995] hover:bg-[#f8ecee] rounded-xl">Cancelar</button>
+<button onclick="createGoal()" class="px-5 py-2.5 bg-[#e19da9] text-white rounded-xl text-xs font-serif font-bold shadow hover:bg-[#d88d9a]">Salvar Meta</button>
+</div>
+</div>
+</div>
+<div id="modal-habit" class="fixed inset-0 bg-[#382b32]/40 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+<div class="bg-white dark:bg-[#231c20] w-full max-w-md p-6 rounded-3xl shadow-2xl border border-[#f4dde1] dark:border-[#382b32]">
+<h3 class="text-xl font-serif font-bold mb-4 text-[#5a424c] dark:text-[#f0dce3]">Novo Hábito</h3>
+<div class="space-y-4">
+<div>
+<label class="text-xs font-semibold text-[#a88995]">Nome do hábito</label>
+<input type="text" id="habit-title-input" autocomplete="off" placeholder="Ex: Caminhada de 30 min" class="w-full mt-1 bg-[#f8ecee] dark:bg-[#2d2328] px-4 py-3 rounded-2xl text-xs border border-[#f4dde1] dark:border-[#382b32] text-[#5a424c] dark:text-[#f0dce3] focus:outline-none">
+</div>
+<div>
+<label class="text-xs font-semibold text-[#a88995]">Ícone</label>
+<select id="habit-icon-input" class="w-full mt-1 bg-[#f8ecee] dark:bg-[#2d2328] px-3 py-3 rounded-2xl text-xs border border-[#f4dde1] dark:border-[#382b32] text-[#5a424c] dark:text-[#f0dce3]">
+<option value="fa-star">✨ Brilho</option>
+<option value="fa-bottle-water">💧 Água</option>
+<option value="fa-book-open">📖 Leitura</option>
+<option value="fa-dumbbell">🏋️ Treino</option>
+<option value="fa-person-walking">🚶 Caminhada</option>
+<option value="fa-bed">🛏️ Sono</option>
+<option value="fa-apple-whole">🍎 Alimentação</option>
+<option value="fa-pen">✏️ Escrita</option>
+</select>
+</div>
+</div>
+<div class="flex justify-end gap-2 mt-6">
+<button onclick="closeModal('modal-habit')" class="px-4 py-2 text-xs font-semibold text-[#a88995] hover:bg-[#f8ecee] rounded-xl">Cancelar</button>
+<button onclick="createHabit()" class="px-5 py-2.5 bg-[#e19da9] text-white rounded-xl text-xs font-serif font-bold shadow hover:bg-[#d88d9a]">Salvar Hábito</button>
+</div>
+</div>
+</div>
+<div id="modal-confirm" class="fixed inset-0 bg-[#382b32]/40 backdrop-blur-sm z-[55] flex items-center justify-center p-4 hidden">
+<div class="bg-white dark:bg-[#231c20] w-full max-w-sm p-6 rounded-3xl shadow-2xl border border-[#f4dde1] dark:border-[#382b32]">
+<p id="confirm-message" class="text-sm text-[#5a424c] dark:text-[#f0dce3] font-medium"></p>
+<div class="flex justify-end gap-2 mt-6">
+<button id="confirm-no" class="px-4 py-2 text-xs font-semibold text-[#a88995] hover:bg-[#f8ecee] rounded-xl">Cancelar</button>
+<button id="confirm-yes" class="px-5 py-2.5 bg-[#e19da9] text-white rounded-xl text-xs font-serif font-bold shadow hover:bg-[#d88d9a]">Confirmar</button>
+</div>
+</div>
+</div>
+<div id="toast" class="fixed left-1/2 bottom-6 -translate-x-1/2 z-[60] px-5 py-3 rounded-2xl bg-[#5a424c] text-white text-xs font-semibold shadow-xl hidden"></div>
+<script>
+/* ================= UTILITÁRIOS ================= */
+const $ = id => document.getElementById(id);
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const pad = n => String(n).padStart(2, '0');
+const isoDate = d => `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+const todayISO = () => isoDate(new Date());
+const addDaysISO = n => { const d = new Date(); d.setDate(d.getDate() + n); return isoDate(d); };
+const newId = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+const slug = s => String(s || 'caderno').normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-zA-Z0-9]+/g, '-').replace(/^-|-$/g, '').toLowerCase() || 'caderno';
+function dateLabel(s) {
+if (!s) return 'Sem data';
+if (s === todayISO()) return 'Hoje';
+if (s === addDaysISO(1)) return 'Amanhã';
+const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(s);
+return m ? `${m[3]}/${m[2]}/${m[1]}` : s;
+}
+const PRIORITY_LABEL = { 'Alta': 'Alta 🌸', 'Média': 'Média ✨', 'Baixa': 'Baixa 🌿' };
+const PRIORITY_RANK = { 'Alta': 0, 'Média': 1, 'Baixa': 2 };
+const prioKey = p => String(p || 'Média').replace(/[^A-Za-zÀ-ú]/g, '') || 'Média';
+/* Armazenamento com fallback (alguns ambientes bloqueiam localStorage) */
+const memStore = {};
+const store = {
+get(k) { try { return localStorage.getItem(k); } catch (e) { return k in memStore ? memStore[k] : null; } },
+set(k, v) { try { localStorage.setItem(k, v); return true; } catch (e) { memStore[k] = v; return false; } }
+};
+const STORE_KEY = 'bloom_plan_ipad_data';
+/* Capacidades opcionais do ambiente (Claude): IA e downloads */
+const capCache = {};
+async function getCap(name) {
+if (name in capCache) return capCache[name];
+let cap = null;
+try { if (window.claude && typeof window.claude.use === 'function') cap = await window.claude.use(name); } catch (e) { cap = null; }
+capCache[name] = cap || null;
+return capCache[name];
+}
+let toastTimer;
+function toast(msg) {
+const el = $('toast');
+el.textContent = msg;
+el.classList.remove('hidden');
+el.classList.remove('toast-in'); void el.offsetWidth; el.classList.add('toast-in');
+clearTimeout(toastTimer);
+toastTimer = setTimeout(() => el.classList.add('hidden'), 2800);
+}
+function askConfirm(message, yesLabel = 'Confirmar') {
+return new Promise(resolve => {
+$('confirm-message').textContent = message;
+$('confirm-yes').textContent = yesLabel;
+const modal = $('modal-confirm');
+modal.classList.remove('hidden');
+const done = v => { modal.classList.add('hidden'); $('confirm-yes').onclick = null; $('confirm-no').onclick = null; resolve(v); };
+$('confirm-yes').onclick = () => done(true);
+$('confirm-no').onclick = () => done(false);
+});
+}
+async function saveFile(filename, data) {
+const dl = await getCap('downloads');
+if (dl) {
+try { await dl.save({ filename, data }); toast('Arquivo pronto ✨'); }
+catch (e) { if (!e || e.code !== 'declined') toast('Não foi possível salvar o arquivo.'); }
+return;
+}
+const blob = data instanceof Blob ? data : new Blob([data], { type: 'application/json' });
+const url = URL.createObjectURL(blob);
+const a = document.createElement('a');
+a.href = url; a.download = filename;
+document.body.appendChild(a); a.click(); a.remove();
+setTimeout(() => URL.revokeObjectURL(url), 5000);
+}
+/* ================= ESTADO ================= */
+const PAPER_W = 800, PAPER_H = 1100;
+const DEFAULT_COVER = 'bg-gradient-to-br from-[#f4dde1] to-[#ebbdc5]';
+function seedState() {
+return {
+selectedCoverColor: DEFAULT_COVER, activeTool: 'pen', penColor: '#5a424c',
+currentNotebookId: null, currentPageIndex: 0,
+notebooks: [
+{ id: '1', title: 'Resumos & Estudos', color: 'bg-gradient-to-br from-[#f4dde1] to-[#ebbdc5]', pages: [{ paper: 'lined', drawingData: null, texts: [] }] },
+{ id: '2', title: 'Planner Financeiro & Metas', color: 'bg-gradient-to-br from-[#f7f2e9] to-[#dfd0b5]', pages: [{ paper: 'grid', drawingData: null, texts: [] }] },
+{ id: '3', title: 'Mapas Mentais & Diagramas 🧠', color: 'bg-gradient-to-br from-[#dcfce7] to-[#86efac]', pages: [{ paper: 'mindmap', drawingData: null, texts: [] }] },
+{ id: '4', title: 'Diário & Reflexões', color: 'bg-gradient-to-br from-[#ede9fe] to-[#c4b5fd]', pages: [{ paper: 'dotted', drawingData: null, texts: [] }] }
+],
+tasks: [
+{ id: '1', title: 'Revisar capítulo de Biologia Celular', priority: 'Alta', date: todayISO(), completed: false },
+{ id: '2', title: 'Montar resumo no caderno digital', priority: 'Média', date: todayISO(), completed: true },
+{ id: '3', title: 'Planejar rotina da próxima semana', priority: 'Baixa', date: addDaysISO(1), completed: false }
+],
+habits: [
+{ id: '1', title: 'Beber 2L de Água', icon: 'fa-bottle-water', streak: 5, lastDone: todayISO() },
+{ id: '2', title: 'Leitura (20 págs)', icon: 'fa-book-open', streak: 3, lastDone: addDaysISO(-1) },
+{ id: '3', title: 'Skincare Noturno', icon: 'fa-star', streak: 12, lastDone: todayISO() }
+],
+subjects: [
+{ name: 'Biologia & Saúde', progress: 75, color: 'border-rose-300', topics: ['Mitocôndrias', 'Genética Molecular', 'Ciclo Celular'] },
+{ name: 'Direito Constitucional', progress: 40, color: 'border-purple-300', topics: ['Direitos Fundamentais', 'Artigo 5º'] },
+{ name: 'Inglês Intermediário', progress: 90, color: 'border-amber-300', topics: ['Phrasal Verbs', 'Listening Practice'] }
+],
+goals: [
+{ title: 'Concluir Curso de Especialização', category: 'Acadêmico', progress: 65, targetDate: 'Dezembro 2026' },
+{ title: 'Manter Rotina de Exercícios e Foco', category: 'Pessoal', progress: 80, targetDate: 'Contínuo' }
+],
+doubts: [
+{ text: 'Diferença entre Transcrição e Tradução de DNA', resolved: false },
+{ text: 'Revisar exceções dos Direitos Fundamentais', resolved: false }
+]
+};
+}
+/* Deixa qualquer dado (antigo, importado ou novo) no formato atual */
+function normalizeState(raw) {
+const base = seedState();
+const s = Object.assign({}, base, raw || {});
+['notebooks', 'tasks', 'habits', 'subjects', 'goals', 'doubts'].forEach(k => { if (!Array.isArray(s[k])) s[k] = []; });
+s.currentNotebookId = null; s.currentPageIndex = 0;
+s.activeTool = 'pen';
+s.notebooks.forEach(nb => {
+nb.id = String(nb.id ?? newId());
+nb.title = nb.title || 'Caderno';
+nb.color = nb.color || DEFAULT_COVER;
+if (!Array.isArray(nb.pages) || !nb.pages.length) nb.pages = [{ paper: 'lined', drawingData: null, texts: [] }];
+nb.pages.forEach(p => { p.paper = p.paper || 'lined'; p.drawingData = p.drawingData || null; if (!Array.isArray(p.texts)) p.texts = []; });
+});
+s.tasks.forEach(t => {
+t.id = String(t.id ?? newId());
+t.priority = prioKey(t.priority);
+if (!PRIORITY_RANK.hasOwnProperty(t.priority)) t.priority = 'Média';
+if (t.date === 'Hoje') t.date = todayISO();
+else if (t.date === 'Amanhã') t.date = addDaysISO(1);
+t.date = t.date || '';
+t.completed = !!t.completed;
+});
+const yesterday = addDaysISO(-1), today = todayISO();
+s.habits.forEach(h => {
+h.id = String(h.id ?? newId());
+h.icon = (!h.icon || h.icon === 'fa-sparkles') ? 'fa-star' : h.icon;
+h.streak = Number(h.streak) || 0;
+if (!('lastDone' in h)) { h.lastDone = h.doneToday ? today : null; }
+delete h.doneToday;
+if (h.lastDone && h.lastDone < yesterday) h.streak = 0;   // passou um dia sem fazer: zera a sequência
+});
+return s;
+}
+let appState = seedState();
+const habitDone = h => h.lastDone === todayISO();
+function loadInitialData() {
+const saved = store.get(STORE_KEY);
+if (saved) {
+try { appState = normalizeState(JSON.parse(saved)); return; }
+catch (e) { console.error('Erro ao carregar dados salvos:', e); }
+}
+appState = normalizeState(seedState());
+saveState();
+}
+let warnedStorage = false;
+function saveState() {
+const ok = store.set(STORE_KEY, JSON.stringify(appState));
+if (!ok && !warnedStorage) {
+warnedStorage = true;
+toast('⚠️ Este navegador não está guardando os dados. Use o botão Backup.');
+}
+}
+let saveTimer;
+function saveStateSoon() { clearTimeout(saveTimer); saveTimer = setTimeout(saveState, 400); }
+/* ================= BACKUP ================= */
+async function exportDataBackup() {
+saveCurrentCanvas();
+await saveFile(`bloom_plan_backup_${todayISO()}.json`, JSON.stringify(appState));
+}
+function importDataBackup(event) {
+const file = event.target.files && event.target.files[0];
+if (!file) return;
+const reader = new FileReader();
+reader.onload = e => {
+try {
+const parsed = JSON.parse(e.target.result);
+if (!parsed || !Array.isArray(parsed.notebooks)) { toast('Arquivo de backup inválido.'); return; }
+appState = normalizeState(parsed);
+saveState();
+toast('Backup restaurado com sucesso! 🎉');
+switchTab('dashboard');
+} catch (err) { toast('Erro ao ler o arquivo de backup.'); }
+};
+reader.readAsText(file);
+event.target.value = '';
+}
+/* ================= ASSISTENTE IA ================= */
+const aiHistory = [];
+let aiBusy = false;
+function aiSystemPrompt() {
+const pending = appState.tasks.filter(t => !t.completed).slice(0, 8).map(t => `- ${t.title} (${t.priority}, ${dateLabel(t.date)})`).join('\n') || '(nenhuma)';
+const subjects = appState.subjects.map(s => `${s.name} (${s.progress}%)`).join(', ') || '(nenhuma)';
+return 'Você é a Aura, uma assistente pessoal de IA especializada em organização, produtividade, estética soft girlboss e rotina de estudos para iPad. ' +
+'Responda sempre em português, de forma carinhosa, empática, acolhedora e objetiva (respostas curtas, com listas quando ajudar). ' +
+'Sobre o app Bloom & Plan: tem Dashboard, Cadernos Digitais (caneta, marca-texto, texto, borracha, Apple Pencil; botão PDF na barra do caderno exporta todas as páginas), ' +
+'Estudos & Revisões, Tarefas & Hábitos, Metas & Sonhos; botões Backup/Restaurar no menu lateral salvam e recuperam os dados em JSON.\n' +
+`Hoje é ${new Date().toLocaleDateString('pt-BR', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })}.\n` +
+`Tarefas pendentes da usuária:\n${pending}\nDisciplinas: ${subjects}.`;
+}
+async function callAI() {
+const sys = aiSystemPrompt();
+let msgs = aiHistory.slice(-10);
+while (msgs.length && msgs[0].role !== 'user') msgs = msgs.slice(1);
+const sample = await getCap('sample');
+if (sample) {
+const input = msgs.map((m, i) => i === 0 ? { role: m.role, content: sys + '\n\n---\n' + m.content } : m);
+const r = await sample(input, { cache: false });
+return r.text;
+}
+const key = store.get('bloom_gemini_key');
+if (!key) { const err = new Error('no_key'); err.code = 'no_key'; throw err; }
+const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${encodeURIComponent(key)}`, {
+method: 'POST',
+headers: { 'Content-Type': 'application/json' },
+body: JSON.stringify({
+systemInstruction: { parts: [{ text: sys }] },
+contents: msgs.map(m => ({ role: m.role === 'assistant' ? 'model' : 'user', parts: [{ text: m.content }] }))
+})
+});
+const data = await res.json();
+const text = data.candidates?.[0]?.content?.parts?.[0]?.text;
+if (!text) throw new Error(data.error?.message || 'empty');
+return text;
+}
+function mdLite(t) {
+return esc(t).replace(/\*\*(.+?)\*\*/g, '<b>$1</b>').replace(/^\s*[-*]\s+/gm, '• ').replace(/\n/g, '<br>');
+}
+function aiBubble(html, who = 'ai', id) {
+const container = $('ai-messages-container');
+const row = document.createElement('div');
+if (id) row.id = id;
+if (who === 'user') {
+row.className = 'flex gap-3 items-start justify-end';
+row.innerHTML = `<div class="bg-[#e19da9] text-white p-4 rounded-2xl max-w-lg text-xs leading-relaxed shadow-sm font-medium">${html}</div>`;
+} else if (who === 'error') {
+row.className = 'flex gap-3 items-start';
+row.innerHTML = `<div class="w-8 h-8 rounded-full bg-rose-100 text-rose-500 flex items-center justify-center text-xs shrink-0 mt-1"><i class="fa-solid fa-triangle-exclamation"></i></div>
+<div class="bg-rose-50 dark:bg-rose-950/40 p-4 rounded-2xl max-w-lg text-xs leading-relaxed text-rose-600 dark:text-rose-200">${html}</div>`;
+} else {
+row.className = 'flex gap-3 items-start';
+row.innerHTML = `<div class="w-8 h-8 rounded-full bg-[#f8ecee] dark:bg-[#33272e] text-[#e19da9] flex items-center justify-center text-xs shrink-0 mt-1"><i class="fa-solid fa-star"></i></div>
+<div class="bg-[#f8ecee]/60 dark:bg-[#2d2328] p-4 rounded-2xl max-w-lg text-xs leading-relaxed text-[#5a424c] dark:text-[#f0dce3] border border-[#f4dde1] dark:border-[#382b32] ${id === 'ai-loading' ? 'italic' : ''}">${html}</div>`;
+}
+container.appendChild(row);
+container.scrollTop = container.scrollHeight;
+return row;
+}
+function sendQuickAiPrompt(text) { $('ai-input').value = text; sendAiMessage(); }
+async function sendAiMessage() {
+if (aiBusy) return;
+const input = $('ai-input');
+const text = input.value.trim();
+if (!text) return;
+input.value = '';
+aiBubble(esc(text), 'user');
+aiHistory.push({ role: 'user', content: text });
+aiBusy = true; $('ai-send-btn').classList.add('opacity-60');
+aiBubble('Aura está pensando em uma resposta maravilhosa... ✨', 'ai', 'ai-loading');
+try {
+const reply = await callAI();
+$('ai-loading')?.remove();
+aiHistory.push({ role: 'assistant', content: reply });
+aiBubble(mdLite(reply));
+} catch (err) {
+$('ai-loading')?.remove();
+aiHistory.pop();
+if (err && err.code === 'no_key') {
+const row = aiBubble(`Para conversar comigo fora do Claude, cole aqui sua chave da API do Gemini (ela fica salva só neste aparelho):
+<div class="mt-3 flex gap-2"><input type="password" autocomplete="off" placeholder="Chave da API" class="key-input flex-1 bg-white px-3 py-2 rounded-xl border border-rose-200 text-[#5a424c] focus:outline-none">
+<button class="key-save px-3 py-2 bg-[#e19da9] text-white rounded-xl font-bold">Salvar</button></div>`, 'error');
+row.querySelector('.key-save').onclick = () => {
+const v = row.querySelector('.key-input').value.trim();
+if (v) { store.set('bloom_gemini_key', v); row.remove(); toast('Chave salva. Envie sua mensagem de novo 🌸'); }
+};
+} else if (err && err.code === 'not_granted') {
+aiBubble('A permissão para usar a IA não foi concedida. Tente de novo e aceite o pedido. 🌸', 'error');
+} else if (err && err.code === 'rate_limited') {
+aiBubble('Muitas mensagens seguidas. Espere um instante e tente de novo. 🌸', 'error');
+} else {
+aiBubble('Houve uma instabilidade ao conectar com a IA. Tente novamente em instantes! 🌸', 'error');
+}
+} finally {
+aiBusy = false; $('ai-send-btn').classList.remove('opacity-60');
+}
+}
+/* ================= NAVEGAÇÃO ================= */
+const TITLES = {
+dashboard: 'Meu Painel', notebooks: 'Cadernos Digitais', studies: 'Estudos & Revisões',
+planning: 'Tarefas & Hábitos', goals: 'Metas & Sonhos', 'ai-assistant': 'Assistente IA — Aura'
+};
+function switchTab(tabId) {
+if (appState.currentNotebookId && tabId !== 'notebooks') saveCurrentCanvas();
+document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+document.querySelectorAll('.nav-btn').forEach(el => el.classList.remove('bg-[#f8ecee]', 'dark:bg-[#33272e]', 'text-[#e19da9]'));
+$(`tab-${tabId}`)?.classList.remove('hidden');
+$(`nav-${tabId}`)?.classList.add('bg-[#f8ecee]', 'dark:bg-[#33272e]', 'text-[#e19da9]');
+$('page-title').innerText = TITLES[tabId] || 'Meu Painel';
+if (tabId === 'dashboard') renderDashboard();
+if (tabId === 'notebooks') renderNotebookGallery();
+if (tabId === 'studies') renderStudies();
+if (tabId === 'planning') renderPlanning();
+if (tabId === 'goals') renderGoals();
+}
+function toggleDarkMode() {
+const on = document.documentElement.classList.toggle('dark');
+store.set('bloom_dark', on ? '1' : '0');
+}
+function updateClock() {
+const now = new Date();
+$('header-clock').innerText = `${pad(now.getHours())}:${pad(now.getMinutes())}`;
+const d = now.toLocaleDateString('pt-BR', { weekday: 'long', day: 'numeric', month: 'long' });
+$('dash-date').innerText = d.charAt(0).toUpperCase() + d.slice(1);
+}
+/* ================= 1. DASHBOARD ================= */
+let calView = { y: new Date().getFullYear(), m: new Date().getMonth() };
+function greeting() {
+const h = new Date().getHours();
+return (h < 12 ? 'Bom dia' : h < 18 ? 'Boa tarde' : 'Boa noite') + ', seja bem-vinda 🌸';
+}
+function sortedTasks() {
+return [...appState.tasks].sort((a, b) =>
+(a.completed - b.completed) ||
+((a.date || '9999') < (b.date || '9999') ? -1 : (a.date || '9999') > (b.date || '9999') ? 1 : 0) ||
+(PRIORITY_RANK[a.priority] - PRIORITY_RANK[b.priority]));
+}
+function renderDashboard() {
+$('dash-greeting').innerText = greeting();
+const total = appState.tasks.length;
+const completed = appState.tasks.filter(t => t.completed).length;
+const percent = total === 0 ? 0 : Math.round((completed / total) * 100);
+$('dash-progress-percent').innerText = `${percent}%`;
+$('dash-progress-bar').style.width = `${percent}%`;
+$('dash-tasks-count').innerText = `${completed}/${total}`;
+const tasksList = $('dash-tasks-list');
+tasksList.innerHTML = '';
+if (!total) tasksList.innerHTML = '<p class="text-xs text-[#a88995] italic font-serif">Nenhuma tarefa ainda. Que tal criar a primeira? 🌸</p>';
+sortedTasks().slice(0, 5).forEach(task => {
+const item = document.createElement('div');
+item.className = 'flex items-center justify-between p-2.5 rounded-2xl bg-[#f8ecee]/50 dark:bg-[#2d2328] text-xs border border-[#f4dde1] dark:border-[#382b32]';
+item.innerHTML = `
+<div class="flex items-center gap-2.5 min-w-0">
+<input type="checkbox" ${task.completed ? 'checked' : ''} onchange="toggleTask('${task.id}')" class="rounded-full text-[#e19da9] focus:ring-[#e19da9] w-4 h-4 shrink-0">
+<span class="truncate ${task.completed ? 'line-through text-[#a88995]' : 'font-medium'}">${esc(task.title)}</span>
+</div>
+<span class="text-[9px] font-bold px-2 py-0.5 rounded-full bg-white dark:bg-[#3d2c34] text-[#e19da9] shadow-sm shrink-0 ml-2">${PRIORITY_LABEL[task.priority]}</span>`;
+tasksList.appendChild(item);
+});
+const recentNb = $('dash-recent-notebooks');
+recentNb.innerHTML = '';
+appState.notebooks.slice(0, 3).forEach(nb => {
+const item = document.createElement('div');
+item.className = 'flex items-center justify-between p-2.5 bg-[#f8ecee]/40 dark:bg-[#2d2328] rounded-2xl cursor-pointer hover:bg-[#f8ecee] transition border border-[#f4dde1] dark:border-[#382b32]';
+item.onclick = () => { switchTab('notebooks'); openNotebook(nb.id); };
+item.innerHTML = `
+<div class="flex items-center gap-3 min-w-0">
+<div class="w-3.5 h-8 ${esc(nb.color)} rounded-md shadow-sm shrink-0"></div>
+<span class="text-xs font-serif font-bold text-[#5a424c] dark:text-[#f0dce3] truncate">${esc(nb.title)}</span>
+</div>
+<i class="fa-solid fa-chevron-right text-[#a88995] text-xs"></i>`;
+recentNb.appendChild(item);
+});
+const habitsDash = $('dash-habits-container');
+habitsDash.innerHTML = '';
+appState.habits.forEach(h => {
+const done = habitDone(h);
+const card = document.createElement('div');
+card.className = `p-3 rounded-2xl border flex items-center justify-between ${done ? 'bg-[#f8ecee] border-[#ebbdc5] dark:bg-[#382b32] dark:border-[#4a3840]' : 'bg-white border-[#f4dde1] dark:bg-[#231c20] dark:border-[#33272e]'}`;
+card.innerHTML = `
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-xl ${done ? 'bg-[#e19da9] text-white' : 'bg-[#f8ecee] dark:bg-[#33272e] text-[#a88995]'} flex items-center justify-center text-xs shadow-sm"><i class="fa-solid ${esc(h.icon)}"></i></div>
+<div>
+<p class="text-xs font-bold text-[#5a424c] dark:text-[#f0dce3]">${esc(h.title)}</p>
+<p class="text-[10px] text-[#a88995]"><i class="fa-solid fa-star text-[#e19da9]"></i> ${h.streak} dias seguidos</p>
+</div>
+</div>
+<button onclick="toggleHabit('${h.id}')" class="p-2 text-[#e19da9]" aria-label="Marcar hábito"><i class="${done ? 'fa-solid fa-circle-check' : 'fa-regular fa-circle'} text-base"></i></button>`;
+habitsDash.appendChild(card);
+});
+const goalsDash = $('dash-goals-summary');
+goalsDash.innerHTML = '';
+appState.goals.forEach(g => {
+const div = document.createElement('div');
+div.className = 'space-y-1.5';
+div.innerHTML = `
+<div class="flex justify-between text-xs font-serif font-bold"><span>${esc(g.title)}</span><span class="text-[#e19da9]">${g.progress}%</span></div>
+<div class="w-full h-2 bg-[#f8ecee] dark:bg-[#33272e] rounded-full overflow-hidden"><div class="h-full bg-gradient-to-r from-[#e19da9] to-[#dfd0b5] rounded-full" style="width:${g.progress}%"></div></div>`;
+goalsDash.appendChild(div);
+});
+renderCalendar();
+}
+function shiftCalendar(delta) {
+calView.m += delta;
+if (calView.m < 0) { calView.m = 11; calView.y--; }
+if (calView.m > 11) { calView.m = 0; calView.y++; }
+renderCalendar();
+}
+function renderCalendar() {
+const { y, m } = calView;
+const mn = new Date(y, m, 1).toLocaleDateString('pt-BR', { month: 'long' });
+$('calendar-month-year').innerText = `${mn.charAt(0).toUpperCase() + mn.slice(1)} ${y}`;
+const grid = $('calendar-days-grid');
+grid.innerHTML = '';
+const firstWeekday = new Date(y, m, 1).getDay();
+const daysInMonth = new Date(y, m + 1, 0).getDate();
+const pending = new Set(appState.tasks.filter(t => !t.completed && t.date).map(t => t.date));
+const today = todayISO();
+for (let i = 0; i < firstWeekday; i++) grid.appendChild(document.createElement('div'));
+for (let d = 1; d <= daysInMonth; d++) {
+const iso = `${y}-${pad(m + 1)}-${pad(d)}`;
+const isToday = iso === today;
+const cell = document.createElement('div');
+cell.className = `relative py-1.5 rounded-xl text-xs font-medium ${isToday ? 'bg-[#e19da9] text-white font-bold shadow-md shadow-rose-200' : 'text-[#5a424c] dark:text-[#f0dce3]'}`;
+cell.innerHTML = `${d}${pending.has(iso) ? `<span class="absolute left-1/2 -translate-x-1/2 bottom-0.5 w-1 h-1 rounded-full ${isToday ? 'bg-white' : 'bg-[#e19da9]'}"></span>` : ''}`;
+grid.appendChild(cell);
+}
+}
+/* ================= 2. CADERNOS ================= */
+let canvas = null, ctx = null, dpr = 1;
+let drawing = false, pts = [], snap = null, lastPenAt = 0, loadToken = 0;
+const currentNb = () => appState.notebooks.find(n => n.id === appState.currentNotebookId);
+const currentPage = () => { const nb = currentNb(); return nb ? nb.pages[appState.currentPageIndex] : null; };
+function renderNotebookGallery() {
+$('notebook-gallery').classList.remove('hidden');
+$('notebook-editor').classList.add('hidden');
+appState.currentNotebookId = null;
+const grid = $('notebooks-grid');
+grid.innerHTML = '';
+appState.notebooks.forEach(nb => {
+const card = document.createElement('div');
+card.className = 'flex flex-col cursor-pointer group relative';
+card.onclick = () => openNotebook(nb.id);
+card.innerHTML = `
+<div class="w-full aspect-[3/4] ${esc(nb.color)} rounded-3xl shadow-md p-5 flex flex-col justify-between text-[#5a424c] transition transform group-hover:-translate-y-1.5 group-hover:shadow-xl relative overflow-hidden border border-white/40">
+<div class="w-full h-full border border-white/40 rounded-2xl p-4 flex flex-col justify-between">
+<div>
+<span class="text-[9px] uppercase font-bold tracking-widest text-[#705863]">Caderno Digital</span>
+<h4 class="font-serif font-bold text-xl mt-1 leading-tight text-[#4a3b43]">${esc(nb.title)}</h4>
+</div>
+<div class="flex justify-between items-center text-xs font-serif italic text-[#705863]">
+<span>${nb.pages.length} ${nb.pages.length === 1 ? 'pág' : 'págs'}</span>
+<i class="fa-solid fa-pen-nib text-[#e19da9]"></i>
+</div>
+</div>
+</div>
+<button class="absolute top-2 right-2 w-8 h-8 rounded-full bg-white/80 text-[#a88995] hover:text-rose-500 shadow flex items-center justify-center" aria-label="Excluir caderno"><i class="fa-regular fa-trash-can text-xs"></i></button>`;
+card.querySelector('button').onclick = async ev => {
+ev.stopPropagation();
+if (await askConfirm(`Excluir o caderno "${nb.title}" e todas as suas páginas?`, 'Excluir')) {
+appState.notebooks = appState.notebooks.filter(n => n.id !== nb.id);
+saveState(); renderNotebookGallery();
+}
+};
+grid.appendChild(card);
+});
+}
+function initCanvasOnce() {
+if (canvas) return;
+canvas = $('notebook-canvas');
+dpr = Math.min(2, window.devicePixelRatio || 1);
+canvas.width = PAPER_W * dpr;
+canvas.height = PAPER_H * dpr;
+ctx = canvas.getContext('2d');
+ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+canvas.addEventListener('pointerdown', onPointerDown);
+canvas.addEventListener('pointermove', onPointerMove);
+canvas.addEventListener('pointerup', onPointerUp);
+canvas.addEventListener('pointercancel', onPointerUp);
+}
+function clearCanvas() {
+ctx.save();
+ctx.setTransform(1, 0, 0, 1, 0, 0);
+ctx.clearRect(0, 0, canvas.width, canvas.height);
+ctx.restore();
+}
+function openNotebook(id) {
+const nb = appState.notebooks.find(n => n.id === id);
+if (!nb) return;
+appState.currentNotebookId = id;
+appState.currentPageIndex = 0;
+$('notebook-gallery').classList.add('hidden');
+$('notebook-editor').classList.remove('hidden');
+$('current-notebook-title').innerText = nb.title;
+initCanvasOnce();
+setTool(appState.activeTool);
+fitPaper();
+loadPageContent();
+}
+function closeNotebook() {
+saveCurrentCanvas();
+renderNotebookGallery();
+}
+/* Ajusta o tamanho da folha à largura disponível (iPad em pé, janela pequena…) */
+function fitPaper() {
+const area = $('paper-area');
+if (!area || $('notebook-editor').classList.contains('hidden')) return;
+const s = Math.min(1, Math.max(0.4, (area.clientWidth - 32) / PAPER_W));
+$('paper-container').style.transform = s < 1 ? `scale(${s})` : 'none';
+$('paper-wrap').style.width = PAPER_W * s + 'px';
+$('paper-wrap').style.height = PAPER_H * s + 'px';
+}
+/* --- Desenho com Pointer Events (dedo, mouse e Apple Pencil com pressão) --- */
+function logicalXY(e) {
+const r = canvas.getBoundingClientRect();
+const k = PAPER_W / r.width;
+return { x: (e.clientX - r.left) * k, y: (e.clientY - r.top) * k };
+}
+function brushFor(e) {
+const t = appState.activeTool;
+ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+if (t === 'eraser') {
+ctx.globalCompositeOperation = 'destination-out'; ctx.globalAlpha = 1; ctx.lineWidth = 24; ctx.strokeStyle = '#000';
+} else if (t === 'highlighter') {
+ctx.globalCompositeOperation = 'source-over'; ctx.globalAlpha = 0.35; ctx.lineWidth = 22; ctx.strokeStyle = appState.penColor;
+} else {
+ctx.globalCompositeOperation = 'source-over'; ctx.globalAlpha = 1; ctx.strokeStyle = appState.penColor;
+ctx.lineWidth = e && e.pointerType === 'pen' ? 1.5 + (e.pressure || 0.5) * 4.5 : 3;
+}
+}
+function resetBrush() { ctx.globalCompositeOperation = 'source-over'; ctx.globalAlpha = 1; }
+function onPointerDown(e) {
+if (!appState.currentNotebookId) return;
+const tool = appState.activeTool;
+if (tool === 'hand') return;
+if (e.pointerType === 'pen') lastPenAt = Date.now();
+else if (e.pointerType === 'touch' && Date.now() - lastPenAt < 2500) return;   // ignora a palma enquanto usa a Pencil
+if (e.pointerType === 'mouse' && e.button !== 0) return;
+e.preventDefault();
+const { x, y } = logicalXY(e);
+if (tool === 'text') { addTextBox(x, y); setTool('pen'); return; }
+drawing = true;
+try { canvas.setPointerCapture(e.pointerId); } catch (err) {}
+pts = [{ x, y }];
+if (tool === 'highlighter') snap = ctx.getImageData(0, 0, canvas.width, canvas.height);
+brushFor(e);
+ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(x + 0.01, y); ctx.stroke();
+resetBrush();
+}
+function onPointerMove(e) {
+if (!drawing) return;
+e.preventDefault();
+const events = e.getCoalescedEvents ? e.getCoalescedEvents() : [e];
+const tool = appState.activeTool;
+for (const ev of (events.length ? events : [e])) {
+const { x, y } = logicalXY(ev);
+const prev = pts[pts.length - 1];
+pts.push({ x, y });
+if (tool === 'highlighter') continue;
+brushFor(ev);
+ctx.beginPath(); ctx.moveTo(prev.x, prev.y); ctx.lineTo(x, y); ctx.stroke();
+resetBrush();
+}
+if (tool === 'highlighter' && snap) {
+ctx.putImageData(snap, 0, 0);
+brushFor(e);
+ctx.beginPath(); ctx.moveTo(pts[0].x, pts[0].y);
+for (let i = 1; i < pts.length; i++) ctx.lineTo(pts[i].x, pts[i].y);
+ctx.stroke();
+resetBrush();
+}
+}
+function onPointerUp() {
+if (!drawing) return;
+drawing = false; snap = null; pts = [];
+resetBrush();
+saveCurrentCanvas();
+}
+function setTool(tool) {
+appState.activeTool = tool;
+document.querySelectorAll('.tool-btn').forEach(b => {
+b.classList.remove('bg-white', 'dark:bg-[#3d2c34]', 'shadow-sm', 'text-[#e19da9]');
+b.classList.add('text-[#705863]', 'dark:text-[#cbb6c0]');
+});
+const active = $(`tool-${tool}`);
+if (active) {
+active.classList.remove('text-[#705863]', 'dark:text-[#cbb6c0]');
+active.classList.add('bg-white', 'dark:bg-[#3d2c34]', 'shadow-sm', 'text-[#e19da9]');
+}
+if (canvas) {
+canvas.style.touchAction = tool === 'hand' ? 'auto' : 'none';
+canvas.style.cursor = tool === 'hand' ? 'grab' : tool === 'text' ? 'text' : 'crosshair';
+}
+}
+function setPenColor(color) {
+appState.penColor = color;
+if (appState.activeTool === 'eraser' || appState.activeTool === 'text' || appState.activeTool === 'hand') setTool('pen');
+document.querySelectorAll('.pen-swatch').forEach(b => {
+const on = b.dataset.color === color;
+b.classList.toggle('ring-2', on); b.classList.toggle('ring-offset-1', on); b.classList.toggle('ring-[#e19da9]', on);
+});
+}
+function applyPaper(paperType) {
+$('paper-container').className = `relative bg-white shadow-2xl rounded-lg overflow-hidden ring-1 ring-[#f4dde1] paper-${paperType}`;
+}
+function changePagePaper(paperType) {
+const page = currentPage();
+if (!page) return;
+page.paper = paperType;
+applyPaper(paperType);
+if (paperType === 'mindmap' && !page.drawingData && !page.texts.length) drawDefaultMindMap();
+saveState();
+}
+function rr(x, y, w, h, r) {
+ctx.beginPath();
+ctx.moveTo(x + r, y);
+ctx.arcTo(x + w, y, x + w, y + h, r);
+ctx.arcTo(x + w, y + h, x, y + h, r);
+ctx.arcTo(x, y + h, x, y, r);
+ctx.arcTo(x, y, x + w, y, r);
+ctx.closePath();
+}
+function drawDefaultMindMap() {
+const cx = PAPER_W / 2, cy = PAPER_H / 2 - 40;
+clearCanvas();
+resetBrush();
+const nodes = [
+{ x: cx - 240, y: cy - 150, title: 'Tópico 1 🌸', text: 'Insira suas ideias ou conceitos...' },
+{ x: cx + 240, y: cy - 150, title: 'Tópico 2 ✨', text: 'Insira suas ideias ou conceitos...' },
+{ x: cx - 240, y: cy + 170, title: 'Tópico 3 🌿', text: 'Insira suas ideias ou conceitos...' },
+{ x: cx + 240, y: cy + 170, title: 'Tópico 4 💡', text: 'Insira suas ideias ou conceitos...' }
+];
+ctx.lineWidth = 3; ctx.strokeStyle = '#e19da9'; ctx.globalAlpha = 0.7;
+nodes.forEach(n => { ctx.beginPath(); ctx.moveTo(cx, cy); ctx.quadraticCurveTo((cx + n.x) / 2, cy, n.x, n.y); ctx.stroke(); });
+ctx.globalAlpha = 1;
+ctx.fillStyle = '#f8ecee'; ctx.strokeStyle = '#e19da9'; ctx.lineWidth = 4;
+rr(cx - 130, cy - 45, 260, 90, 24); ctx.fill(); ctx.stroke();
+ctx.textAlign = 'center';
+ctx.fillStyle = '#5a424c'; ctx.font = 'bold 20px "Cormorant Garamond", serif';
+ctx.fillText('Tema Central 🌸', cx, cy - 5);
+ctx.font = '12px "Plus Jakarta Sans", sans-serif'; ctx.fillStyle = '#a88995';
+ctx.fillText('(Toque para escrever / desenhar)', cx, cy + 20);
+nodes.forEach(n => {
+ctx.fillStyle = '#ffffff'; ctx.strokeStyle = '#f4dde1'; ctx.lineWidth = 2.5;
+rr(n.x - 100, n.y - 40, 200, 80, 18); ctx.fill(); ctx.stroke();
+ctx.fillStyle = '#5a424c'; ctx.font = 'bold 15px "Plus Jakarta Sans", sans-serif';
+ctx.fillText(n.title, n.x, n.y - 12);
+ctx.fillStyle = '#a88995'; ctx.font = '11px "Plus Jakarta Sans", sans-serif';
+ctx.fillText(n.text, n.x, n.y + 12);
+});
+saveCurrentCanvas();
+}
+/* --- Caixas de texto (agora salvas junto com a página) --- */
+function addTextBox(x, y) {
+const page = currentPage();
+if (!page) return;
+const t = { id: newId(), x: Math.max(0, Math.min(PAPER_W - 220, x)), y: Math.max(0, Math.min(PAPER_H - 140, y)), w: 192, h: 80, text: '' };
+page.texts.push(t);
+const box = buildTextBox(t, page);
+$('text-overlay-layer').appendChild(box);
+saveState();
+setTimeout(() => box.querySelector('textarea').focus(), 50);
+}
+function buildTextBox(t, page) {
+const box = document.createElement('div');
+box.className = 'absolute p-2.5 border border-dashed border-[#e19da9] bg-white/90 rounded-2xl pointer-events-auto shadow-md';
+box.style.left = t.x + 'px'; box.style.top = t.y + 'px';
+box.innerHTML = `
+<div class="tb-handle flex justify-between items-center text-[10px] text-[#a88995] mb-1 cursor-move font-serif italic" style="touch-action:none">
+<span>Anotação</span>
+<button class="tb-del text-rose-400 hover:text-rose-600 px-1" aria-label="Remover anotação"><i class="fa-solid fa-xmark"></i></button>
+</div>
+<textarea placeholder="Digite aqui..." class="bg-transparent text-sm outline-none resize font-sans text-[#5a424c] block" style="width:${t.w}px;height:${t.h}px"></textarea>`;
+const ta = box.querySelector('textarea');
+ta.value = t.text || '';
+ta.addEventListener('input', () => { t.text = ta.value; saveStateSoon(); });
+if (window.ResizeObserver) {
+let first = true;
+new ResizeObserver(() => {
+if (first) { first = false; return; }
+t.w = ta.offsetWidth; t.h = ta.offsetHeight; saveStateSoon();
+}).observe(ta);
+}
+const del = box.querySelector('.tb-del');
+del.addEventListener('pointerdown', e => e.stopPropagation());
+del.addEventListener('click', () => { page.texts = page.texts.filter(x => x.id !== t.id); box.remove(); saveState(); });
+const handle = box.querySelector('.tb-handle');
+handle.addEventListener('pointerdown', e => {
+if (e.target.closest('.tb-del')) return;
+e.preventDefault();
+handle.setPointerCapture(e.pointerId);
+const k = PAPER_W / $('paper-container').getBoundingClientRect().width;
+const sx = e.clientX, sy = e.clientY, ox = t.x, oy = t.y;
+const move = ev => {
+t.x = Math.max(0, Math.min(PAPER_W - 60, ox + (ev.clientX - sx) * k));
+t.y = Math.max(0, Math.min(PAPER_H - 40, oy + (ev.clientY - sy) * k));
+box.style.left = t.x + 'px'; box.style.top = t.y + 'px';
+};
+const up = () => { handle.removeEventListener('pointermove', move); handle.removeEventListener('pointerup', up); handle.removeEventListener('pointercancel', up); saveState(); };
+handle.addEventListener('pointermove', move); handle.addEventListener('pointerup', up); handle.addEventListener('pointercancel', up);
+});
+return box;
+}
+function saveCurrentCanvas() {
+const page = currentPage();
+if (!page || !canvas) return;
+page.drawingData = canvas.toDataURL('image/png');
+saveState();
+}
+/* Carrega a página atual; devolve uma Promise que resolve quando o desenho já está na tela */
+function loadPageContent() {
+const nb = currentNb(), page = currentPage();
+if (!nb || !page) return Promise.resolve();
+const token = ++loadToken;
+$('current-page-indicator').innerText = `Página ${appState.currentPageIndex + 1} de ${nb.pages.length}`;
+$('paper-type-select').value = page.paper || 'lined';
+applyPaper(page.paper || 'lined');
+clearCanvas();
+const layer = $('text-overlay-layer');
+layer.innerHTML = '';
+page.texts.forEach(t => layer.appendChild(buildTextBox(t, page)));
+return new Promise(resolve => {
+if (page.drawingData) {
+const img = new Image();
+img.onload = () => { if (token === loadToken) { clearCanvas(); ctx.drawImage(img, 0, 0, PAPER_W, PAPER_H); } resolve(); };
+img.onerror = () => resolve();
+img.src = page.drawingData;
+} else {
+if (page.paper === 'mindmap' && !page.texts.length) drawDefaultMindMap();
+resolve();
+}
+});
+}
+function addNewPage() {
+const nb = currentNb();
+if (!nb) return;
+saveCurrentCanvas();
+nb.pages.push({ paper: 'lined', drawingData: null, texts: [] });
+appState.currentPageIndex = nb.pages.length - 1;
+saveState();
+loadPageContent();
+}
+async function deleteCurrentPage() {
+const nb = currentNb();
+if (!nb) return;
+if (nb.pages.length === 1) { toast('Um caderno precisa ter ao menos uma página.'); return; }
+if (!(await askConfirm(`Excluir a página ${appState.currentPageIndex + 1}?`, 'Excluir'))) return;
+nb.pages.splice(appState.currentPageIndex, 1);
+appState.currentPageIndex = Math.max(0, appState.currentPageIndex - 1);
+saveState();
+loadPageContent();
+}
+function prevPage() {
+if (appState.currentPageIndex > 0) { saveCurrentCanvas(); appState.currentPageIndex--; loadPageContent(); }
+}
+function nextPage() {
+const nb = currentNb();
+if (nb && appState.currentPageIndex < nb.pages.length - 1) { saveCurrentCanvas(); appState.currentPageIndex++; loadPageContent(); }
+}
+/* Exporta TODAS as páginas do caderno em um único PDF */
+async function exportNotebookPDF() {
+const nb = currentNb();
+if (!nb) return;
+if (!window.html2canvas || !window.jspdf) { toast('Biblioteca de PDF indisponível (sem internet?).'); return; }
+toast('Gerando PDF… ✨');
+saveCurrentCanvas();
+const startIndex = appState.currentPageIndex;
+const wrap = $('paper-wrap'), cont = $('paper-container'), layer = $('text-overlay-layer');
+const prev = { t: cont.style.transform, w: wrap.style.width, h: wrap.style.height };
+cont.style.transform = 'none'; wrap.style.width = PAPER_W + 'px'; wrap.style.height = PAPER_H + 'px';
+layer.classList.add('exporting');
+try {
+const { jsPDF } = window.jspdf;
+const pw = 210, ph = 210 * PAPER_H / PAPER_W;
+const pdf = new jsPDF({ unit: 'mm', format: [pw, ph], orientation: 'p' });
+for (let i = 0; i < nb.pages.length; i++) {
+appState.currentPageIndex = i;
+await loadPageContent();
+await new Promise(r => setTimeout(r, 60));
+const shot = await html2canvas(cont, { scale: 2, backgroundColor: '#ffffff', logging: false });
+if (i > 0) pdf.addPage([pw, ph], 'p');
+pdf.addImage(shot.toDataURL('image/jpeg', 0.92), 'JPEG', 0, 0, pw, ph);
+}
+await saveFile(`${slug(nb.title)}.pdf`, pdf.output('blob'));
+} catch (err) {
+console.error(err);
+toast('Não foi possível gerar o PDF.');
+} finally {
+layer.classList.remove('exporting');
+cont.style.transform = prev.t; wrap.style.width = prev.w; wrap.style.height = prev.h;
+appState.currentPageIndex = startIndex;
+await loadPageContent();
+fitPaper();
+}
+}
+/* ================= 3. ESTUDOS ================= */
+function renderStudies() {
+const container = $('subjects-container');
+container.innerHTML = '';
+if (!appState.subjects.length) container.innerHTML = '<p class="text-sm text-[#a88995] italic font-serif col-span-full">Nenhuma disciplina ainda. Toque em "Nova Disciplina" 🌸</p>';
+appState.subjects.forEach((sub, i) => {
+const card = document.createElement('div');
+card.dataset.card = '1';
+card.className = `bg-white dark:bg-[#231c20] p-6 rounded-3xl border-l-4 ${esc(sub.color)} border-y border-r border-[#f4dde1] dark:border-[#382b32] shadow-sm space-y-4 glow-soft`;
+card.innerHTML = `
+<div class="flex justify-between items-center gap-2">
+<h3 class="font-serif font-bold text-xl text-[#5a424c] dark:text-[#f0dce3]">${esc(sub.name)}</h3>
+<div class="flex items-center gap-2 shrink-0">
+<span data-badge class="text-xs font-bold px-3 py-1 rounded-full bg-[#f8ecee] dark:bg-[#33272e] text-[#e19da9]">${sub.progress}%</span>
+<button onclick="removeItem('subjects',${i})" class="text-[#a88995] hover:text-rose-500" aria-label="Excluir disciplina"><i class="fa-regular fa-trash-can text-xs"></i></button>
+</div>
+</div>
+<input type="range" min="0" max="100" value="${sub.progress}" class="w-full" oninput="setProgress('subjects',${i},this.value,this)" aria-label="Progresso">
+<div>
+<p class="text-xs font-semibold text-[#a88995] mb-2 font-serif italic">Tópicos Principais:</p>
+<ul class="space-y-1.5 text-xs">
+${sub.topics.map(t => `<li class="flex items-center gap-2 text-[#5a424c] dark:text-[#f0dce3]"><i class="fa-solid fa-star text-[#e19da9] text-[10px]"></i> ${esc(t)}</li>`).join('')}
+</ul>
+</div>`;
+container.appendChild(card);
+});
+renderDoubts();
+}
+function renderDoubts() {
+const list = $('doubts-list');
+list.innerHTML = '';
+appState.doubts.forEach((d, index) => {
+const div = document.createElement('div');
+div.className = 'flex justify-between items-center gap-3 p-3.5 bg-[#f8ecee]/60 dark:bg-[#2d2328] rounded-2xl border border-[#f4dde1] dark:border-[#382b32] text-xs';
+div.innerHTML = `
+<span class="font-medium text-[#5a424c] dark:text-[#f0dce3]">${esc(d.text)}</span>
+<button onclick="removeDoubt(${index})" class="text-[#e19da9] hover:text-rose-500 font-serif font-bold text-xs shrink-0"><i class="fa-solid fa-check"></i> Revisado</button>`;
+list.appendChild(div);
+});
+}
+function addDoubt() {
+const input = $('doubt-input');
+const text = input.value.trim();
+if (!text) return;
+appState.doubts.push({ text, resolved: false });
+input.value = '';
+saveState(); renderDoubts();
+}
+function removeDoubt(index) { appState.doubts.splice(index, 1); saveState(); renderDoubts(); }
+function setProgress(kind, i, value, el) {
+const item = appState[kind][i];
+if (!item) return;
+item.progress = Number(value);
+const badge = el.closest('[data-card]')?.querySelector('[data-badge]');
+if (badge) badge.textContent = `${item.progress}%`;
+saveStateSoon();
+}
+async function removeItem(kind, i) {
+const labels = { subjects: 'esta disciplina', goals: 'esta meta' };
+if (await askConfirm(`Excluir ${labels[kind] || 'este item'}?`, 'Excluir')) {
+appState[kind].splice(i, 1);
+saveState();
+if (kind === 'subjects') renderStudies();
+if (kind === 'goals') renderGoals();
+}
+}
+/* ================= 4. TAREFAS & HÁBITOS ================= */
+function renderPlanning() {
+const list = $('tasks-list-full');
+list.innerHTML = '';
+if (!appState.tasks.length) list.innerHTML = '<p class="text-sm text-[#a88995] italic font-serif col-span-full">Nenhuma tarefa ainda. Toque em "Nova Tarefa" 🌸</p>';
+const today = todayISO();
+sortedTasks().forEach(t => {
+const late = !t.completed && t.date && t.date < today;
+const card = document.createElement('div');
+card.className = 'bg-white dark:bg-[#231c20] p-4 rounded-3xl border border-[#f4dde1] dark:border-[#382b32] shadow-sm flex items-center justify-between gap-2 glow-soft';
+card.innerHTML = `
+<div class="flex items-center gap-3.5 min-w-0">
+<input type="checkbox" ${t.completed ? 'checked' : ''} onchange="toggleTask('${t.id}')" class="rounded-full text-[#e19da9] focus:ring-[#e19da9] w-5 h-5 shrink-0">
+<div class="min-w-0">
+<p class="text-sm font-semibold ${t.completed ? 'line-through text-[#a88995]' : 'text-[#5a424c] dark:text-[#f0dce3]'}">${esc(t.title)}</p>
+<span class="text-[10px] ${late ? 'text-rose-500 font-bold' : 'text-[#a88995]'}">${late ? 'Atrasada · ' : ''}${dateLabel(t.date)}</span>
+</div>
+</div>
+<div class="flex items-center gap-2 shrink-0">
+<span class="text-xs px-2.5 py-1 rounded-full bg-[#f8ecee] dark:bg-[#33272e] text-[#e19da9] font-bold">${PRIORITY_LABEL[t.priority]}</span>
+<button onclick="deleteTask('${t.id}')" class="text-[#a88995] hover:text-rose-500 p-1" aria-label="Excluir tarefa"><i class="fa-regular fa-trash-can text-xs"></i></button>
+</div>`;
+list.appendChild(card);
+});
+renderHabitsFull();
+}
+function renderHabitsFull() {
+const container = $('habits-list-full');
+container.innerHTML = '';
+if (!appState.habits.length) container.innerHTML = '<p class="text-sm text-[#a88995] italic font-serif col-span-full">Nenhum hábito ainda. Toque em "Novo Hábito" 🌱</p>';
+appState.habits.forEach(h => {
+const done = habitDone(h);
+const card = document.createElement('div');
+card.className = 'bg-white dark:bg-[#231c20] p-4 rounded-3xl border border-[#f4dde1] dark:border-[#382b32] shadow-sm flex items-center justify-between gap-2 glow-soft';
+card.innerHTML = `
+<div class="flex items-center gap-3.5 min-w-0">
+<div class="w-10 h-10 rounded-2xl bg-[#f8ecee] dark:bg-[#2d2328] text-[#e19da9] flex items-center justify-center text-base shrink-0"><i class="fa-solid ${esc(h.icon)}"></i></div>
+<div class="min-w-0">
+<p class="text-sm font-bold text-[#5a424c] dark:text-[#f0dce3]">${esc(h.title)}</p>
+<p class="text-xs text-[#a88995]"><i class="fa-solid fa-star text-[#e19da9]"></i> ${h.streak} dias seguidos</p>
+</div>
+</div>
+<div class="flex items-center gap-1 shrink-0">
+<button onclick="toggleHabit('${h.id}')" class="px-4 py-2 rounded-xl text-xs font-serif font-bold ${done ? 'bg-[#f8ecee] text-[#e19da9]' : 'bg-[#f8ecee]/40 text-[#a88995]'}">${done ? 'Concluído ✨' : 'Marcar 🌸'}</button>
+<button onclick="deleteHabit('${h.id}')" class="text-[#a88995] hover:text-rose-500 p-1" aria-label="Excluir hábito"><i class="fa-regular fa-trash-can text-xs"></i></button>
+</div>`;
+container.appendChild(card);
+});
+}
+function refreshTaskViews() {
+saveState();
+renderDashboard();
+renderPlanning();
+}
+function toggleTask(id) {
+const task = appState.tasks.find(t => t.id === id);
+if (task) { task.completed = !task.completed; refreshTaskViews(); }
+}
+async function deleteTask(id) {
+if (await askConfirm('Excluir esta tarefa?', 'Excluir')) {
+appState.tasks = appState.tasks.filter(t => t.id !== id);
+refreshTaskViews();
+}
+}
+function toggleHabit(id) {
+const h = appState.habits.find(x => x.id === id);
+if (!h) return;
+if (habitDone(h)) { h.lastDone = null; h.streak = Math.max(0, h.streak - 1); }
+else { h.lastDone = todayISO(); h.streak++; }
+saveState();
+renderDashboard();
+renderPlanning();
+}
+async function deleteHabit(id) {
+if (await askConfirm('Excluir este hábito?', 'Excluir')) {
+appState.habits = appState.habits.filter(h => h.id !== id);
+saveState(); renderDashboard(); renderPlanning();
+}
+}
+/* ================= 5. METAS ================= */
+function renderGoals() {
+const container = $('goals-container');
+container.innerHTML = '';
+if (!appState.goals.length) container.innerHTML = '<p class="text-sm text-[#a88995] italic font-serif col-span-full">Nenhuma meta ainda. Toque em "Nova Meta" 👑</p>';
+appState.goals.forEach((g, i) => {
+const card = document.createElement('div');
+card.dataset.card = '1';
+card.className = 'bg-white dark:bg-[#231c20] p-6 rounded-3xl border border-[#f4dde1] dark:border-[#382b32] shadow-sm space-y-4 glow-soft';
+card.innerHTML = `
+<div class="flex justify-between items-center gap-2">
+<h3 class="font-serif font-bold text-lg text-[#5a424c] dark:text-[#f0dce3]">${esc(g.title)}</h3>
+<div class="flex items-center gap-2 shrink-0">
+<span class="text-xs font-bold text-[#e19da9] bg-[#f8ecee] dark:bg-[#33272e] px-3 py-1 rounded-full">${esc(g.category)}</span>
+<button onclick="removeItem('goals',${i})" class="text-[#a88995] hover:text-rose-500" aria-label="Excluir meta"><i class="fa-regular fa-trash-can text-xs"></i></button>
+</div>
+</div>
+<div class="space-y-1.5">
+<div class="flex justify-between text-xs text-[#a88995]"><span>Progresso Alcançado</span><span data-badge class="font-bold text-[#e19da9]">${g.progress}%</span></div>
+<input type="range" min="0" max="100" value="${g.progress}" class="w-full" oninput="setProgress('goals',${i},this.value,this)" aria-label="Progresso">
+</div>
+<div class="text-[10px] text-[#a88995] flex justify-between font-serif italic"><span>Objetivo final: ${esc(g.targetDate)}</span></div>`;
+container.appendChild(card);
+});
+}
+/* ================= MODAIS ================= */
+function openModal(id) { $(id).classList.remove('hidden'); }
+function closeModal(id) { $(id).classList.add('hidden'); }
+function openNewNotebookModal() { openModal('modal-notebook'); setTimeout(() => $('nb-title-input').focus(), 50); }
+function openTaskModal() { $('task-date-input').value = todayISO(); openModal('modal-task'); setTimeout(() => $('task-title-input').focus(), 50); }
+function openSubjectModal() { openModal('modal-subject'); setTimeout(() => $('subject-name-input').focus(), 50); }
+function openGoalModal() { openModal('modal-goal'); setTimeout(() => $('goal-title-input').focus(), 50); }
+function openHabitModal() { openModal('modal-habit'); setTimeout(() => $('habit-title-input').focus(), 50); }
+function selectCoverColor(btn) {
+appState.selectedCoverColor = btn.dataset.cover;
+document.querySelectorAll('.color-opt').forEach(b => b.classList.remove('ring-2', 'ring-offset-2', 'ring-[#e19da9]'));
+btn.classList.add('ring-2', 'ring-offset-2', 'ring-[#e19da9]');
+}
+function createNotebook() {
+const title = $('nb-title-input').value.trim();
+if (!title) return;
+appState.notebooks.push({ id: newId(), title, color: appState.selectedCoverColor || DEFAULT_COVER, pages: [{ paper: 'lined', drawingData: null, texts: [] }] });
+saveState();
+closeModal('modal-notebook');
+$('nb-title-input').value = '';
+renderNotebookGallery();
+}
+function createTask() {
+const title = $('task-title-input').value.trim();
+if (!title) return;
+appState.tasks.push({ id: newId(), title, priority: $('task-priority-input').value, date: $('task-date-input').value || todayISO(), completed: false });
+closeModal('modal-task');
+$('task-title-input').value = '';
+refreshTaskViews();
+}
+function createSubject() {
+const name = $('subject-name-input').value.trim();
+if (!name) return;
+const topics = $('subject-topics-input').value.split(/[,\n]/).map(s => s.trim()).filter(Boolean);
+appState.subjects.push({ name, progress: 0, color: $('subject-color-input').value, topics });
+saveState();
+closeModal('modal-subject');
+$('subject-name-input').value = ''; $('subject-topics-input').value = '';
+renderStudies();
+}
+function createGoal() {
+const title = $('goal-title-input').value.trim();
+if (!title) return;
+appState.goals.push({ title, category: $('goal-category-input').value, progress: 0, targetDate: $('goal-date-input').value.trim() || 'Sem data' });
+saveState();
+closeModal('modal-goal');
+$('goal-title-input').value = ''; $('goal-date-input').value = '';
+renderGoals();
+}
+function createHabit() {
+const title = $('habit-title-input').value.trim();
+if (!title) return;
+appState.habits.push({ id: newId(), title, icon: $('habit-icon-input').value, streak: 0, lastDone: null });
+saveState();
+closeModal('modal-habit');
+$('habit-title-input').value = '';
+renderDashboard(); renderPlanning();
+}
+/* ================= INICIALIZAÇÃO ================= */
+window.addEventListener('resize', fitPaper);
+window.addEventListener('pagehide', () => { try { saveCurrentCanvas(); } catch (e) {} });
+window.addEventListener('load', () => {
+if (store.get('bloom_dark') === '1') document.documentElement.classList.add('dark');
+loadInitialData();
+updateClock();
+setInterval(updateClock, 15000);
+setPenColor(appState.penColor);
+switchTab('dashboard');
+getCap('downloads'); getCap('sample');   // resolve as capacidades em segundo plano
+});
+</script>
+</body>
+</html>

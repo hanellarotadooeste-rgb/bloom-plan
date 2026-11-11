@@ -1,0 +1,20 @@
+{
+  "name": "Bloom & Plan",
+  "short_name": "Bloom&Plan",
+  "description": "Organizador pessoal com cadernos, tarefas, hábitos e metas",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#fcf9f9",
+  "theme_color": "#fcf9f9",
+  "lang": "pt-BR",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
